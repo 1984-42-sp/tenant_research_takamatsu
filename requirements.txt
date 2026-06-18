@@ -1,0 +1,8 @@
+playwright
+pandas
+beautifulsoup4
+lxml
+geopy
+folium
+openpyxl
+python-dotenv
