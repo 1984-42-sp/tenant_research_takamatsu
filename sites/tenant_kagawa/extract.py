@@ -85,3 +85,22 @@ print()
 for row in records[:5]:
 
     print(row)
+
+import pandas as pd
+
+df_list = pd.DataFrame(records)
+
+print()
+print(df_list.shape)
+
+print()
+print(df_list.head())
+
+df_list.to_csv(
+    "output/tenant_kagawa_list.csv",
+    index=False,
+    encoding="utf-8-sig"
+)
+
+print()
+print("saved")

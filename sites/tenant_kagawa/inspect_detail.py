@@ -14,22 +14,20 @@ soup = BeautifulSoup(
     "lxml"
 )
 
-for tr in soup.select("tr"):
+tables = soup.find_all("table")
 
-    cells = tr.find_all(["th", "td"])
+print(f"table数: {len(tables)}")
 
-    if len(cells) >= 2:
+for i, table in enumerate(tables):
 
-        key = cells[0].get_text(
-            " ",
-            strip=True
-        )
+    print()
+    print("=" * 50)
+    print(f"TABLE {i}")
+    print("=" * 50)
 
-        value = cells[1].get_text(
-            " ",
-            strip=True
-        )
+    text = table.get_text(
+        "\n",
+        strip=True
+    )
 
-        print(
-            f"{key} => {value}"
-        )
+    print(text[:1000])
