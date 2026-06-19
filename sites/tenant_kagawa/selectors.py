@@ -1,0 +1,5 @@
+LIST_ID = 'input[id^="ID_ARTICLE_URL_"]'
+LIST_NAME = 'input[id^="ID_ARTICLE_NAME_"]'
+LIST_ADDRESS = 'input[id^="ID_ADDRESS_"]'
+LIST_RENT = 'input[id^="ID_RENT_FEE_"]'
+LIST_AREA = 'input[id^="ID_CONTRACT_AREA_"]'
