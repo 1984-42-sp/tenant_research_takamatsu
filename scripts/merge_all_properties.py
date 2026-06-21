@@ -89,11 +89,21 @@ def normalize_one(site_name, path):
         ])
 
         item["面積"] = first_existing(row, [
-            "面積", "契約面積", "専有面積", "area"
+            "面積",
+            "契約面積",
+            "専有面積",
+            "使用部分面積",
+            "建物面積",
+            "土地面積",
+            "area",
         ])
 
         item["坪数"] = first_existing(row, [
-            "坪数", "坪", "tsubo"
+            "坪数",
+            "坪",
+            "坪数/坪単価",
+            "坪単価",
+            "tsubo",
         ])
 
         item["詳細URL"] = first_existing(row, [
@@ -321,15 +331,18 @@ def main():
     print(f"[INFO] duplicated removed: {before - after}件")
     print(f"[INFO] final total: {after}件")
 
-    all_csv = OUTPUT_DIR / "all_properties.csv"
+    all_properties_dir = OUTPUT_DIR / "all_properties"
+    all_properties_dir.mkdir(parents=True, exist_ok=True)
+
+    all_csv = all_properties_dir / "all_properties.csv"
     all_df.to_csv(all_csv, index=False, encoding="utf-8-sig")
     print(f"[SAVE] {all_csv}")
 
     geocoded = all_df[all_df["住所取得可否"] == "取得済み"].copy()
     failed = all_df[all_df["住所取得可否"] == "未取得"].copy()
 
-    geocoded_csv = OUTPUT_DIR / "all_properties_geocoded.csv"
-    failed_csv = OUTPUT_DIR / "all_properties_geocode_failed.csv"
+    geocoded_csv = all_properties_dir / "all_properties_geocoded.csv"
+    failed_csv = all_properties_dir / "all_properties_geocode_failed.csv"
 
     geocoded.to_csv(geocoded_csv, index=False, encoding="utf-8-sig")
     failed.to_csv(failed_csv, index=False, encoding="utf-8-sig")
