@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+from turtle import right, width
 import pandas as pd
 
 
@@ -201,6 +202,19 @@ h1 {{
   margin-top: 0;
 }}
 
+.filters {{
+  margin: 12px 0 16px 0;
+  padding: 10px 12px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}}
+
+.filters label {{
+  margin-right: 14px;
+  cursor: pointer;
+}}
+
 table {{
   width: 100%;
 }}
@@ -250,6 +264,21 @@ a {{
   </div>
 </div>
 
+<div class="filters">
+  <b>評価ランク：</b>
+  <label><input type="checkbox" class="rank-filter" value="A" checked> A</label>
+  <label><input type="checkbox" class="rank-filter" value="B" checked> B</label>
+  <label><input type="checkbox" class="rank-filter" value="C" checked> C</label>
+  <label><input type="checkbox" class="rank-filter" value="D" checked> D</label>
+</div>
+
+<div class="filters">
+  <b>飲食可否：</b>
+  <label><input type="checkbox" class="food-filter" value="可" checked> 可</label>
+  <label><input type="checkbox" class="food-filter" value="確認必要" checked> 確認必要</label>
+  <label><input type="checkbox" class="food-filter" value="不可" checked> 不可</label>
+</div>
+
 <div id="chart"></div>
 
 <div id="detail">
@@ -265,33 +294,54 @@ const points = {points_json};
 
 const patterns = [...new Set(points.map(p => p["事業成立パターン"]))];
 
-const traces = patterns.map(pattern => {{
-  const rows = points.filter(p => p["事業成立パターン"] === pattern);
+const patternColors = {{
+  "低固定費・小商圏型": "#2ca02c",
+  "中心街・高回転型": "#d62728",
+  "中心街・高単価型": "#ff7f0e",
+  "郊外・駐車場依存型": "#1f77b4",
+  "大型投資・高売上必須型": "#9467bd",
+  "家賃未定・問い合わせ必要型": "#7f7f7f",
+  "面積不明・詳細確認型": "#8c564b",
+  "飲食不可・評価対象外型": "#000000"
+}};
 
-  return {{
-    type: "scatter",
-    mode: "markers",
-    name: pattern,
-    x: rows.map(p => p["必要月商"]),
-    y: rows.map(p => p["必要日客数"]),
-    text: rows.map(p => p["物件名"]),
-    customdata: rows,
-    marker: {{
-      size: rows.map(p => p["marker_size"]),
-      opacity: 0.75,
-      line: {{
-        width: 1,
-        color: "#333"
-      }}
-    }},
-    hovertemplate:
+function markerSymbol(p) {{
+  if (p["飲食可否"] === "可") return "circle";
+  if (p["飲食可否"] === "不可") return "x";
+  return "diamond";
+}}
+
+function buildTraces(filteredPoints) {{
+  return patterns.map(pattern => {{
+    const rows = filteredPoints.filter(p => p["事業成立パターン"] === pattern);
+
+    return {{
+      type: "scatter",
+      mode: "markers",
+      name: pattern,
+      x: rows.map(p => p["必要月商"]),
+      y: rows.map(p => p["必要日客数"]),
+      text: rows.map(p => p["物件名"]),
+      customdata: rows,
+      marker: {{
+        size: rows.map(p => p["marker_size"]),
+        opacity: 0.85,
+        color: patternColors[pattern],
+        symbol: rows.map(p => markerSymbol(p)),
+        line: {{
+          width: 1,
+          color: "#333333"
+        }}
+      }},
+      hovertemplate:
         "<b>%{{text}}</b><br>" +
         "事業成立パターン: " + pattern + "<br>" +
         "必要月商: %{{x:,.0f}}円<br>" +
         "必要日客数: %{{y:.0f}}人<br>" +
         "<extra></extra>"
-  }};
-}});
+    }};
+  }});
+}}
 
 const layout = {{
   title: "必要月商 × 必要日客数",
@@ -317,9 +367,32 @@ const layout = {{
   hovermode: "closest"
 }};
 
-Plotly.newPlot("chart", traces, layout, {{
+function selectedValues(selector) {{
+  return Array.from(document.querySelectorAll(selector + ":checked")).map(el => el.value);
+}}
+
+function updateChartFilters() {{
+  const selectedRanks = selectedValues(".rank-filter");
+  const selectedFoods = selectedValues(".food-filter");
+
+  const filteredPoints = points.filter(p =>
+    selectedRanks.includes(p["評価ランク"]) &&
+    selectedFoods.includes(p["飲食可否"])
+  );
+
+  Plotly.react("chart", buildTraces(filteredPoints), layout, {{
+    responsive: true,
+    displayModeBar: true
+  }});
+}}
+
+Plotly.newPlot("chart", buildTraces(points), layout, {{
   responsive: true,
   displayModeBar: true
+}});
+
+document.querySelectorAll(".rank-filter, .food-filter").forEach(el => {{
+  el.addEventListener("change", updateChartFilters);
 }});
 
 document.getElementById("chart").on("plotly_click", function(data) {{
@@ -331,25 +404,17 @@ document.getElementById("chart").on("plotly_click", function(data) {{
 
   document.getElementById("detail").innerHTML = `
     <h2>${{p["物件名"]}}</h2>
-    <div>
-      <span class="badge">${{p["評価ランク"]}}</span>
-      <span class="badge">${{p["事業成立パターン"]}}</span>
-      <span class="badge">${{p["立地区分"]}}</span>
-      <span class="badge">${{p["店舗規模"]}}</span>
-    </div>
     <p><b>所在地：</b>${{p["所在地"]}}</p>
     <p><b>掲載サイト：</b>${{p["掲載サイト"]}}</p>
     <p><b>家賃：</b>${{p["家賃"]}}（${{p["家賃_円"]}}）</p>
     <p><b>坪数：</b>${{p["坪数_補正"]}} 坪</p>
-    <p><b>坪単価：</b>${{p["坪単価"]}}</p>
     <p><b>飲食可否：</b>${{p["飲食可否"]}}</p>
-    <p><b>階数：</b>${{p["階数判定"]}} / <b>駐車場：</b>${{p["駐車場判定"]}}</p>
+    <p><b>事業成立パターン：</b>${{p["事業成立パターン"]}}</p>
     <p><b>推奨モデル：</b>${{p["推奨カフェモデル"]}}</p>
     <p><b>必要月商：</b>${{p["必要月商表示"]}}</p>
     <p><b>必要日客数：</b>${{p["必要日客数"]}} 人</p>
     <p><b>初期投資中央値：</b>${{p["初期投資中央値"]}}</p>
     <p><b>評価コメント：</b>${{p["評価コメント"]}}</p>
-    <p><b>表示コメント：</b>${{p["ダッシュボード表示コメント"]}}</p>
     <p>${{urlHtml}}</p>
   `;
 }});
@@ -358,22 +423,7 @@ $(document).ready(function() {{
   $('#property_table').DataTable({{
     pageLength: 25,
     order: [[1, 'desc']],
-    scrollX: true,
-    initComplete: function () {{
-      this.api().columns([0, 2, 3, 11, 12, 13, 14]).every(function () {{
-        const column = this;
-        const select = $('<select><option value="">すべて</option></select>')
-          .appendTo($(column.header()))
-          .on('change', function () {{
-            const val = $.fn.dataTable.util.escapeRegex($(this).val());
-            column.search(val ? '^' + val + '$' : '', true, false).draw();
-          }});
-
-        column.data().unique().sort().each(function (d) {{
-          if (d) select.append('<option value="' + d + '">' + d + '</option>');
-        }});
-      }});
-    }}
+    scrollX: true
   }});
 }});
 </script>

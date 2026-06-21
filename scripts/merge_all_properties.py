@@ -51,16 +51,48 @@ def extract_number(value):
 
 
 def judge_food_allowed(row):
+    direct_cols = [
+        "飲食店可否",
+        "飲食可否",
+        "飲食",
+        "飲食店",
+    ]
+
+    for col in direct_cols:
+        if col in row and pd.notna(row[col]):
+            value = str(row[col]).strip()
+
+            if value in ["可", "飲食可", "飲食店可", "軽飲食可", "重飲食可"]:
+                return "可"
+
+            if value in ["不可", "飲食不可", "飲食店不可", "飲食NG", "重飲食不可"]:
+                return "不可"
+
     text = " ".join(str(v) for v in row.values if pd.notna(v))
 
-    ng_words = ["飲食不可", "飲食店不可", "重飲食不可", "飲食NG"]
-    ok_words = ["飲食可", "飲食店可", "軽飲食可", "重飲食可", "飲食相談", "飲食可能"]
+    ng_words = [
+        "飲食不可",
+        "飲食店不可",
+        "飲食NG",
+        "重飲食不可",
+    ]
+
+    ok_words = [
+        "飲食店可",
+        "飲食可",
+        "軽飲食可",
+        "重飲食可",
+        "飲食相談",
+        "飲食可能",
+    ]
 
     if any(w in text for w in ng_words):
         return "不可"
+
     if any(w in text for w in ok_words):
         return "可"
-    return "不明"
+
+    return "確認必要"
 
 
 def normalize_one(site_name, path):
@@ -107,7 +139,12 @@ def normalize_one(site_name, path):
         ])
 
         item["詳細URL"] = first_existing(row, [
-            "詳細URL", "詳細ページURL", "detail_url", "url"
+            "詳細URL",
+            "詳細ページURL",
+            "detail_url",
+            "detail_url_detail",
+            "detail_url_list",
+            "url",
         ])
 
         item["掲載サイト"] = site_name

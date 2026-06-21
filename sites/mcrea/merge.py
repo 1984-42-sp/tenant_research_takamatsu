@@ -15,12 +15,12 @@ def main():
     print("list   :", list_df.shape)
     print("detail :", detail_df.shape)
 
-    merged = pd.concat(
-        [
-            list_df.reset_index(drop=True),
-            detail_df.reset_index(drop=True),
-        ],
-        axis=1,
+    merged = list_df.merge(
+        detail_df,
+        left_on="detail_url",
+        right_on="detail_url",
+        how="left",
+        suffixes=("_list", "_detail"),
     )
 
     merged.to_csv(

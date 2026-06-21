@@ -1,6 +1,8 @@
 from ast import pattern
 from pathlib import Path
 import re
+from openpyxl import comments
+from openpyxl import comments
 import pandas as pd
 
 
@@ -366,12 +368,12 @@ def score_business(row):
     if row.get("飲食可否") == "可":
         score += 10
         comments.append("飲食可")
-    elif row.get("飲食可否") == "不明":
-        score -= 5
+    elif row.get("飲食可否") in ["不明", "確認必要"]:
+        score -= 15
         comments.append("飲食可否確認必要")
     else:
-        score -= 30
-        comments.append("飲食不可の可能性")
+        score -= 50
+        comments.append("飲食不可のため原則対象外")
 
     # 階数
     if row.get("階数判定") == "1階・路面想定":
