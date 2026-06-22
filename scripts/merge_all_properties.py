@@ -203,7 +203,11 @@ def save_map(df):
             icon=folium.Icon(color=color),
         ).add_to(m)
 
-    out = OUTPUT_DIR / "all_properties_map.html"
+    out = (
+    OUTPUT_DIR
+    / "all_properties"
+    / "all_properties_map.html"
+    )
     m.save(out)
     print(f"[SAVE] {out}")
 
@@ -297,7 +301,11 @@ $(document).ready(function() {{
 </html>
 """
 
-    out = OUTPUT_DIR / "all_properties_list.html"
+    out = (
+    OUTPUT_DIR
+    / "all_properties"
+    / "all_properties_list.html"
+    )
     out.write_text(html, encoding="utf-8")
     print(f"[SAVE] {out}")
 
