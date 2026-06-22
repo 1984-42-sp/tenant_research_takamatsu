@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 BASE_URL = "https://www.takamatsuhousing.jp"
 HTML_DIR = Path("data/html/takamatsu_housing")
-OUTPUT_PATH = Path("output/takamatsu_housing_list.csv")
+OUTPUT_PATH = Path("output/takamatsu_housing/takamatsu_housing_list.csv")
 
 records = []
 

@@ -1,6 +1,16 @@
 from pathlib import Path
 from bs4 import BeautifulSoup
 import pandas as pd
+import re
+import unicodedata
+
+
+def normalize_key(value):
+    if value is None:
+        return ""
+    text = unicodedata.normalize("NFKC", str(value))
+    text = re.sub(r"\s+", "", text)
+    return text.strip()
 
 DETAIL_DIR = Path(
     "data/html/tenant_kagawa/detail"
@@ -49,9 +59,11 @@ for file in DETAIL_DIR.glob("*.html"):
         if len(cells) < 2:
             continue
 
-        key = cells[0].get_text(
-            " ",
-            strip=True
+        key = normalize_key(
+            cells[0].get_text(
+                " ",
+                strip=True
+            )
         )
 
         value = cells[1].get_text(
@@ -80,8 +92,13 @@ for col in sorted(df.columns):
     print()
 print(df.isna().sum())
 
+Path("output/tenant_kagawa").mkdir(
+    parents=True,
+    exist_ok=True
+)
+
 df.to_csv(
-    "output/tenant_kagawa_detail.csv",
+    "output/tenant_kagawa/tenant_kagawa_detail.csv",
     index=False,
     encoding="utf-8-sig"
 )

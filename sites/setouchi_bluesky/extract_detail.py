@@ -18,7 +18,7 @@ selectors = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(selectors)
 
 DETAIL_DIR = ROOT / "data" / "html" / selectors.SITE_NAME / "detail"
-OUTPUT_DIR = ROOT / "output"
+OUTPUT_DIR = ROOT / "output" / selectors.SITE_NAME
 OUTPUT_PATH = OUTPUT_DIR / selectors.OUTPUT_DETAIL_CSV
 
 

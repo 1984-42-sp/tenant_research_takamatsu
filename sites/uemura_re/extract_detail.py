@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import selectors
 
 DETAIL_DIR = Path("data/html/uemura_re/detail")
-OUT_PATH = Path("output/uemura_re_detail.csv")
+OUT_PATH = Path("output/uemura_re/uemura_re_detail.csv")
 
 
 def normalize_key(text: str) -> str:

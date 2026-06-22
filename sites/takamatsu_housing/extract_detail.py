@@ -7,9 +7,7 @@ DETAIL_DIR = Path(
     "data/html/takamatsu_housing/detail"
 )
 
-OUTPUT_PATH = Path(
-    "output/takamatsu_housing_detail.csv"
-)
+OUTPUT_PATH = Path("output/takamatsu_housing/takamatsu_housing_detail.csv")
 
 IGNORE_KEYS = {
     "",

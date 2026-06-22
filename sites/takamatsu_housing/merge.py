@@ -1,48 +1,68 @@
+from pathlib import Path
+
 import pandas as pd
 
-LIST_PATH = "output/takamatsu_housing_list.csv"
-DETAIL_PATH = "output/takamatsu_housing_detail.csv"
-OUTPUT_PATH = "output/takamatsu_housing.csv"
 
-df_list = pd.read_csv(
-    LIST_PATH
-)
+OUT_DIR = Path("output/takamatsu_housing")
 
-df_detail = pd.read_csv(
-    DETAIL_PATH
-)
+LIST_PATH = OUT_DIR / "takamatsu_housing_list.csv"
+DETAIL_PATH = OUT_DIR / "takamatsu_housing_detail.csv"
+OUT_CSV = OUT_DIR / "takamatsu_housing.csv"
 
-print("list :", df_list.shape)
-print("detail:", df_detail.shape)
 
-df = pd.merge(
-    df_list,
-    df_detail,
-    on="article_id",
-    how="left"
-)
+def main():
+    df_list = pd.read_csv(LIST_PATH)
+    df_detail = pd.read_csv(DETAIL_PATH)
 
-print("merged:", df.shape)
+    print("list :", df_list.shape)
+    print("detail:", df_detail.shape)
 
-print()
-print(
-    "duplicated:",
-    df["article_id"]
-    .duplicated()
-    .sum()
-)
+    df = pd.merge(
+        df_list,
+        df_detail,
+        on="article_id",
+        how="left"
+    )
 
-print()
-print(
-    df["飲食店可否"]
-    .value_counts(dropna=False)
-)
+    print("merged:", df.shape)
 
-df.to_csv(
-    OUTPUT_PATH,
-    index=False,
-    encoding="utf-8-sig"
-)
+    print()
+    print(
+        "duplicated:",
+        df["article_id"]
+        .duplicated()
+        .sum()
+    )
 
-print()
-print(f"saved: {OUTPUT_PATH}")
+    print()
+    print(
+        df["飲食店可否"]
+        .value_counts(dropna=False)
+    )
+
+    OUT_CSV.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    df.to_csv(
+        OUT_CSV,
+        index=False,
+        encoding="utf-8-sig"
+    )
+
+    print()
+    print(f"saved {OUT_CSV}")
+
+    check_df = pd.read_csv(OUT_CSV)
+
+    print(check_df.shape)
+    print(
+        check_df["article_id"]
+        .duplicated()
+        .sum()
+    )
+
+
+if __name__ == "__main__":
+    main()

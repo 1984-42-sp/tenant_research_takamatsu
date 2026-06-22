@@ -12,7 +12,7 @@ MERGED_CSV = OUT_DIR / "uemura_re.csv"
 GEOCODED_CSV = OUT_DIR / "uemura_re_geocoded.csv"
 FAILED_CSV = OUT_DIR / "uemura_re_geocode_failed.csv"
 
-MAP_HTML = Path("output") / "uemura_re_map.html"
+MAP_HTML = OUT_DIR / "uemura_re_map.html"
 README_PATH = SITE_DIR / "README.md"
 
 

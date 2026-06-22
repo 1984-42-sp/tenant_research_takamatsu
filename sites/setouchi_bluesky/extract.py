@@ -19,7 +19,7 @@ selectors = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(selectors)
 
 HTML_PATH = ROOT / "data" / "html" / selectors.SITE_NAME / selectors.HTML_LIST_FILENAME
-OUTPUT_DIR = ROOT / "output"
+OUTPUT_DIR = ROOT / "output" / selectors.SITE_NAME
 OUTPUT_PATH = OUTPUT_DIR / selectors.OUTPUT_LIST_CSV
 
 

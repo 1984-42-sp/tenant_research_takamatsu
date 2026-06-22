@@ -96,8 +96,13 @@ print(df_list.shape)
 print()
 print(df_list.head())
 
+Path("output/tenant_kagawa").mkdir(
+    parents=True,
+    exist_ok=True
+)
+
 df_list.to_csv(
-    "output/tenant_kagawa_list.csv",
+    "output/tenant_kagawa/tenant_kagawa_list.csv",
     index=False,
     encoding="utf-8-sig"
 )

@@ -6,8 +6,12 @@ from playwright.sync_api import sync_playwright
 
 import selectors
 
-LIST_CSV = Path("output/uemura_re_list.csv")
-OUT_DIR = Path("data/html/uemura_re/detail")
+LIST_CSV = Path(
+    "output/uemura_re/uemura_re_list.csv"
+)
+OUT_DIR = Path(
+    "data/html/uemura_re/detail"
+)
 
 
 def slug_from_url(url: str) -> str:

@@ -4,10 +4,10 @@ import folium
 import pandas as pd
 from geopy.geocoders import Nominatim
 
-INPUT_PATH = "output/takamatsu_housing.csv"
-GEOCODED_PATH = "output/takamatsu_housing_geocoded.csv"
-FAILED_PATH = "output/takamatsu_housing_geocode_failed.csv"
-MAP_PATH = "output/takamatsu_housing_map.html"
+INPUT_PATH = "output/takamatsu_housing/takamatsu_housing.csv"
+GEOCODED_PATH = "output/takamatsu_housing/takamatsu_housing_geocoded.csv"
+FAILED_PATH = "output/takamatsu_housing/takamatsu_housing_geocode_failed.csv"
+MAP_PATH = "output/takamatsu_housing/takamatsu_housing_map.html"
 
 df = pd.read_csv(INPUT_PATH)
 

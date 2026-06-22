@@ -7,7 +7,9 @@ from bs4 import BeautifulSoup
 import selectors
 
 HTML_PATH = Path("data/html/uemura_re/list_page_1.html")
-OUT_PATH = Path("output/uemura_re_list.csv")
+OUT_PATH = Path(
+    "output/uemura_re/uemura_re_list.csv"
+)
 
 
 def main():

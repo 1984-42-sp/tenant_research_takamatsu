@@ -2,9 +2,17 @@ from pathlib import Path
 
 import pandas as pd
 
-LIST_CSV = Path("output/uemura_re_list.csv")
-DETAIL_CSV = Path("output/uemura_re_detail.csv")
-OUT_CSV = Path("output/uemura_re.csv")
+LIST_CSV = Path(
+    "output/uemura_re/uemura_re_list.csv"
+)
+
+DETAIL_CSV = Path(
+    "output/uemura_re/uemura_re_detail.csv"
+)
+
+OUT_CSV = Path(
+    "output/uemura_re/uemura_re.csv"
+)
 
 
 def main():

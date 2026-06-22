@@ -3,7 +3,7 @@ from datetime import date
 
 import pandas as pd
 
-OUTPUT_DIR = Path("output")
+OUTPUT_DIR = Path("output/tenant_kagawa")
 README_PATH = Path(
     "sites/tenant_kagawa/README.md"
 )
@@ -66,12 +66,12 @@ readme = f"""# テナント香川 攻略記録
 
 ## 成果物
 
-- output/tenant_kagawa_list.csv
-- output/tenant_kagawa_detail.csv
-- output/tenant_kagawa.csv
-- output/tenant_kagawa_geocoded.csv
-- output/tenant_kagawa_geocode_failed.csv
-- output/tenant_kagawa_map.html
+- output/tenant_kagawa/tenant_kagawa_list.csv
+- output/tenant_kagawa/tenant_kagawa_detail.csv
+- output/tenant_kagawa/tenant_kagawa.csv
+- output/tenant_kagawa/tenant_kagawa_geocoded.csv
+- output/tenant_kagawa/tenant_kagawa_geocode_failed.csv
+- output/tenant_kagawa/tenant_kagawa_map.html
 
 ---
 

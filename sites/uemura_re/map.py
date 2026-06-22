@@ -5,11 +5,21 @@ import folium
 import pandas as pd
 from geopy.geocoders import Nominatim
 
-INPUT_CSV = Path("output/uemura_re.csv")
+INPUT_CSV = Path(
+    "output/uemura_re/uemura_re.csv"
+)
 
-GEOCODED_CSV = Path("output/uemura_re_geocoded.csv")
-FAILED_CSV = Path("output/uemura_re_geocode_failed.csv")
-MAP_HTML = Path("output/uemura_re_map.html")
+GEOCODED_CSV = Path(
+    "output/uemura_re/uemura_re_geocoded.csv"
+)
+
+FAILED_CSV = Path(
+    "output/uemura_re/uemura_re_geocode_failed.csv"
+)
+
+MAP_HTML = Path(
+    "output/uemura_re/uemura_re_map.html"
+)
 
 
 def normalize_address(addr):

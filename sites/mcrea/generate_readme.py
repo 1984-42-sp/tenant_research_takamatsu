@@ -12,7 +12,7 @@ MERGED_CSV = OUT_DIR / "mcrea.csv"
 GEOCODED_CSV = OUT_DIR / "mcrea_geocoded.csv"
 FAILED_CSV = OUT_DIR / "mcrea_geocode_failed.csv"
 
-MAP_HTML = Path("output") / "mcrea_map.html"
+MAP_HTML = OUT_DIR / "mcrea_map.html"
 README_PATH = SITE_DIR / "README.md"
 
 

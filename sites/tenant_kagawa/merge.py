@@ -1,11 +1,17 @@
 import pandas as pd
 
+from pathlib import Path
+
+OUT_CSV = Path(
+    "output/tenant_kagawa/tenant_kagawa.csv"
+)
+
 df_list = pd.read_csv(
-    "output/tenant_kagawa_list.csv"
+    "output/tenant_kagawa/tenant_kagawa.csv"
 )
 
 df_detail = pd.read_csv(
-    "output/tenant_kagawa_detail.csv"
+    "output/tenant_kagawa/tenant_kagawa_detail.csv"
 )
 
 print("list :", df_list.shape)
@@ -28,19 +34,36 @@ print(
     .sum()
 )
 
+from pathlib import Path
+
+OUT_CSV = Path(
+    "output/tenant_kagawa/tenant_kagawa.csv"
+)
+
+OUT_CSV.parent.mkdir(
+    parents=True,
+    exist_ok=True
+)
+
 df.to_csv(
-    "output/tenant_kagawa.csv",
+    OUT_CSV,
     index=False,
     encoding="utf-8-sig"
 )
 
 print()
-print("saved tenant_kagawa.csv")
-
-import pandas as pd
+print(f"saved {OUT_CSV}")
 
 df = pd.read_csv(
-    "output/tenant_kagawa.csv"
+    OUT_CSV
+)
+
+print(df.shape)
+
+print(
+    df["article_id"]
+    .duplicated()
+    .sum()
 )
 
 print(df.shape)

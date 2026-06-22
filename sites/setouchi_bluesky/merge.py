@@ -16,7 +16,7 @@ spec = importlib.util.spec_from_file_location(
 selectors = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(selectors)
 
-OUTPUT_DIR = ROOT / "output"
+OUTPUT_DIR = ROOT / "output" / selectors.SITE_NAME
 LIST_CSV_PATH = OUTPUT_DIR / selectors.OUTPUT_LIST_CSV
 DETAIL_CSV_PATH = OUTPUT_DIR / selectors.OUTPUT_DETAIL_CSV
 MERGED_CSV_PATH = OUTPUT_DIR / selectors.OUTPUT_MERGED_CSV

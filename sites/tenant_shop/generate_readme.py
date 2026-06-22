@@ -11,7 +11,7 @@ MERGED_CSV = OUT_DIR / "tenant_shop.csv"
 GEOCODED_CSV = OUT_DIR / "tenant_shop_geocoded.csv"
 FAILED_CSV = OUT_DIR / "tenant_shop_geocode_failed.csv"
 
-MAP_HTML = Path("output") / "tenant_shop_map.html"
+MAP_HTML = OUT_DIR / "tenant_shop_map.html"
 README_PATH = SITE_DIR / "README.md"
 
 

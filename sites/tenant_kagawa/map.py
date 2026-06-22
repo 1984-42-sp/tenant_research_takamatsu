@@ -4,7 +4,7 @@ import pandas as pd
 from geopy.geocoders import Nominatim
 
 df = pd.read_csv(
-    "output/tenant_kagawa.csv"
+    "output/tenant_kagawa/tenant_kagawa.csv"
 )
 
 geolocator = Nominatim(
@@ -62,7 +62,7 @@ df["latitude"] = latitudes
 df["longitude"] = longitudes
 
 df.to_csv(
-    "output/tenant_kagawa_geocoded.csv",
+    "output/tenant_kagawa/tenant_kagawa_geocoded.csv",
     index=False,
     encoding="utf-8-sig"
 )
@@ -122,7 +122,7 @@ for _, row in valid_df.iterrows():
     ).add_to(m)
 
 m.save(
-    "output/tenant_kagawa_map.html"
+    "output/tenant_kagawa/tenant_kagawa_map.html"
 )
 
 print()
@@ -135,7 +135,7 @@ failed = df[
 ]
 
 failed.to_csv(
-    "output/tenant_kagawa_geocode_failed.csv",
+    "output/tenant_kagawa/tenant_kagawa_geocode_failed.csv",
     index=False,
     encoding="utf-8-sig"
 )
