@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>アビタシオンＮＹＫ 1F南 営業シミュレーション</title>
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  background: #f4f5f7;
+  color: #222;
+}
+.header {
+  background: #2f3a45;
+  color: white;
+  padding: 28px 36px;
+}
+.header h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+}
+.header .sub {
+  opacity: 0.9;
+}
+.container {
+  padding: 28px 36px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.card .label {
+  color: #666;
+  font-size: 13px;
+}
+.card .value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+.section {
+  background: white;
+  border-radius: 10px;
+  padding: 22px;
+  margin: 18px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.section h2 {
+  margin-top: 0;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 10px;
+  text-align: left;
+}
+th {
+  background: #fafafa;
+}
+.badge {
+  display: inline-block;
+  background: #eef3f8;
+  border-radius: 999px;
+  padding: 5px 10px;
+  margin: 2px 4px 2px 0;
+  font-size: 13px;
+}
+.warn {
+  background: #fff8e6;
+  border-left: 5px solid #e0a800;
+  padding: 14px 16px;
+  line-height: 1.7;
+}
+.good {
+  background: #eef9f0;
+  border-left: 5px solid #3fa35c;
+  padding: 14px 16px;
+  line-height: 1.7;
+}
+a {
+  color: #0066cc;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  background: white;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+}
+
+.controls input,
+.controls select {
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.controls input {
+  flex: 1;
+  min-width: 280px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>アビタシオンＮＹＫ 1F南</h1>
+  <div class="sub">物件別営業シミュレーション / フルーツ×コーヒー業態</div>
+</div>
+
+<div class="container">
+
+  <div class="grid">
+    <div class="card"><div class="label">評価ランク</div><div class="value">D</div></div>
+    <div class="card"><div class="label">事業成立性スコア</div><div class="value">0</div></div>
+    <div class="card"><div class="label">必要月商</div><div class="value">1,659,259円</div></div>
+    <div class="card"><div class="label">推奨必要日客数</div><div class="value">92人</div></div>
+    <div class="card"><div class="label">推定席数</div><div class="value">61人</div></div>
+    <div class="card"><div class="label">初期投資中央値</div><div class="value">36,386,214円</div></div>
+  </div>
+
+  <div class="section">
+    <h2>1. 物件概要</h2>
+    <p><span class="badge">高松ハウジングサービス</span>
+       <span class="badge">郊外</span>
+       <span class="badge">大型</span>
+       <span class="badge">1階・路面想定</span>
+       <span class="badge">駐車場：不明</span></p>
+    <p><b>所在地：</b>香川県高松市香西南町</p>
+    <p><b>家賃：</b>19.8万円（198,000円）</p>
+    <p><b>坪数：</b>55.13 坪</p>
+    <p><a href="https://www.takamatsuhousing.jp/kasi-tenpo/detail-5ecf6e6730c1427032fc12e9/" target="_blank">物件詳細ページ</a></p>
+  </div>
+
+  <div class="section">
+    <h2>2. 推奨営業モデル</h2>
+    <p><b>事業成立パターン：</b>大型投資・高売上必須型</p>
+    <p><b>推奨カフェモデル：</b>大型滞在・複合目的型カフェ</p>
+    <p><b>商品構成戦略：</b>複合大型型</p>
+    <div class="good">
+      この物件では、席数・立地・必要客数をもとに、上記の商品構成を基本案として想定します。
+      かき氷は通年損益には含めず、夏季の上振れ商品として別枠で扱います。
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>3. 売上計画</h2>
+    <div class="grid">
+      <div class="card"><div class="label">必要日商</div><div class="value">63,818円</div></div>
+      <div class="card"><div class="label">理論必要日客数</div><div class="value">51人</div></div>
+      <div class="card"><div class="label">推奨必要日客数</div><div class="value">92人</div></div>
+      <div class="card"><div class="label">商品構成上の平均客単価</div><div class="value">812円</div></div>
+    </div>
+    <p><b>平日必要客数：</b>78人 / <b>休日必要客数：</b>124人</p>
+  </div>
+
+  <div class="section">
+    <h2>4. メニュー構成</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>カテゴリ</th>
+          <th>売上構成比</th>
+          <th>月間売上目安</th>
+          <th>想定単価</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>パフェ</td>
+          <td>35%</td>
+          <td>580,741円</td>
+          <td>1,200円</td>
+        </tr>
+        
+
+        <tr>
+          <td>フルーツドリンク</td>
+          <td>30%</td>
+          <td>497,778円</td>
+          <td>700円</td>
+        </tr>
+        
+
+        <tr>
+          <td>コーヒー</td>
+          <td>25%</td>
+          <td>414,815円</td>
+          <td>550円</td>
+        </tr>
+        
+
+        <tr>
+          <td>その他</td>
+          <td>10%</td>
+          <td>165,926円</td>
+          <td>450円</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>5. 人員・オペレーション計画</h2>
+    <div class="card">
+      <div class="label">推奨体制</div>
+      <div class="value">4名以上</div>
+    </div>
+    <p>多客数前提。会計、コーヒー、フルーツドリンク、パフェ、補充・洗い物の分担が必要です。個人小規模開業としては高難度です。</p>
+    <p><b>基本役割分担：</b></p>
+    <ul>
+      <li>A：注文・会計・受け渡し・コーヒー</li>
+      <li>B：フルーツドリンク・パフェ製造・仕込み補充</li>
+      <li>C：ピーク時の洗い物・補充・客席リセット</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>6. 通年損益シミュレーション</h2>
+    <table>
+      <tr><th>項目</th><th>金額</th></tr>
+      <tr><td>必要月商</td><td>1,659,259円</td></tr>
+      <tr><td>原価</td><td>530,963円</td></tr>
+      <tr><td>人件費</td><td>431,407円</td></tr>
+      <tr><td>家賃</td><td>198,000円</td></tr>
+      <tr><td>その他固定費</td><td>0円</td></tr>
+      <tr><td><b>営業利益目安</b></td><td><b>498,889円</b></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>7. 夏季ブースト：かき氷導入</h2>
+    <div class="warn">
+      かき氷は通年成立性の計算には含めず、7〜9月の上振れ商品として扱います。
+      この物件では、夏季売上の上振れ余地を約 20% と見ます。
+    </div>
+    <p><b>夏季月商目安：</b>1,991,111円</p>
+  </div>
+
+  <div class="section">
+    <h2>8. 開業判断コメント</h2>
+    <p>多客数が必須 / 必要月商250万円以下 / 初期投資が重い / 飲食可否確認必要 / 1階・路面想定 / 郊外で駐車場確認必要 / 大型投資型のため慎重判断 / 席数に対する必要回転数は低め</p>
+    <p>大型投資・高売上必須型。必要月商1,659,259円、必要日客数51人が目安。</p>
+  </div>
+
+  <p><a href="index.html">一覧へ戻る</a></p>
+
+</div>
+</body>
+</html>
