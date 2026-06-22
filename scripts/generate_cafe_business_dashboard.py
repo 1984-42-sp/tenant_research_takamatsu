@@ -1,6 +1,8 @@
+from html import escape
+from os import name
 from pathlib import Path
 import json
-from turtle import right, width
+
 import pandas as pd
 
 
@@ -104,17 +106,44 @@ def main():
         "店舗規模",
         "掲載サイト",
         "詳細URL",
+        
     ]
 
     table_df = df[table_cols].copy()
 
     for col in ["必要月商", "初期投資中央値"]:
-        table_df[col] = pd.to_numeric(table_df[col], errors="coerce").apply(yen)
+        table_df[col] = pd.to_numeric(
+            table_df[col],
+            errors="coerce"
+        ).apply(yen)
 
-    table_df["詳細URL"] = table_df["詳細URL"].apply(
-        lambda x: f'<a href="{x}" target="_blank">詳細</a>' if str(x).strip() else ""
+    def make_property_link(row):
+        name_raw = str(row.get("物件名", ""))
+        url = str(row.get("詳細URL", "")).strip()
+
+        if "<a " in name_raw:
+            return name_raw
+
+        name = escape(name_raw)
+
+        if url:
+            return (
+                f'<a href="{escape(url)}" '
+                f'target="_blank" '
+                f'rel="noopener noreferrer">{name}</a>'
+            )
+
+        return name
+
+    table_df["物件名"] = table_df.apply(
+        make_property_link,
+        axis=1
     )
 
+    table_df["物件名"] = table_df.apply(make_property_link, axis=1)
+
+    table_df = table_df.drop(columns=["詳細URL"])
+    
     html_table = table_df.to_html(
         index=False,
         escape=False,
@@ -404,6 +433,8 @@ document.getElementById("chart").on("plotly_click", function(data) {{
 
   document.getElementById("detail").innerHTML = `
     <h2>${{p["物件名"]}}</h2>
+    <p><b>評価ランク：</b>${{p["評価ランク"]}}</p>
+    <p><b>事業成立性スコア：</b>${{p["事業成立性スコア"]}}</p>
     <p><b>所在地：</b>${{p["所在地"]}}</p>
     <p><b>掲載サイト：</b>${{p["掲載サイト"]}}</p>
     <p><b>家賃：</b>${{p["家賃"]}}（${{p["家賃_円"]}}）</p>
