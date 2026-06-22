@@ -10,6 +10,12 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 INPUT_CSV = BASE_DIR / "output" / "all_properties" / "cafe_business_dashboard.csv"
 OUTPUT_HTML = BASE_DIR / "output" / "all_properties" / "cafe_business_dashboard.html"
 
+SIM_INDEX_CSV = (
+    BASE_DIR
+    / "output"
+    / "all_properties"
+    / "property_business_simulations_index.csv"
+)
 
 def yen(value):
     if pd.isna(value) or value == "":
@@ -28,7 +34,15 @@ def safe(value):
 
 def main():
     df = pd.read_csv(INPUT_CSV).fillna("")
-
+    if SIM_INDEX_CSV.exists():
+        sim_df = pd.read_csv(SIM_INDEX_CSV).fillna("")
+        df = df.merge(
+            sim_df,
+            on="物件名",
+            how="left"
+        )
+    else:
+        df["営業シミュレーションURL"] = ""
     plot_df = df[
         (df["必要月商"].astype(str).str.strip() != "") &
         (df["必要日客数_26日営業"].astype(str).str.strip() != "")
@@ -89,6 +103,7 @@ def main():
             "評価コメント": safe(row.get("評価コメント")),
             "ダッシュボード表示コメント": safe(row.get("ダッシュボード表示コメント")),
             "marker_size": size,
+            "営業シミュレーションURL": safe(row.get("営業シミュレーションURL")),
         })
 
     table_cols = [
@@ -109,7 +124,7 @@ def main():
         "店舗規模",
         "掲載サイト",
         "詳細URL",
-        
+        "営業シミュレーションURL"
     ]
 
     table_df = df[table_cols].copy()
@@ -370,6 +385,7 @@ function buildTraces(filteredPoints) {{
         "事業成立パターン: " + pattern + "<br>" +
         "必要月商: %{{x:,.0f}}円<br>" +
         "必要日客数: %{{y:.0f}}人<br>" +
+        "クリックで詳細・営業シミュレーション表示<br>" +
         "<extra></extra>"
     }};
   }});
@@ -434,6 +450,10 @@ document.getElementById("chart").on("plotly_click", function(data) {{
     ? `<a href="${{p["詳細URL"]}}" target="_blank">詳細ページを開く</a>`
     : "詳細URLなし";
 
+  const simUrlHtml = p["営業シミュレーションURL"]
+  ? `<a href="${{p["営業シミュレーションURL"]}}" target="_blank">個別営業シミュレーションを開く</a>`
+  : "営業シミュレーション未生成";
+
   document.getElementById("detail").innerHTML = `
     <h2>${{p["物件名"]}}</h2>
     <p><b>評価ランク：</b>${{p["評価ランク"]}}</p>
@@ -451,6 +471,7 @@ document.getElementById("chart").on("plotly_click", function(data) {{
     <p><b>初期投資中央値：</b>${{p["初期投資中央値"]}}</p>
     <p><b>評価コメント：</b>${{p["評価コメント"]}}</p>
     <p>${{urlHtml}}</p>
+    <p>${{simUrlHtml}}</p>
   `;
 }});
 

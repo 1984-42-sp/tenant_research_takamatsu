@@ -9,8 +9,14 @@ import pandas as pd
 BASE_DIR = Path(__file__).resolve().parents[1]
 INPUT_CSV = BASE_DIR / "output" / "all_properties" / "cafe_business_dashboard.csv"
 OUT_DIR = BASE_DIR / "output" / "all_properties" / "property_business_simulations"
-INDEX_HTML = OUT_DIR / "index.html"
 
+INDEX_HTML = (
+    BASE_DIR
+    / "output"
+    / "all_properties"
+    / "index.html"
+)
+SIM_INDEX_CSV = BASE_DIR / "output" / "all_properties" / "property_business_simulations_index.csv"
 
 SALES_DAYS = 26
 WEEKDAYS = 18
@@ -405,6 +411,29 @@ th {{
 a {{
   color: #0066cc;
 }}
+.controls {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  background: white;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+}}
+
+.controls input,
+.controls select {{
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}}
+
+.controls input {{
+  flex: 1;
+  min-width: 280px;
+}}
 </style>
 </head>
 <body>
@@ -530,64 +559,314 @@ a {{
 
 
 def make_index(rows):
-    links = []
+    cards = []
+
     for row in rows:
-        links.append(f"""
-        <tr>
-          <td>{escape(safe(row["物件名"]))}</td>
-          <td>{escape(safe(row["評価ランク"]))}</td>
-          <td>{escape(safe(row["事業成立パターン"]))}</td>
-          <td>{yen(row["必要月商"])}</td>
-          <td>{people(row["推奨必要日客数"])}</td>
-          <td><a href="{escape(row["file_name"])}">営業シミュレーション</a></td>
-        </tr>
+        cards.append(f"""
+        <div
+          class="property-card rank-{escape(safe(row["評価ランク"]))}"
+          data-search="{escape((safe(row["物件名"]) + ' ' + safe(row["所在地"]) + ' ' + safe(row["事業成立パターン"]) + ' ' + safe(row["商品構成戦略"])).lower())}"
+          data-rank="{escape(safe(row["評価ランク"]))}"
+          data-score="{num(row.get("事業成立性スコア"), 0)}"
+          data-sales="{num(row.get("必要月商"), 999999999)}"
+          data-customers="{num(row.get("推奨必要日客数"), 999999)}"
+          data-profit="{num(row.get("営業利益目安"), -999999999)}"
+        >
+          <div class="card-header">
+            <div>
+              <h2>{escape(safe(row["物件名"]))}</h2>
+              <div class="meta">
+                <span>{escape(safe(row["掲載サイト"]))}</span>
+                <span>{escape(safe(row["立地区分"]))}</span>
+                <span>{escape(safe(row["店舗規模"]))}</span>
+                <span>駐車場：{escape(safe(row["駐車場判定"]))}</span>
+              </div>
+            </div>
+            <div class="rank-box">
+              <div class="rank">{escape(safe(row["評価ランク"]))}</div>
+              <div class="score">{escape(safe(row["事業成立性スコア"]))}点</div>
+            </div>
+          </div>
+
+          <div class="summary-grid">
+            <div><b>事業成立パターン</b><br>{escape(safe(row["事業成立パターン"]))}</div>
+            <div><b>商品構成戦略</b><br>{escape(safe(row["商品構成戦略"]))}</div>
+            <div><b>必要月商</b><br>{yen(row["必要月商"])}</div>
+            <div><b>推奨必要日客数</b><br>{people(row["推奨必要日客数"])}</div>
+            <div><b>平日必要客数</b><br>{people(row["平日必要客数"])}</div>
+            <div><b>休日必要客数</b><br>{people(row["休日必要客数"])}</div>
+            <div><b>推奨体制</b><br>{escape(safe(row["推奨人員体制"]))}</div>
+            <div><b>営業利益目安</b><br>{yen(row["営業利益目安"])}</div>
+            <div><b>夏季月商目安</b><br>{yen(row["夏季月商目安"])}</div>
+            <div><b>初期投資中央値</b><br>{yen(row["初期投資中央値"])}</div>
+          </div>
+
+          <div class="menu-mix">
+            <div><span>パフェ</span><div class="bar"><i style="width:{row["パフェ比率"] * 100:.0f}%"></i></div><em>{pct(row["パフェ比率"])}</em></div>
+            <div><span>フルーツドリンク</span><div class="bar"><i style="width:{row["フルーツドリンク比率"] * 100:.0f}%"></i></div><em>{pct(row["フルーツドリンク比率"])}</em></div>
+            <div><span>コーヒー</span><div class="bar"><i style="width:{row["コーヒー比率"] * 100:.0f}%"></i></div><em>{pct(row["コーヒー比率"])}</em></div>
+            <div><span>その他</span><div class="bar"><i style="width:{row["その他比率"] * 100:.0f}%"></i></div><em>{pct(row["その他比率"])}</em></div>
+          </div>
+
+          <div class="comment">
+            {escape(safe(row["短評"]))}
+          </div>
+
+          <div class="actions">
+            <a href="property_business_simulations/{escape(row["file_name"])}">個別シミュレーションを見る</a>
+          </div>
+        </div>
         """)
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>物件別営業シミュレーション一覧</title>
+<title>高松市 物件別営業シミュレーション一覧</title>
 <style>
 body {{
-  font-family: sans-serif;
-  margin: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  background: #f4f5f7;
+  color: #222;
 }}
-table {{
-  width: 100%;
-  border-collapse: collapse;
+
+.header {{
+  background: #2f3a45;
+  color: white;
+  padding: 30px 40px;
 }}
-th, td {{
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
+
+.header h1 {{
+  margin: 0 0 8px 0;
 }}
-th {{
-  background: #f4f4f4;
+
+.header p {{
+  margin: 0;
+  opacity: 0.9;
 }}
+
+.container {{
+  padding: 26px 40px;
+}}
+
+.note {{
+  background: white;
+  border-left: 5px solid #2f3a45;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+  line-height: 1.7;
+  border-radius: 8px;
+}}
+
+.property-card {{
+  background: white;
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+  border-left: 8px solid #999;
+}}
+
+.rank-A {{ border-left-color: #2ca02c; }}
+.rank-B {{ border-left-color: #1f77b4; }}
+.rank-C {{ border-left-color: #ffbf00; }}
+.rank-D {{ border-left-color: #d62728; }}
+.rank-要確認 {{ border-left-color: #888; }}
+
+.card-header {{
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}}
+
+.card-header h2 {{
+  margin: 0 0 8px 0;
+  font-size: 22px;
+}}
+
+.meta span {{
+  display: inline-block;
+  background: #eef1f4;
+  border-radius: 999px;
+  padding: 4px 9px;
+  margin: 2px 4px 2px 0;
+  font-size: 12px;
+}}
+
+.rank-box {{
+  text-align: center;
+  min-width: 80px;
+}}
+
+.rank {{
+  font-size: 30px;
+  font-weight: 800;
+}}
+
+.score {{
+  font-size: 13px;
+  color: #666;
+}}
+
+.summary-grid {{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}}
+
+.summary-grid div {{
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px 12px;
+  line-height: 1.5;
+}}
+
+.menu-mix {{
+  margin-top: 18px;
+  display: grid;
+  gap: 8px;
+}}
+
+.menu-mix > div {{
+  display: grid;
+  grid-template-columns: 130px 1fr 50px;
+  gap: 10px;
+  align-items: center;
+}}
+
+.bar {{
+  height: 10px;
+  background: #eee;
+  border-radius: 999px;
+  overflow: hidden;
+}}
+
+.bar i {{
+  display: block;
+  height: 100%;
+  background: #6c8fb3;
+}}
+
+.menu-mix em {{
+  font-style: normal;
+  text-align: right;
+  color: #555;
+}}
+
+.comment {{
+  margin-top: 16px;
+  background: #fff8e6;
+  border-left: 4px solid #e0a800;
+  padding: 12px 14px;
+  line-height: 1.7;
+}}
+
+.actions {{
+  margin-top: 16px;
+}}
+
+.actions a {{
+  display: inline-block;
+  background: #2f3a45;
+  color: white;
+  text-decoration: none;
+  padding: 9px 14px;
+  border-radius: 8px;
+}}
+
 a {{
   color: #0066cc;
 }}
 </style>
 </head>
 <body>
-<h1>物件別営業シミュレーション一覧</h1>
-<p>フルーツ×コーヒー業態を前提に、各物件の席数・立地・必要客数から商品構成と運営体制を自動生成した資料です。</p>
-<table>
-<thead>
-<tr>
-<th>物件名</th>
-<th>評価ランク</th>
-<th>事業成立パターン</th>
-<th>必要月商</th>
-<th>推奨必要日客数</th>
-<th>詳細</th>
-</tr>
-</thead>
-<tbody>
-{''.join(links)}
-</tbody>
-</table>
+
+<div class="header">
+  <h1>高松市 物件別営業シミュレーション一覧</h1>
+  <p>フルーツ・コーヒー・パフェ業態を前提に、各物件の営業像を一覧化した資料です。</p>
+</div>
+
+<div class="container">
+  <div class="note">
+    この一覧は、物件ごとの家賃・坪数・席数・立地・必要客数をもとに、商品構成、必要客数、人員体制、通年損益、夏季ブーストを自動計算したものです。
+    かき氷は通年損益には含めず、夏季の上振れ商品として別枠で扱っています。
+  </div>
+
+  <div class="controls">
+    <input id="searchInput" type="text" placeholder="物件名・所在地・パターン・商品構成で検索">
+
+    <select id="sortSelect">
+      <option value="rank">評価ランク順</option>
+      <option value="score_desc">スコア高い順</option>
+      <option value="sales_asc">必要月商低い順</option>
+      <option value="customers_asc">推奨必要日客数少ない順</option>
+      <option value="profit_desc">営業利益高い順</option>
+    </select>
+  </div>
+
+  <div id="cardList">
+
+  {''.join(cards)}
+  </div>
+</div>
+<script>
+const rankOrder = {{
+  "A": 1,
+  "B": 2,
+  "C": 3,
+  "D": 4,
+  "要確認": 5
+}};
+
+function applyFiltersAndSort() {{
+  const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
+  const sortMode = document.getElementById("sortSelect").value;
+  const list = document.getElementById("cardList");
+  const cards = Array.from(list.querySelectorAll(".property-card"));
+
+  cards.forEach(card => {{
+    const searchText = card.dataset.search || "";
+    card.style.display = searchText.includes(keyword) ? "" : "none";
+  }});
+
+  const visibleCards = cards.filter(card => card.style.display !== "none");
+
+  visibleCards.sort((a, b) => {{
+    if (sortMode === "rank") {{
+      return (rankOrder[a.dataset.rank] || 99) - (rankOrder[b.dataset.rank] || 99);
+    }}
+
+    if (sortMode === "score_desc") {{
+      return Number(b.dataset.score) - Number(a.dataset.score);
+    }}
+
+    if (sortMode === "sales_asc") {{
+      return Number(a.dataset.sales) - Number(b.dataset.sales);
+    }}
+
+    if (sortMode === "customers_asc") {{
+      return Number(a.dataset.customers) - Number(b.dataset.customers);
+    }}
+
+    if (sortMode === "profit_desc") {{
+      return Number(b.dataset.profit) - Number(a.dataset.profit);
+    }}
+
+    return 0;
+  }});
+
+  visibleCards.forEach(card => list.appendChild(card));
+}}
+
+document.getElementById("searchInput").addEventListener("input", applyFiltersAndSort);
+document.getElementById("sortSelect").addEventListener("change", applyFiltersAndSort);
+
+applyFiltersAndSort();
+</script>
 </body>
 </html>
 """
@@ -607,15 +886,69 @@ def main():
         html = make_html(row, i + 1, file_name)
         out_path.write_text(html, encoding="utf-8")
 
+        strategy = classify_menu_strategy(row)
+        menu_mix = get_menu_mix(strategy)
+
+        monthly_sales = num(row.get("必要月商"))
+        recommended_customers = num(row.get("推奨必要日客数"))
+        weekday_customers, weekend_customers = estimate_weekday_weekend_customers(
+            recommended_customers
+        )
+
+        staff_title, staff_comment = estimate_staff_plan(row, menu_mix)
+
+        summer_boost = estimate_summer_boost(row, menu_mix)
+        summer_sales = monthly_sales * (1 + summer_boost) if monthly_sales else None
+
+        cost_rate = num(row.get("原価率"), 0.32)
+        labor_rate = num(row.get("人件費率"), 0.26)
+        rent = num(row.get("家賃_円"), 0)
+        other_fixed = num(row.get("その他固定費"), 0)
+
+        food_cost = monthly_sales * cost_rate if monthly_sales else None
+        labor_cost = monthly_sales * labor_rate if monthly_sales else None
+        operating_profit = (
+            monthly_sales - food_cost - labor_cost - rent - other_fixed
+            if monthly_sales is not None
+            else None
+        )
+
+        short_comment = (
+            f"{strategy}。"
+            f"平日{people(weekday_customers)}、休日{people(weekend_customers)}程度の来店を想定。"
+            f"{staff_title}で、カウンター内完結型の運営を前提にします。"
+        )
+
         r = row.to_dict()
         r["file_name"] = file_name
+        r["商品構成戦略"] = strategy
+        r["パフェ比率"] = menu_mix.get("パフェ", 0)
+        r["フルーツドリンク比率"] = menu_mix.get("フルーツドリンク", 0)
+        r["コーヒー比率"] = menu_mix.get("コーヒー", 0)
+        r["その他比率"] = menu_mix.get("その他", 0)
+        r["平日必要客数"] = weekday_customers
+        r["休日必要客数"] = weekend_customers
+        r["推奨人員体制"] = staff_title
+        r["営業利益目安"] = operating_profit
+        r["夏季月商目安"] = summer_sales
+        r["短評"] = short_comment
+
         rows.append(r)
 
     INDEX_HTML.write_text(make_index(rows), encoding="utf-8")
 
+    pd.DataFrame([
+        {
+            "物件名": r["物件名"],
+            "営業シミュレーションURL": f'property_business_simulations/{r["file_name"]}'
+        }
+        for r in rows
+    ]).to_csv(SIM_INDEX_CSV, index=False, encoding="utf-8-sig")
+
     print(f"[LOAD] {INPUT_CSV}: {len(df)}件")
     print(f"[SAVE] {OUT_DIR}")
     print(f"[INDEX] {INDEX_HTML}")
+    print(f"[SIM_INDEX] {SIM_INDEX_CSV}")
 
 
 if __name__ == "__main__":
