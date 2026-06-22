@@ -420,10 +420,39 @@ document.getElementById("chart").on("plotly_click", function(data) {{
 }});
 
 $(document).ready(function() {{
-  $('#property_table').DataTable({{
+  const table = $('#property_table').DataTable({{
     pageLength: 25,
     order: [[1, 'desc']],
-    scrollX: true
+    scrollX: true,
+
+    initComplete: function () {{
+      this.api().columns().every(function () {{
+        const column = this;
+        const header = $(column.header());
+        const title = header.text();
+
+        const select = $('<select style="width:100%; margin-top:4px;"><option value="">すべて</option></select>')
+          .appendTo(header.empty().append(title + '<br>'))
+          .on('click', function(e) {{
+            e.stopPropagation();
+          }})
+          .on('change', function () {{
+            const val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+            column
+              .search(val ? '^' + val + '$' : '', true, false)
+              .draw();
+          }});
+
+        column.data().unique().sort().each(function (d) {{
+          const text = $('<div>').html(d).text().trim();
+
+          if (text !== "") {{
+            select.append('<option value="' + text + '">' + text + '</option>');
+          }}
+        }});
+      }});
+    }}
   }});
 }});
 </script>

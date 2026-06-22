@@ -191,19 +191,22 @@ def choose_business_pattern(location_class, size_class, parking, rent_yen, tsubo
     if required_monthly_sales is None or required_daily_customers is None:
         return "要確認・情報不足型"
 
+    # 推定席数
+    estimated_seats = int(tsubo * 1.2)
+
     if tsubo >= 60 or (initial_high and initial_high >= 30000000) or required_monthly_sales >= 6000000:
         return "大型投資・高売上必須型"
 
     if location_class == "中心街":
-        if size_class in ["極小", "小規模"]:
+        if estimated_seats < 20:
             return "中心街・高単価型"
-        if required_daily_customers >= 60 or rent_yen >= 250000:
-            return "中心街・高回転型"
-        return "中心街・高単価型"
+        return "中心街・高回転型"
 
     if location_class == "準中心街":
         if size_class in ["極小", "小規模"] and required_monthly_sales <= 1200000:
             return "低固定費・小商圏型"
+        if estimated_seats < 20:
+            return "中心街・高単価型"
         if required_daily_customers >= 60 or rent_yen >= 250000:
             return "中心街・高回転型"
         return "中心街・高単価型"
