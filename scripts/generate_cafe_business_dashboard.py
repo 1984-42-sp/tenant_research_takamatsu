@@ -175,7 +175,7 @@ def main():
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>高松市 カフェ事業性ダッシュボード</title>
+<title>物件別事業成立性散布図</title>
 
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -288,7 +288,7 @@ a {{
 </head>
 
 <body>
-<h1>高松市 カフェ事業性ダッシュボード</h1>
+<h1>物件別事業成立性散布図</h1>
 
 <div class="note">
   <div>このダッシュボードは、統合済み216件の店舗・事業用賃貸物件をもとに、カフェ開業時の事業成立性を可視化したものです。</div>

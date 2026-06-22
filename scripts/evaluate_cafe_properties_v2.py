@@ -786,7 +786,7 @@ def main():
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>カフェ開業向け物件評価一覧</title>
+<title>物件詳細評価</title>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
 <style>
 body {{ font-family: sans-serif; margin: 20px; }}
@@ -796,7 +796,7 @@ a {{ color: #0066cc; }}
 </style>
 </head>
 <body>
-<h1>カフェ開業向け物件評価一覧</h1>
+<h1>物件詳細評価</h1>
 <div class="note">
 <p>この一覧は、統合済み物件CSVをもとにした事業成立性評価です。</p>
 <p>A/B/C/Dは立地の良さではなく、必要月商・必要日客数・初期投資・物件条件から見た事業成立性を評価しています。</p>

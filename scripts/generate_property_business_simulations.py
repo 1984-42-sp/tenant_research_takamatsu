@@ -622,7 +622,7 @@ def make_index(rows):
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>高松市 物件別営業シミュレーション一覧</title>
+<title>物件別営業シミュレーション</title>
 <style>
 body {{
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -786,7 +786,7 @@ a {{
 <body>
 
 <div class="header">
-  <h1>高松市 物件別営業シミュレーション一覧</h1>
+  <h1>物件別営業シミュレーション</h1>
   <p>フルーツ・コーヒー・パフェ業態を前提に、各物件の営業像を一覧化した資料です。</p>
 </div>
 
