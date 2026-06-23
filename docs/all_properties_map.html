@@ -250,7 +250,10 @@ body {
 }
 
 .link-primary {
-    background: var(--accent-color);
+  background: var(--accent-color);
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+  border: 2px solid rgba(255,255,255,.35);
 }
 
 .link-secondary {
@@ -305,7 +308,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_b7ef8a303d096a28f989a94db2a754d1 {
+                #map_80cf247ca8e9a00fa38804620c8bf73a {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -365,14 +368,14 @@ body {
   </div>
 </div>
     
-            <div class="folium-map" id="map_b7ef8a303d096a28f989a94db2a754d1" ></div>
+            <div class="folium-map" id="map_80cf247ca8e9a00fa38804620c8bf73a" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_b7ef8a303d096a28f989a94db2a754d1 === "undefined") {
+  if (typeof L === "undefined" || typeof map_80cf247ca8e9a00fa38804620c8bf73a === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -509,7 +512,7 @@ propertyPoints.forEach((p) => {
     weight: 2,
     fillColor: p.color,
     fillOpacity: 0.92
-  }).addTo(map_b7ef8a303d096a28f989a94db2a754d1);
+  }).addTo(map_80cf247ca8e9a00fa38804620c8bf73a);
 
   marker.bindTooltip(p["物件名"], {
     direction: "top",
@@ -518,7 +521,7 @@ propertyPoints.forEach((p) => {
 
   marker.on("click", function() {
     renderPanel(p);
-    map_b7ef8a303d096a28f989a94db2a754d1.panTo([p.latitude, p.longitude]);
+    map_80cf247ca8e9a00fa38804620c8bf73a.panTo([p.latitude, p.longitude]);
   });
 });
 
@@ -531,14 +534,14 @@ if (targetProperty) {
 
   if (target) {
     renderPanel(target);
-    map_b7ef8a303d096a28f989a94db2a754d1.setView([target.latitude, target.longitude], 17);
+    map_80cf247ca8e9a00fa38804620c8bf73a.setView([target.latitude, target.longitude], 17);
   }
 }
 
 })();
     
-            var map_b7ef8a303d096a28f989a94db2a754d1 = L.map(
-                "map_b7ef8a303d096a28f989a94db2a754d1",
+            var map_80cf247ca8e9a00fa38804620c8bf73a = L.map(
+                "map_80cf247ca8e9a00fa38804620c8bf73a",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -550,13 +553,13 @@ if (targetProperty) {
 
                 }
             );
-            L.control.scale().addTo(map_b7ef8a303d096a28f989a94db2a754d1);
+            L.control.scale().addTo(map_80cf247ca8e9a00fa38804620c8bf73a);
 
             
 
         
     
-            var tile_layer_f0b264547ea245d4606e6d42244e8c86 = L.tileLayer(
+            var tile_layer_63cbffe25846a02b4aed2ee0d310b223 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -573,7 +576,7 @@ if (targetProperty) {
             );
         
     
-            tile_layer_f0b264547ea245d4606e6d42244e8c86.addTo(map_b7ef8a303d096a28f989a94db2a754d1);
+            tile_layer_63cbffe25846a02b4aed2ee0d310b223.addTo(map_80cf247ca8e9a00fa38804620c8bf73a);
         
 </script>
 </html>

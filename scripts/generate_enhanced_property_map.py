@@ -439,7 +439,10 @@ body {
 }
 
 .link-primary {
-    background: var(--accent-color);
+  background: var(--accent-color);
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+  border: 2px solid rgba(255,255,255,.35);
 }
 
 .link-secondary {
