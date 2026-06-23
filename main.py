@@ -25,6 +25,8 @@ TASKS = [
     "scripts/generate_property_business_simulations.py",
 
     "scripts/generate_cafe_business_dashboard.py",
+
+    "scripts\generate_enhanced_property_map.py",
 ]
 
 
