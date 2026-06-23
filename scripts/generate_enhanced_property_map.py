@@ -328,10 +328,10 @@ body {
   display: inline-block;
   padding: 6px 10px;
   border-radius: 999px;
-  background: #eadcc8;
-  color: #2d2118;
   font-weight: 700;
-  border: 1px solid #c9ab85;
+  color: #111;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.15);
 }
 
 .panel-header {
@@ -406,13 +406,16 @@ body {
 }
 
 .link-primary {
-  background: var(--accent-color, #2d2016);
-  color: white !important;
+    background: var(--accent-color);
 }
 
 .link-secondary {
-  background: var(--accent-color, #f4efe7);
-  color: var(--accent-color, #3b2d22) !important;
+    background: #3d2e22;
+    color: white !important;
+}
+
+.link-secondary:hover {
+  background: #cdb08b;
 }
 
 .leaflet-control-zoom {
@@ -502,9 +505,20 @@ function renderPanel(p) {
     </div>
 
       <div class="badges">
-        <span class="badge">${safe(p["事業成立パターン"])}</span>
-        <span class="badge">${safe(p["飲食可否"])}</span>
-        <span class="badge">${safe(p["評価ランク"])}</span>
+        <span
+            class="badge badge-pattern"
+            style="background:${accentColor};color:white;border:none;"
+        >
+            ${safe(p["事業成立パターン"])}
+        </span>
+
+        <span class="badge">
+            ${safe(p["飲食可否"])}
+        </span>
+
+        <span class="badge">
+            ${safe(p["評価ランク"])}
+        </span>
       </div>
 
       <div class="info-grid">
