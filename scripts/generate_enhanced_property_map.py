@@ -328,12 +328,12 @@ body {
 
 .badge {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 6px 10px;
   border-radius: 999px;
-  background: #f4efe7;
-  color: #6b4f2a;
-  font-size: 12px;
+  background: #eadcc8;
+  color: #2d2118;
   font-weight: 700;
+  border: 1px solid #c9ab85;
 }
 
 .panel-title {
