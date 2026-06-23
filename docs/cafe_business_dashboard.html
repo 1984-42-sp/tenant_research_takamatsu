@@ -147,7 +147,7 @@ a {
     <label><input type="checkbox" class="rank-filter" value="★☆☆☆☆" checked> ★☆☆☆☆</label>
     <label><input type="checkbox" class="rank-filter" value="評価不可" checked> 評価不可</label>
     <label><input type="checkbox" class="rank-filter" value="評価不可" checked> 評価不可</label>
-
+</div>
 <div class="filters">
   <b>飲食可否：</b>
   <label><input type="checkbox" class="food-filter" value="可" checked> 可</label>
@@ -4631,7 +4631,7 @@ document.getElementById("chart").on("plotly_click", function(data) {
   : "営業シミュレーション未生成";
 
   const mapUrlHtml = p["マップURL"]
-  ? p["マップURL"]
+  ? `<a href="${p["マップURL"]}" target="_blank">🗺 地図で表示</a>`
   : "マップリンクなし";
 
   document.getElementById("detail").innerHTML = `

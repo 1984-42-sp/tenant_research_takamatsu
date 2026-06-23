@@ -1,5 +1,41 @@
 ﻿competitor_id,store_name,source,genre,address,lat,lng,rating,review_count,business_hours,closed_days,url,memo
-competitor_id,store_name,source,genre,高松市address,,,,,business_hours,closed_days,url,memo
-C00002,umie,manual,カフェ,高松市北浜町3-2,,,,,,,,
-C00003,206 TSU MA MU,manual,カフェ,高松市北浜町4-14,,,,,,,,
-C00004,半空,manual,カフェ,高松市瓦町1丁目10-18,,,,,,,,
+TBL00001,umie,tabelog,高松築港、片原町（高松）、高松 / カフェ,高松市北浜町3-2北浜alley内,34.35111453028,134.056330953751,,349,,,https://tabelog.com/kagawa/A3701/A370101/37000531/,source=tabelog; import_method=script
+TBL00002,南珈琲店,tabelog,瓦町、片原町（高松）、今橋 / カフェ,高松市南新町3-4２Ｆ,34.340834167945,134.049232990504,,260,,,https://tabelog.com/kagawa/A3701/A370101/37003112/,source=tabelog; import_method=script
+TBL00003,掬月亭,tabelog,栗林公園北口、栗林公園、栗林 / 甘味処,高松市栗林町1-20-16栗林公園内,34.329638376054,134.045692139326,,134,,,https://tabelog.com/kagawa/A3701/A370101/37000927/,source=tabelog; import_method=script
+TBL00004,三びきの子ぶた,tabelog,瓦町、栗林、今橋 / カフェ,高松市常磐町1-4-9,34.338805915014,134.051643709676,,224,,,https://tabelog.com/kagawa/A3701/A370101/37003080/,source=tabelog; import_method=script
+TBL00005,まちのシューレ 963 カフェ,tabelog,片原町（高松）、瓦町、高松築港 / カフェ,高松市丸亀町13-3高松丸亀町参番街東館 2F,34.344431387421,134.050395476655,,121,,,https://tabelog.com/kagawa/A3701/A370101/37005810/,source=tabelog; import_method=script
+TBL00006,コーヒーサロン 皇帝,tabelog,片原町（高松）、高松築港、高松 / 喫茶店,高松市兵庫町11-5,34.345992894073,134.049778987677,,124,,,https://tabelog.com/kagawa/A3701/A370101/37004429/,source=tabelog; import_method=script
+TBL00007,甘味茶屋 ぶどうの木,tabelog,片原町（高松）、高松築港、瓦町 / 甘味処,,,,,124,,,https://tabelog.com/kagawa/A3701/A370101/37003114/,source=tabelog; import_method=script
+TBL00008,峰山ハチミツ,tabelog,栗林公園北口、昭和町、香西 / カフェ,高松市峰山町1838-266,34.332642366333,134.024963441316,,58,,,https://tabelog.com/kagawa/A3701/A370101/37008556/,source=tabelog; import_method=script
+TBL00009,珈琲美人 文月,tabelog,林道、木太東口 / 喫茶店,高松市木太町828-1,34.31692885436,134.071552154641,,117,,,https://tabelog.com/kagawa/A3701/A370101/37002702/,source=tabelog; import_method=script
+TBL00010,CAFE LOURDES,tabelog,片原町（高松）、高松築港、高松 / カフェ,高松市兵庫町1-15富貴ビル2F,34.346328673114,134.049823830859,,118,,,https://tabelog.com/kagawa/A3701/A370101/37006321/,source=tabelog; import_method=script
+TBL00011,グレコ,tabelog,瓦町、栗林、栗林公園北口 / 喫茶店,高松市田町11-2,34.337534757488,134.049009864241,,89,,,https://tabelog.com/kagawa/A3701/A370101/37004273/,source=tabelog; import_method=script
+TBL00012,逸珈琲,tabelog,元山（高松）、木太東口、水田 / 喫茶店,高松市林町1545-1,34.304889088639,134.071048234622,,67,,,https://tabelog.com/kagawa/A3701/A370101/37001167/,source=tabelog; import_method=script
+TBL00013,グッドネイバーズコーヒー 高松店,tabelog,太田（高松）、伏石 / カフェ,高松市多肥下町1552-26,34.300738454005,134.058641592999,,111,,,https://tabelog.com/kagawa/A3701/A370101/37008918/,source=tabelog; import_method=script
+TBL00014,Lunch & Sweets STORY,tabelog,林道 / カフェ,高松市松縄町1074-6シャ-メゾン シュロス松縄 1F,34.318373894467,134.063453056879,,52,,,https://tabelog.com/kagawa/A3701/A370101/37011725/,source=tabelog; import_method=script
+TBL00015,くつわ堂 総本店,tabelog,片原町（高松）、高松築港、高松 / 喫茶店,高松市片原町1-2,34.346191042264,134.050850949274,,76,,,https://tabelog.com/kagawa/A3701/A370101/37005297/,source=tabelog; import_method=script
+TBL00016,アンデルセン,tabelog,六万寺、八栗、古高松南 / 喫茶店,高松市牟礼町牟礼974-7,34.343187219623,134.129350070902,,70,,,https://tabelog.com/kagawa/A3701/A370101/37004958/,source=tabelog; import_method=script
+TBL00017,ジャラク コーヒー&カカオ,tabelog,元山（高松）、伏石、木太東口 / カフェ,高松市林町2537-10ユメックスCUBE内,34.305687045821,134.066540028,,72,,,https://tabelog.com/kagawa/A3701/A370101/37010482/,source=tabelog; import_method=script
+TBL00018,カフェコンディトライ＆レスト シカ,tabelog,国分 / カフェ,高松市国分寺町新名7-1,34.296200952631,133.946563142327,,84,,,https://tabelog.com/kagawa/A3701/A370101/37003222/,source=tabelog; import_method=script
+TBL00019,tri cafe,tabelog,片原町（高松）、高松築港、高松 / カフェ,高松市兵庫町1-3２Ｆ,34.346279429433,134.049901698739,,69,,,https://tabelog.com/kagawa/A3701/A370101/37003092/,source=tabelog; import_method=script
+TBL00020,城の眼,tabelog,片原町（高松）、高松築港、瓦町 / 喫茶店,高松市紺屋町2-4,34.344588045191,134.048731333599,,68,,,https://tabelog.com/kagawa/A3701/A370101/37002683/,source=tabelog; import_method=script
+TBL00021,プロバンス・ブルー,tabelog,高松市 /カフェ・喫茶店(カフェ)、レストラン,高松市屋島東町32-9,34.370102809914,134.107616801796,3.08,18,,,https://tabelog.com/kagawa/A3701/A370101/37001008/,source=tabelog; import_method=script
+TBL00022,CAFE Lululu,tabelog,高松市 /カフェ・喫茶店(カフェ),高松市高松町2487-10,34.33869724364,134.109799617021,3.33,29,,,https://tabelog.com/kagawa/A3701/A370101/37012232/,source=tabelog; import_method=script
+TBL00023,dot．,tabelog,高松市 / バー、ダイニングバー、カフェ・喫茶店(カフェ),高松市古馬場町1-11キタジマビル 2F,34.343169869084,134.051125456603,3.14,33,,,https://tabelog.com/kagawa/A3701/A370101/37001113/,source=tabelog; import_method=script
+TBL00024,cafe SORAのいろ,tabelog,高松市 /カフェ・喫茶店(カフェ),高松市前田西町697,34.306414930293,134.111001498118,3.33,34,,,https://tabelog.com/kagawa/A3701/A370101/37011824/,source=tabelog; import_method=script
+TBL00025,5デイズコーヒー,tabelog,高松市 /カフェ・喫茶店(カフェ)、洋食、バル,高松市鍛冶屋町1-112F,34.343462397504,134.049183621094,3.26,56,,,https://tabelog.com/kagawa/A3701/A370101/37009320/,source=tabelog; import_method=script
+TBL00026,サテンドール,tabelog,高松市 /カフェ・喫茶店(喫茶店),高松市塩上町1-1-23佐藤ビル １F,34.339160050423,134.053562075856,3.07,12,,,https://tabelog.com/kagawa/A3701/A370101/37005624/,source=tabelog; import_method=script
+TBL00027,モスバーガー フレスポ高松店,tabelog,高松市 / ハンバーガー、カフェ・喫茶店(カフェ),高松市東山崎町668-1,34.308912360253,134.091727730861,3.04,20,,,https://tabelog.com/kagawa/A3701/A370101/37005472/,source=tabelog; import_method=script
+TBL00028,世界劇場,tabelog,高松市 /カフェ・喫茶店(カフェ),高松市古馬場町13-7ル-ベルビル 4F,34.341952230009,134.05140449016,3.08,10,,,https://tabelog.com/kagawa/A3701/A370101/37013284/,source=tabelog; import_method=script
+TBL00029,くるみ,tabelog,高松市 /カフェ・喫茶店(カフェ)、サンドイッチ,高松市川島東町523-4,34.275719101669,134.100512887398,3.37,56,,,https://tabelog.com/kagawa/A3701/A370101/37008393/,source=tabelog; import_method=script
+TBL00030,名物かまど 高松郷東店,tabelog,高松市 / ケーキ、和菓子、カフェ・喫茶店(カフェ),高松市郷東町17-7,34.341782203103,134.015120656237,3.03,14,,,https://tabelog.com/kagawa/A3701/A370101/37007002/,source=tabelog; import_method=script
+TBL00031,テンペル,tabelog,高松市 /カフェ・喫茶店(カフェ),高松市塩上町1-3-18,34.338043413282,134.0532033304,3.07,11,,,https://tabelog.com/kagawa/A3701/A370101/37010713/,source=tabelog; import_method=script
+TBL00032,珈琲倶楽部 欅,tabelog,高松市 /カフェ・喫茶店(喫茶店),,,,3.07,11,,,https://tabelog.com/kagawa/A3701/A370101/37003115/,source=tabelog; import_method=script
+TBL00033,みち草,tabelog,高松市 /カフェ・喫茶店(喫茶店)、うどん、丼,,,,3.06,12,,,https://tabelog.com/kagawa/A3701/A370101/37004368/,source=tabelog; import_method=script
+TBL00034,Coffee House JUN,tabelog,高松市 /カフェ・喫茶店(喫茶店),,,,3.15,15,,,https://tabelog.com/kagawa/A3701/A370101/37004540/,source=tabelog; import_method=script
+TBL00035,Kid coffee,tabelog,高松市 /カフェ・喫茶店(カフェ),,,,3.08,10,,,https://tabelog.com/kagawa/A3701/A370101/37013682/,source=tabelog; import_method=script
+TBL00036,M珈琲,tabelog,高松市 /カフェ・喫茶店(カフェ),,,,3.21,16,,,https://tabelog.com/kagawa/A3701/A370101/37013089/,source=tabelog; import_method=script
+TBL00037,喫茶 権べ衛,tabelog,高松市 /カフェ・喫茶店(喫茶店),,,,3.11,16,,,https://tabelog.com/kagawa/A3701/A370101/37009499/,source=tabelog; import_method=script
+TBL00038,ホワイトマリン,tabelog,高松市 /カフェ・喫茶店(喫茶店),,,,3.11,11,,,https://tabelog.com/kagawa/A3701/A370101/37002613/,source=tabelog; import_method=script
+TBL00039,珈琲焙煎卸工房ビオス 屋島店,tabelog,高松市 /カフェ・喫茶店(コーヒースタンド)、パン,,,,3.10,12,,,https://tabelog.com/kagawa/A3701/A370101/37010240/,source=tabelog; import_method=script
+TBL00040,チャフ,tabelog,高松市 /カフェ・喫茶店(カフェ)、スイーツ,,,,3.23,53,,,https://tabelog.com/kagawa/A3701/A370101/37003349/,source=tabelog; import_method=script

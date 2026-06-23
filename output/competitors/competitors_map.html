@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_94c650164a7dfea015bc570f91768471 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_94c650164a7dfea015bc570f91768471" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_94c650164a7dfea015bc570f91768471 = L.map(
+                "map_94c650164a7dfea015bc570f91768471",
+                {
+                    center: [34.33126012344433, 134.05925872738436],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 14,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_0fbc03ccf12e6381d9bdcb27ef31d8b8 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_0fbc03ccf12e6381d9bdcb27ef31d8b8.addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var marker_d669b7dbcfde7320562e7c674edf974c = L.marker(
+                [34.35111453028, 134.056330953751],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_fe887ff69626b05a4c088aa3fd225c02 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5535c3137c17d8dce4992d16fdec3cb5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ff06108612f82b1ad62a04d383cecbab = $(`<div id="html_ff06108612f82b1ad62a04d383cecbab" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>umie</b><br>           ジャンル：高松築港、片原町（高松）、高松 / カフェ<br>           住所：高松市北浜町3-2北浜alley内<br>           評価：<br>           口コミ数：349<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37000531/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_5535c3137c17d8dce4992d16fdec3cb5.setContent(html_ff06108612f82b1ad62a04d383cecbab);
+            
+        
+
+        marker_d669b7dbcfde7320562e7c674edf974c.bindPopup(popup_5535c3137c17d8dce4992d16fdec3cb5)
+        ;
+
+        
+    
+    
+            marker_d669b7dbcfde7320562e7c674edf974c.bindTooltip(
+                `<div>
+                     umie
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d669b7dbcfde7320562e7c674edf974c.setIcon(icon_fe887ff69626b05a4c088aa3fd225c02);
+            
+    
+            var marker_399f6d9cc2e3fc0aca2ca080d83da60a = L.marker(
+                [34.340834167945, 134.049232990504],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_b1d4a032e4b19aac519141b51169ad30 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_15d15273bbd4b9165e90a5d390425488 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0f3462fa772337273b8d82bcbc01af66 = $(`<div id="html_0f3462fa772337273b8d82bcbc01af66" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>南珈琲店</b><br>           ジャンル：瓦町、片原町（高松）、今橋 / カフェ<br>           住所：高松市南新町3-4２Ｆ<br>           評価：<br>           口コミ数：260<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37003112/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_15d15273bbd4b9165e90a5d390425488.setContent(html_0f3462fa772337273b8d82bcbc01af66);
+            
+        
+
+        marker_399f6d9cc2e3fc0aca2ca080d83da60a.bindPopup(popup_15d15273bbd4b9165e90a5d390425488)
+        ;
+
+        
+    
+    
+            marker_399f6d9cc2e3fc0aca2ca080d83da60a.bindTooltip(
+                `<div>
+                     南珈琲店
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_399f6d9cc2e3fc0aca2ca080d83da60a.setIcon(icon_b1d4a032e4b19aac519141b51169ad30);
+            
+    
+            var marker_3130b68782eb3a2c5b5372051c997bfd = L.marker(
+                [34.329638376054, 134.045692139326],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_4247e234eb001b245c2ab765055e7263 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d5882b4c779c4ad3c368d8246aad4f4a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e34a5dcded5641121901d086ad4dadb1 = $(`<div id="html_e34a5dcded5641121901d086ad4dadb1" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>掬月亭</b><br>           ジャンル：栗林公園北口、栗林公園、栗林 / 甘味処<br>           住所：高松市栗林町1-20-16栗林公園内<br>           評価：<br>           口コミ数：134<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37000927/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_d5882b4c779c4ad3c368d8246aad4f4a.setContent(html_e34a5dcded5641121901d086ad4dadb1);
+            
+        
+
+        marker_3130b68782eb3a2c5b5372051c997bfd.bindPopup(popup_d5882b4c779c4ad3c368d8246aad4f4a)
+        ;
+
+        
+    
+    
+            marker_3130b68782eb3a2c5b5372051c997bfd.bindTooltip(
+                `<div>
+                     掬月亭
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3130b68782eb3a2c5b5372051c997bfd.setIcon(icon_4247e234eb001b245c2ab765055e7263);
+            
+    
+            var marker_e0545d78470af6b8d4a1fd802bcc1396 = L.marker(
+                [34.338805915014, 134.051643709676],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_60fcd71f7d756b9ed77af787c575878c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4dbb044e3ba206fe1b161559b51ecc2b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b46b7de596b11de8e4b2c03b24bd23c6 = $(`<div id="html_b46b7de596b11de8e4b2c03b24bd23c6" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>三びきの子ぶた</b><br>           ジャンル：瓦町、栗林、今橋 / カフェ<br>           住所：高松市常磐町1-4-9<br>           評価：<br>           口コミ数：224<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37003080/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_4dbb044e3ba206fe1b161559b51ecc2b.setContent(html_b46b7de596b11de8e4b2c03b24bd23c6);
+            
+        
+
+        marker_e0545d78470af6b8d4a1fd802bcc1396.bindPopup(popup_4dbb044e3ba206fe1b161559b51ecc2b)
+        ;
+
+        
+    
+    
+            marker_e0545d78470af6b8d4a1fd802bcc1396.bindTooltip(
+                `<div>
+                     三びきの子ぶた
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e0545d78470af6b8d4a1fd802bcc1396.setIcon(icon_60fcd71f7d756b9ed77af787c575878c);
+            
+    
+            var marker_26c4f9ee9762053479f3c5990d442720 = L.marker(
+                [34.344431387421, 134.050395476655],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_bbf2e3c828a5c8c593a87b3f6d9be1dd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_de375ac5dcbd3799e81f8064f57b5b63 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_74f02d9f1d821abeed98b1891ebefda8 = $(`<div id="html_74f02d9f1d821abeed98b1891ebefda8" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>まちのシューレ 963 カフェ</b><br>           ジャンル：片原町（高松）、瓦町、高松築港 / カフェ<br>           住所：高松市丸亀町13-3高松丸亀町参番街東館 2F<br>           評価：<br>           口コミ数：121<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37005810/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_de375ac5dcbd3799e81f8064f57b5b63.setContent(html_74f02d9f1d821abeed98b1891ebefda8);
+            
+        
+
+        marker_26c4f9ee9762053479f3c5990d442720.bindPopup(popup_de375ac5dcbd3799e81f8064f57b5b63)
+        ;
+
+        
+    
+    
+            marker_26c4f9ee9762053479f3c5990d442720.bindTooltip(
+                `<div>
+                     まちのシューレ 963 カフェ
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_26c4f9ee9762053479f3c5990d442720.setIcon(icon_bbf2e3c828a5c8c593a87b3f6d9be1dd);
+            
+    
+            var marker_15924a5fd28ab19ca29f93cb35b866c3 = L.marker(
+                [34.345992894073, 134.049778987677],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_ba6326632dca7b609de90535362a10c2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d61b8b70fb735a8755303af549764cf4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d1748f75092b810637eb1fa5510dec5f = $(`<div id="html_d1748f75092b810637eb1fa5510dec5f" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>コーヒーサロン 皇帝</b><br>           ジャンル：片原町（高松）、高松築港、高松 / 喫茶店<br>           住所：高松市兵庫町11-5<br>           評価：<br>           口コミ数：124<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37004429/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_d61b8b70fb735a8755303af549764cf4.setContent(html_d1748f75092b810637eb1fa5510dec5f);
+            
+        
+
+        marker_15924a5fd28ab19ca29f93cb35b866c3.bindPopup(popup_d61b8b70fb735a8755303af549764cf4)
+        ;
+
+        
+    
+    
+            marker_15924a5fd28ab19ca29f93cb35b866c3.bindTooltip(
+                `<div>
+                     コーヒーサロン 皇帝
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_15924a5fd28ab19ca29f93cb35b866c3.setIcon(icon_ba6326632dca7b609de90535362a10c2);
+            
+    
+            var marker_795f952cbe06554e0446d2f33f1bde78 = L.marker(
+                [34.332642366333, 134.024963441316],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_0e953feb315010881b0d4181bea9cdcb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_37835fdf4f84882be42b7da9d1379333 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3518aed02866d02c22a2e2da3d25e6af = $(`<div id="html_3518aed02866d02c22a2e2da3d25e6af" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>峰山ハチミツ</b><br>           ジャンル：栗林公園北口、昭和町、香西 / カフェ<br>           住所：高松市峰山町1838-266<br>           評価：<br>           口コミ数：58<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37008556/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_37835fdf4f84882be42b7da9d1379333.setContent(html_3518aed02866d02c22a2e2da3d25e6af);
+            
+        
+
+        marker_795f952cbe06554e0446d2f33f1bde78.bindPopup(popup_37835fdf4f84882be42b7da9d1379333)
+        ;
+
+        
+    
+    
+            marker_795f952cbe06554e0446d2f33f1bde78.bindTooltip(
+                `<div>
+                     峰山ハチミツ
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_795f952cbe06554e0446d2f33f1bde78.setIcon(icon_0e953feb315010881b0d4181bea9cdcb);
+            
+    
+            var marker_282028688f02a2e20292436f534f8850 = L.marker(
+                [34.31692885436, 134.071552154641],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_c5098345b9f7d197bf36e5368937401a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6c796b8e2e4d995ceea3b3155aa3609e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4bf7362b462886f21ea41e8e80036e53 = $(`<div id="html_4bf7362b462886f21ea41e8e80036e53" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>珈琲美人 文月</b><br>           ジャンル：林道、木太東口 / 喫茶店<br>           住所：高松市木太町828-1<br>           評価：<br>           口コミ数：117<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37002702/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_6c796b8e2e4d995ceea3b3155aa3609e.setContent(html_4bf7362b462886f21ea41e8e80036e53);
+            
+        
+
+        marker_282028688f02a2e20292436f534f8850.bindPopup(popup_6c796b8e2e4d995ceea3b3155aa3609e)
+        ;
+
+        
+    
+    
+            marker_282028688f02a2e20292436f534f8850.bindTooltip(
+                `<div>
+                     珈琲美人 文月
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_282028688f02a2e20292436f534f8850.setIcon(icon_c5098345b9f7d197bf36e5368937401a);
+            
+    
+            var marker_d8018c48d780e948c4747f13e5502d6e = L.marker(
+                [34.346328673114, 134.049823830859],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_a2e9f7c2961b5885532c3268acc74723 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ed0d42ffe7c221cdf6ef950d03e038e4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_80e8e7c9b808240be64f110badde6ff4 = $(`<div id="html_80e8e7c9b808240be64f110badde6ff4" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>CAFE LOURDES</b><br>           ジャンル：片原町（高松）、高松築港、高松 / カフェ<br>           住所：高松市兵庫町1-15富貴ビル2F<br>           評価：<br>           口コミ数：118<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37006321/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_ed0d42ffe7c221cdf6ef950d03e038e4.setContent(html_80e8e7c9b808240be64f110badde6ff4);
+            
+        
+
+        marker_d8018c48d780e948c4747f13e5502d6e.bindPopup(popup_ed0d42ffe7c221cdf6ef950d03e038e4)
+        ;
+
+        
+    
+    
+            marker_d8018c48d780e948c4747f13e5502d6e.bindTooltip(
+                `<div>
+                     CAFE LOURDES
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d8018c48d780e948c4747f13e5502d6e.setIcon(icon_a2e9f7c2961b5885532c3268acc74723);
+            
+    
+            var marker_688c7483fe6d469a43d123b169792ebc = L.marker(
+                [34.337534757488, 134.049009864241],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_c9b9f54d98f83844977c43b9713fc0f6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1203343820f0049e73ec4bff8d972f9e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_24dcfde77f3791f9e59c38a43f8c62ec = $(`<div id="html_24dcfde77f3791f9e59c38a43f8c62ec" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>グレコ</b><br>           ジャンル：瓦町、栗林、栗林公園北口 / 喫茶店<br>           住所：高松市田町11-2<br>           評価：<br>           口コミ数：89<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37004273/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_1203343820f0049e73ec4bff8d972f9e.setContent(html_24dcfde77f3791f9e59c38a43f8c62ec);
+            
+        
+
+        marker_688c7483fe6d469a43d123b169792ebc.bindPopup(popup_1203343820f0049e73ec4bff8d972f9e)
+        ;
+
+        
+    
+    
+            marker_688c7483fe6d469a43d123b169792ebc.bindTooltip(
+                `<div>
+                     グレコ
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_688c7483fe6d469a43d123b169792ebc.setIcon(icon_c9b9f54d98f83844977c43b9713fc0f6);
+            
+    
+            var marker_bf2b8ba93066666ffc9247e3b13f1f53 = L.marker(
+                [34.304889088639, 134.071048234622],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_c266fed067b5658ce53ceb2fd7a666dc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0a52a72985b95317eec114737471350c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e1529e38b9a127667ad032d8efafa906 = $(`<div id="html_e1529e38b9a127667ad032d8efafa906" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>逸珈琲</b><br>           ジャンル：元山（高松）、木太東口、水田 / 喫茶店<br>           住所：高松市林町1545-1<br>           評価：<br>           口コミ数：67<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37001167/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_0a52a72985b95317eec114737471350c.setContent(html_e1529e38b9a127667ad032d8efafa906);
+            
+        
+
+        marker_bf2b8ba93066666ffc9247e3b13f1f53.bindPopup(popup_0a52a72985b95317eec114737471350c)
+        ;
+
+        
+    
+    
+            marker_bf2b8ba93066666ffc9247e3b13f1f53.bindTooltip(
+                `<div>
+                     逸珈琲
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_bf2b8ba93066666ffc9247e3b13f1f53.setIcon(icon_c266fed067b5658ce53ceb2fd7a666dc);
+            
+    
+            var marker_0c3da908d8a9cc40465b77bffdbae13d = L.marker(
+                [34.300738454005, 134.058641592999],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_f6e033a759cc9bd42dbcaeffc59a05c5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c29b3fb19bb8858823a63c6153f174dd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_81f24a22b76922c18ce1da606dd707f3 = $(`<div id="html_81f24a22b76922c18ce1da606dd707f3" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>グッドネイバーズコーヒー 高松店</b><br>           ジャンル：太田（高松）、伏石 / カフェ<br>           住所：高松市多肥下町1552-26<br>           評価：<br>           口コミ数：111<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37008918/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_c29b3fb19bb8858823a63c6153f174dd.setContent(html_81f24a22b76922c18ce1da606dd707f3);
+            
+        
+
+        marker_0c3da908d8a9cc40465b77bffdbae13d.bindPopup(popup_c29b3fb19bb8858823a63c6153f174dd)
+        ;
+
+        
+    
+    
+            marker_0c3da908d8a9cc40465b77bffdbae13d.bindTooltip(
+                `<div>
+                     グッドネイバーズコーヒー 高松店
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0c3da908d8a9cc40465b77bffdbae13d.setIcon(icon_f6e033a759cc9bd42dbcaeffc59a05c5);
+            
+    
+            var marker_44090e3b201ae922c430d56de29eb0d1 = L.marker(
+                [34.318373894467, 134.063453056879],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_e92a0307ec32858fc3143c5cb72e35cf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0515bdcd4dafe1f5eaf6d89eac583b4b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_aeff91729302668e1b043a6ee6b21e3d = $(`<div id="html_aeff91729302668e1b043a6ee6b21e3d" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>Lunch & Sweets STORY</b><br>           ジャンル：林道 / カフェ<br>           住所：高松市松縄町1074-6シャ-メゾン シュロス松縄 1F<br>           評価：<br>           口コミ数：52<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37011725/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_0515bdcd4dafe1f5eaf6d89eac583b4b.setContent(html_aeff91729302668e1b043a6ee6b21e3d);
+            
+        
+
+        marker_44090e3b201ae922c430d56de29eb0d1.bindPopup(popup_0515bdcd4dafe1f5eaf6d89eac583b4b)
+        ;
+
+        
+    
+    
+            marker_44090e3b201ae922c430d56de29eb0d1.bindTooltip(
+                `<div>
+                     Lunch & Sweets STORY
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_44090e3b201ae922c430d56de29eb0d1.setIcon(icon_e92a0307ec32858fc3143c5cb72e35cf);
+            
+    
+            var marker_d977c62d191c4a051d4c6f607024d2fd = L.marker(
+                [34.346191042264, 134.050850949274],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_d4d2b9360472cab3f059d5c20b6a6c6a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0e409abdf4e05752feaba119499165b9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5ce636574d067a9492a0505330019204 = $(`<div id="html_5ce636574d067a9492a0505330019204" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>くつわ堂 総本店</b><br>           ジャンル：片原町（高松）、高松築港、高松 / 喫茶店<br>           住所：高松市片原町1-2<br>           評価：<br>           口コミ数：76<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37005297/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_0e409abdf4e05752feaba119499165b9.setContent(html_5ce636574d067a9492a0505330019204);
+            
+        
+
+        marker_d977c62d191c4a051d4c6f607024d2fd.bindPopup(popup_0e409abdf4e05752feaba119499165b9)
+        ;
+
+        
+    
+    
+            marker_d977c62d191c4a051d4c6f607024d2fd.bindTooltip(
+                `<div>
+                     くつわ堂 総本店
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d977c62d191c4a051d4c6f607024d2fd.setIcon(icon_d4d2b9360472cab3f059d5c20b6a6c6a);
+            
+    
+            var marker_d05d696bc70d29e3f7317ff6d1bba44b = L.marker(
+                [34.343187219623, 134.129350070902],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_1766eed0d75cbe59265f11760c3c4e1c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_420ff72feac1509389267751832a34d1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3225519b8ade5936916ead1858d37a54 = $(`<div id="html_3225519b8ade5936916ead1858d37a54" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>アンデルセン</b><br>           ジャンル：六万寺、八栗、古高松南 / 喫茶店<br>           住所：高松市牟礼町牟礼974-7<br>           評価：<br>           口コミ数：70<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37004958/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_420ff72feac1509389267751832a34d1.setContent(html_3225519b8ade5936916ead1858d37a54);
+            
+        
+
+        marker_d05d696bc70d29e3f7317ff6d1bba44b.bindPopup(popup_420ff72feac1509389267751832a34d1)
+        ;
+
+        
+    
+    
+            marker_d05d696bc70d29e3f7317ff6d1bba44b.bindTooltip(
+                `<div>
+                     アンデルセン
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d05d696bc70d29e3f7317ff6d1bba44b.setIcon(icon_1766eed0d75cbe59265f11760c3c4e1c);
+            
+    
+            var marker_d51bd31cec129ac3c680cbf8d83b6c4f = L.marker(
+                [34.305687045821, 134.066540028],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_18bfcacd2326bb13eb3b353a2d9d8ff0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5b1e9a9e4dfe2affe2836309cbfdfd44 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8955bdd0b368c3c8412792029c90e9c2 = $(`<div id="html_8955bdd0b368c3c8412792029c90e9c2" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>ジャラク コーヒー&カカオ</b><br>           ジャンル：元山（高松）、伏石、木太東口 / カフェ<br>           住所：高松市林町2537-10ユメックスCUBE内<br>           評価：<br>           口コミ数：72<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37010482/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_5b1e9a9e4dfe2affe2836309cbfdfd44.setContent(html_8955bdd0b368c3c8412792029c90e9c2);
+            
+        
+
+        marker_d51bd31cec129ac3c680cbf8d83b6c4f.bindPopup(popup_5b1e9a9e4dfe2affe2836309cbfdfd44)
+        ;
+
+        
+    
+    
+            marker_d51bd31cec129ac3c680cbf8d83b6c4f.bindTooltip(
+                `<div>
+                     ジャラク コーヒー&カカオ
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d51bd31cec129ac3c680cbf8d83b6c4f.setIcon(icon_18bfcacd2326bb13eb3b353a2d9d8ff0);
+            
+    
+            var marker_209bfe1a8f80b98646b6fd84b75b52a2 = L.marker(
+                [34.296200952631, 133.946563142327],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_28d978164568819902400cc3f3c11252 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3ddc9c6401dd84d8807a587309a7a6b1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8cc38308b07de69b802b0424fefb688c = $(`<div id="html_8cc38308b07de69b802b0424fefb688c" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>カフェコンディトライ＆レスト シカ</b><br>           ジャンル：国分 / カフェ<br>           住所：高松市国分寺町新名7-1<br>           評価：<br>           口コミ数：84<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37003222/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_3ddc9c6401dd84d8807a587309a7a6b1.setContent(html_8cc38308b07de69b802b0424fefb688c);
+            
+        
+
+        marker_209bfe1a8f80b98646b6fd84b75b52a2.bindPopup(popup_3ddc9c6401dd84d8807a587309a7a6b1)
+        ;
+
+        
+    
+    
+            marker_209bfe1a8f80b98646b6fd84b75b52a2.bindTooltip(
+                `<div>
+                     カフェコンディトライ＆レスト シカ
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_209bfe1a8f80b98646b6fd84b75b52a2.setIcon(icon_28d978164568819902400cc3f3c11252);
+            
+    
+            var marker_4a2b74b12197ac2aab2fd6c012bdbbdd = L.marker(
+                [34.346279429433, 134.049901698739],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_0538d9a1b1bb0de5f7dd429e666bb94c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6db3a9c09133fc9a5991b1975fccb25d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0aa82ae88083afe691e8e7fa3dc2ef60 = $(`<div id="html_0aa82ae88083afe691e8e7fa3dc2ef60" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>tri cafe</b><br>           ジャンル：片原町（高松）、高松築港、高松 / カフェ<br>           住所：高松市兵庫町1-3２Ｆ<br>           評価：<br>           口コミ数：69<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37003092/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_6db3a9c09133fc9a5991b1975fccb25d.setContent(html_0aa82ae88083afe691e8e7fa3dc2ef60);
+            
+        
+
+        marker_4a2b74b12197ac2aab2fd6c012bdbbdd.bindPopup(popup_6db3a9c09133fc9a5991b1975fccb25d)
+        ;
+
+        
+    
+    
+            marker_4a2b74b12197ac2aab2fd6c012bdbbdd.bindTooltip(
+                `<div>
+                     tri cafe
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4a2b74b12197ac2aab2fd6c012bdbbdd.setIcon(icon_0538d9a1b1bb0de5f7dd429e666bb94c);
+            
+    
+            var marker_6e9c4a8f52177aceedd06e4b58a55e55 = L.marker(
+                [34.344588045191, 134.048731333599],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_0dd37da27d305bb5aa1956be2f7f8d27 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a0ca39e24183aa9bf3e55d39823591cc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2929fc9ca68c876f5f5b0def479b5e75 = $(`<div id="html_2929fc9ca68c876f5f5b0def479b5e75" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>城の眼</b><br>           ジャンル：片原町（高松）、高松築港、瓦町 / 喫茶店<br>           住所：高松市紺屋町2-4<br>           評価：<br>           口コミ数：68<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37002683/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_a0ca39e24183aa9bf3e55d39823591cc.setContent(html_2929fc9ca68c876f5f5b0def479b5e75);
+            
+        
+
+        marker_6e9c4a8f52177aceedd06e4b58a55e55.bindPopup(popup_a0ca39e24183aa9bf3e55d39823591cc)
+        ;
+
+        
+    
+    
+            marker_6e9c4a8f52177aceedd06e4b58a55e55.bindTooltip(
+                `<div>
+                     城の眼
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6e9c4a8f52177aceedd06e4b58a55e55.setIcon(icon_0dd37da27d305bb5aa1956be2f7f8d27);
+            
+    
+            var marker_3cf0d6f56cbcdf789b8cb87923b984a7 = L.marker(
+                [34.370102809914, 134.107616801796],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_4516bced9a07ef3fc2dc6276f9620607 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f12f29fdcc7b7cb069395a982bba45ed = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4fd00ac389072bac0e649b3e4d0678c0 = $(`<div id="html_4fd00ac389072bac0e649b3e4d0678c0" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>プロバンス・ブルー</b><br>           ジャンル：高松市 /カフェ・喫茶店(カフェ)、レストラン<br>           住所：高松市屋島東町32-9<br>           評価：3.08<br>           口コミ数：18<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37001008/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_f12f29fdcc7b7cb069395a982bba45ed.setContent(html_4fd00ac389072bac0e649b3e4d0678c0);
+            
+        
+
+        marker_3cf0d6f56cbcdf789b8cb87923b984a7.bindPopup(popup_f12f29fdcc7b7cb069395a982bba45ed)
+        ;
+
+        
+    
+    
+            marker_3cf0d6f56cbcdf789b8cb87923b984a7.bindTooltip(
+                `<div>
+                     プロバンス・ブルー
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3cf0d6f56cbcdf789b8cb87923b984a7.setIcon(icon_4516bced9a07ef3fc2dc6276f9620607);
+            
+    
+            var marker_0a71d76cefb9198ae962862fbb8bd917 = L.marker(
+                [34.33869724364, 134.109799617021],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_15946d57fb90729f7a202399acda31a8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f04c5ba55737d55714d06be56808c0d5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4c67e9582841eda380347b498b7f4777 = $(`<div id="html_4c67e9582841eda380347b498b7f4777" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>CAFE Lululu</b><br>           ジャンル：高松市 /カフェ・喫茶店(カフェ)<br>           住所：高松市高松町2487-10<br>           評価：3.33<br>           口コミ数：29<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37012232/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_f04c5ba55737d55714d06be56808c0d5.setContent(html_4c67e9582841eda380347b498b7f4777);
+            
+        
+
+        marker_0a71d76cefb9198ae962862fbb8bd917.bindPopup(popup_f04c5ba55737d55714d06be56808c0d5)
+        ;
+
+        
+    
+    
+            marker_0a71d76cefb9198ae962862fbb8bd917.bindTooltip(
+                `<div>
+                     CAFE Lululu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0a71d76cefb9198ae962862fbb8bd917.setIcon(icon_15946d57fb90729f7a202399acda31a8);
+            
+    
+            var marker_969f57b3a5b7604fbb49df0f3d7861bf = L.marker(
+                [34.343169869084, 134.051125456603],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_c137f1270696774b03284d6a548a2a50 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b848b8ff317da7893662d6246975b65a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_29b0e50c89070601414e93211e3c06de = $(`<div id="html_29b0e50c89070601414e93211e3c06de" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>dot．</b><br>           ジャンル：高松市 / バー、ダイニングバー、カフェ・喫茶店(カフェ)<br>           住所：高松市古馬場町1-11キタジマビル 2F<br>           評価：3.14<br>           口コミ数：33<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37001113/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_b848b8ff317da7893662d6246975b65a.setContent(html_29b0e50c89070601414e93211e3c06de);
+            
+        
+
+        marker_969f57b3a5b7604fbb49df0f3d7861bf.bindPopup(popup_b848b8ff317da7893662d6246975b65a)
+        ;
+
+        
+    
+    
+            marker_969f57b3a5b7604fbb49df0f3d7861bf.bindTooltip(
+                `<div>
+                     dot．
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_969f57b3a5b7604fbb49df0f3d7861bf.setIcon(icon_c137f1270696774b03284d6a548a2a50);
+            
+    
+            var marker_0529c72cb390900af96e69dffb0876b9 = L.marker(
+                [34.306414930293, 134.111001498118],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_9e921402312fa03fe8057e6c18a941d2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a641e5c683ed4633cd3467b65c8fcba5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ba14ce149bfe3df6e9851e03df6325c5 = $(`<div id="html_ba14ce149bfe3df6e9851e03df6325c5" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>cafe SORAのいろ</b><br>           ジャンル：高松市 /カフェ・喫茶店(カフェ)<br>           住所：高松市前田西町697<br>           評価：3.33<br>           口コミ数：34<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37011824/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_a641e5c683ed4633cd3467b65c8fcba5.setContent(html_ba14ce149bfe3df6e9851e03df6325c5);
+            
+        
+
+        marker_0529c72cb390900af96e69dffb0876b9.bindPopup(popup_a641e5c683ed4633cd3467b65c8fcba5)
+        ;
+
+        
+    
+    
+            marker_0529c72cb390900af96e69dffb0876b9.bindTooltip(
+                `<div>
+                     cafe SORAのいろ
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0529c72cb390900af96e69dffb0876b9.setIcon(icon_9e921402312fa03fe8057e6c18a941d2);
+            
+    
+            var marker_161b802a9c5fa8c6b9b977507155175b = L.marker(
+                [34.343462397504, 134.049183621094],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_661731aa0b8b71b67ae38c7af5704b62 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bef67880cffdbe7f0c03b49f8a6892a7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_200463beb5e77b87d80fa91fb6057b48 = $(`<div id="html_200463beb5e77b87d80fa91fb6057b48" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>5デイズコーヒー</b><br>           ジャンル：高松市 /カフェ・喫茶店(カフェ)、洋食、バル<br>           住所：高松市鍛冶屋町1-112F<br>           評価：3.26<br>           口コミ数：56<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37009320/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_bef67880cffdbe7f0c03b49f8a6892a7.setContent(html_200463beb5e77b87d80fa91fb6057b48);
+            
+        
+
+        marker_161b802a9c5fa8c6b9b977507155175b.bindPopup(popup_bef67880cffdbe7f0c03b49f8a6892a7)
+        ;
+
+        
+    
+    
+            marker_161b802a9c5fa8c6b9b977507155175b.bindTooltip(
+                `<div>
+                     5デイズコーヒー
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_161b802a9c5fa8c6b9b977507155175b.setIcon(icon_661731aa0b8b71b67ae38c7af5704b62);
+            
+    
+            var marker_fb97e5bab229d4546bd994899be7904b = L.marker(
+                [34.339160050423, 134.053562075856],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_d0257f26690dd1f76bb365c36970204a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2b7572a63479ebc24c6e4f120862f1a9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9655ae5c5e676ec85c91f965a81754b0 = $(`<div id="html_9655ae5c5e676ec85c91f965a81754b0" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>サテンドール</b><br>           ジャンル：高松市 /カフェ・喫茶店(喫茶店)<br>           住所：高松市塩上町1-1-23佐藤ビル １F<br>           評価：3.07<br>           口コミ数：12<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37005624/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_2b7572a63479ebc24c6e4f120862f1a9.setContent(html_9655ae5c5e676ec85c91f965a81754b0);
+            
+        
+
+        marker_fb97e5bab229d4546bd994899be7904b.bindPopup(popup_2b7572a63479ebc24c6e4f120862f1a9)
+        ;
+
+        
+    
+    
+            marker_fb97e5bab229d4546bd994899be7904b.bindTooltip(
+                `<div>
+                     サテンドール
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fb97e5bab229d4546bd994899be7904b.setIcon(icon_d0257f26690dd1f76bb365c36970204a);
+            
+    
+            var marker_2853c2e6b5517d2d191baf5766b0a5fd = L.marker(
+                [34.308912360253, 134.091727730861],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_eae333f2c0dfb6abe2d22076f1fb7c3d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5fb21af6fd56bf3ea2f0b0ee4f46cbd6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e2f85e6fe7af96aa962c18cf9d88722a = $(`<div id="html_e2f85e6fe7af96aa962c18cf9d88722a" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>モスバーガー フレスポ高松店</b><br>           ジャンル：高松市 / ハンバーガー、カフェ・喫茶店(カフェ)<br>           住所：高松市東山崎町668-1<br>           評価：3.04<br>           口コミ数：20<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37005472/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_5fb21af6fd56bf3ea2f0b0ee4f46cbd6.setContent(html_e2f85e6fe7af96aa962c18cf9d88722a);
+            
+        
+
+        marker_2853c2e6b5517d2d191baf5766b0a5fd.bindPopup(popup_5fb21af6fd56bf3ea2f0b0ee4f46cbd6)
+        ;
+
+        
+    
+    
+            marker_2853c2e6b5517d2d191baf5766b0a5fd.bindTooltip(
+                `<div>
+                     モスバーガー フレスポ高松店
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2853c2e6b5517d2d191baf5766b0a5fd.setIcon(icon_eae333f2c0dfb6abe2d22076f1fb7c3d);
+            
+    
+            var marker_3df34e74bca595bba0b8c8f5407ca1b5 = L.marker(
+                [34.341952230009, 134.05140449016],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_b7d00b399e035ba1e0f0cecb2dbc824f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cc19235696776b20c3b4622079908f45 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_42a1dcd3e9fcb70a2cbec9fb36104cc8 = $(`<div id="html_42a1dcd3e9fcb70a2cbec9fb36104cc8" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>世界劇場</b><br>           ジャンル：高松市 /カフェ・喫茶店(カフェ)<br>           住所：高松市古馬場町13-7ル-ベルビル 4F<br>           評価：3.08<br>           口コミ数：10<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37013284/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_cc19235696776b20c3b4622079908f45.setContent(html_42a1dcd3e9fcb70a2cbec9fb36104cc8);
+            
+        
+
+        marker_3df34e74bca595bba0b8c8f5407ca1b5.bindPopup(popup_cc19235696776b20c3b4622079908f45)
+        ;
+
+        
+    
+    
+            marker_3df34e74bca595bba0b8c8f5407ca1b5.bindTooltip(
+                `<div>
+                     世界劇場
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3df34e74bca595bba0b8c8f5407ca1b5.setIcon(icon_b7d00b399e035ba1e0f0cecb2dbc824f);
+            
+    
+            var marker_0492bb66514a1c05e4494e593e23e352 = L.marker(
+                [34.275719101669, 134.100512887398],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_5b092dab7ec430df738d3e9b92680355 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2e07c5f90683913d761aef469838f88d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2b3293f7258ab440b4fe7b9c2c3541c9 = $(`<div id="html_2b3293f7258ab440b4fe7b9c2c3541c9" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>くるみ</b><br>           ジャンル：高松市 /カフェ・喫茶店(カフェ)、サンドイッチ<br>           住所：高松市川島東町523-4<br>           評価：3.37<br>           口コミ数：56<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37008393/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_2e07c5f90683913d761aef469838f88d.setContent(html_2b3293f7258ab440b4fe7b9c2c3541c9);
+            
+        
+
+        marker_0492bb66514a1c05e4494e593e23e352.bindPopup(popup_2e07c5f90683913d761aef469838f88d)
+        ;
+
+        
+    
+    
+            marker_0492bb66514a1c05e4494e593e23e352.bindTooltip(
+                `<div>
+                     くるみ
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0492bb66514a1c05e4494e593e23e352.setIcon(icon_5b092dab7ec430df738d3e9b92680355);
+            
+    
+            var marker_e7a7bd9120842b253485840212c040f4 = L.marker(
+                [34.341782203103, 134.015120656237],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_8b98cbb453a6ae59d99e18ab04a50071 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7a29ccd64b486d44572d8b9072c7ab77 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2d7222513b73376819bab8fc642486a9 = $(`<div id="html_2d7222513b73376819bab8fc642486a9" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>名物かまど 高松郷東店</b><br>           ジャンル：高松市 / ケーキ、和菓子、カフェ・喫茶店(カフェ)<br>           住所：高松市郷東町17-7<br>           評価：3.03<br>           口コミ数：14<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37007002/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_7a29ccd64b486d44572d8b9072c7ab77.setContent(html_2d7222513b73376819bab8fc642486a9);
+            
+        
+
+        marker_e7a7bd9120842b253485840212c040f4.bindPopup(popup_7a29ccd64b486d44572d8b9072c7ab77)
+        ;
+
+        
+    
+    
+            marker_e7a7bd9120842b253485840212c040f4.bindTooltip(
+                `<div>
+                     名物かまど 高松郷東店
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e7a7bd9120842b253485840212c040f4.setIcon(icon_8b98cbb453a6ae59d99e18ab04a50071);
+            
+    
+            var marker_d8c5a877bafbd12218d80dd9a3285e95 = L.marker(
+                [34.338043413282, 134.0532033304],
+                {
+}
+            ).addTo(map_94c650164a7dfea015bc570f91768471);
+        
+    
+            var icon_5c6101aca3453434b393074b8b1a174b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "coffee",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_92d630ca1c959d5a3748c9027a8ff4e2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d39cea1bc04db224dd886517438a2518 = $(`<div id="html_d39cea1bc04db224dd886517438a2518" style="width: 100.0%; height: 100.0%;">         <div style="font-size:14px; line-height:1.6;">           <b>テンペル</b><br>           ジャンル：高松市 /カフェ・喫茶店(カフェ)<br>           住所：高松市塩上町1-3-18<br>           評価：3.07<br>           口コミ数：11<br>           情報源：tabelog<br>           <a href="https://tabelog.com/kagawa/A3701/A370101/37010713/" target="_blank">URL</a>         </div>         </div>`)[0];
+                popup_92d630ca1c959d5a3748c9027a8ff4e2.setContent(html_d39cea1bc04db224dd886517438a2518);
+            
+        
+
+        marker_d8c5a877bafbd12218d80dd9a3285e95.bindPopup(popup_92d630ca1c959d5a3748c9027a8ff4e2)
+        ;
+
+        
+    
+    
+            marker_d8c5a877bafbd12218d80dd9a3285e95.bindTooltip(
+                `<div>
+                     テンペル
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d8c5a877bafbd12218d80dd9a3285e95.setIcon(icon_5c6101aca3453434b393074b8b1a174b);
+            
+</script>
+</html>
