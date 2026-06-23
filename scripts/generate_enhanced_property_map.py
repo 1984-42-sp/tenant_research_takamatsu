@@ -438,6 +438,11 @@ body {
   font-weight: 800;
 }
 
+..link-button {
+    text-decoration: none;
+    color: inherit;
+}
+
 .link-primary {
     background: var(--accent-color);
     color: #ffffff !important;
