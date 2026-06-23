@@ -4,7 +4,7 @@ import shutil
 BASE_DIR = Path(__file__).resolve().parents[1]
 
 SOURCE_DIR = BASE_DIR / "output" / "final_html"
-TARGET_DIR = BASE_DIR / "netlify_public"
+TARGET_DIR = BASE_DIR / "docs"
 
 PUBLIC_FILES = [
     "all_properties_map.html",
@@ -75,10 +75,9 @@ def main():
         copy_dir(dirname)
 
     print()
-    print("[DONE] netlify_public updated")
+    print("[DONE] docs updated")
 
 
 if __name__ == "__main__":
     main()
 
-    

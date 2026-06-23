@@ -133,8 +133,6 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   margin: 14px 0 18px;
-  background: #eadcc8;
-  color: #3a281b;
 }
 
 .badge {
@@ -147,17 +145,21 @@ body {
   border: 1px solid #c9ab85;
 }
 
-.panel-title {
-  font-size: 22px;
-  line-height: 1.35;
-  margin: 0;
-  color: #17110c;
+.panel-header {
+  background: var(--accent-color, #2d2016);
+  color: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin: -4px -4px 18px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.16);
 }
 
-.panel-address {
-  margin-top: 10px;
-  color: #3f352d;
-  line-height: 1.5;
+.panel-header .panel-title {
+  color: white;
+}
+
+.panel-header .panel-address {
+  color: rgba(255,255,255,0.88);
 }
 
 .info-grid {
@@ -170,6 +172,7 @@ body {
 .info-card {
   background: #fbf8f3;
   border: 1px solid #eee4d8;
+  border-top: 4px solid var(--accent-color, #2d2016);
   border-radius: 14px;
   padding: 12px;
 }
@@ -190,7 +193,7 @@ body {
 .section-title {
   margin: 22px 0 10px;
   font-size: 15px;
-  color: #2f261f;
+  color: var(--accent-color);
 }
 
 .comment-box {
@@ -214,13 +217,13 @@ body {
 }
 
 .link-primary {
-  background: #2d2016;
+  background: var(--accent-color, #2d2016);
   color: white !important;
 }
 
 .link-secondary {
-  background: #f4efe7;
-  color: #3b2d22 !important;
+  background: var(--accent-color, #f4efe7);
+  color: var(--accent-color, #3b2d22) !important;
 }
 
 .leaflet-control-zoom {
@@ -244,6 +247,7 @@ body {
     top: auto;
     width: auto;
     max-height: 42vh;
+    background: #efe5d6;
   }
 
   .legend-card {
@@ -265,7 +269,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_0a5caf04824e7404487e421ce86d2aae {
+                #map_16d6beeb83b5076b20dca951c1a41cc3 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -325,14 +329,14 @@ body {
   </div>
 </div>
     
-            <div class="folium-map" id="map_0a5caf04824e7404487e421ce86d2aae" ></div>
+            <div class="folium-map" id="map_16d6beeb83b5076b20dca951c1a41cc3" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_0a5caf04824e7404487e421ce86d2aae === "undefined") {
+  if (typeof L === "undefined" || typeof map_16d6beeb83b5076b20dca951c1a41cc3 === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -363,6 +367,8 @@ function yen(value) {
 }
 
 function renderPanel(p) {
+  const accentColor = patternColors[p["事業成立パターン"]] || "#2d2016";
+  document.getElementById("sidePanel").style.setProperty("--accent-color", accentColor);
   const simButton = p["営業シミュレーションURL"]
     ? `<a class="link-button link-primary" href="${p["営業シミュレーションURL"]}">営業シミュレーションを見る</a>`
     : "";
@@ -371,10 +377,17 @@ function renderPanel(p) {
     ? `<a class="link-button link-secondary" href="${p["詳細URL"]}" target="_blank">掲載元詳細ページを見る</a>`
     : "";
 
+    const panel = document.getElementById("sidePanel");
+
+    panel.style.setProperty(
+        "--accent-color",
+        patternColors[p["事業成立パターン"]] || "#666");
+
   document.getElementById("sidePanel").innerHTML = `
-    <div class="panel-content">
-      <h2 class="panel-title">${safe(p["物件名"])}</h2>
-      <div class="panel-address">${safe(p["所在地"])}</div>
+    <div class="panel-header">
+        <h2 class="panel-title">${safe(p["物件名"])}</h2>
+        <div class="panel-address">${safe(p["所在地"])}</div>
+    </div>
 
       <div class="badges">
         <span class="badge">${safe(p["事業成立パターン"])}</span>
@@ -442,7 +455,7 @@ propertyPoints.forEach((p) => {
     weight: 2,
     fillColor: p.color,
     fillOpacity: 0.92
-  }).addTo(map_0a5caf04824e7404487e421ce86d2aae);
+  }).addTo(map_16d6beeb83b5076b20dca951c1a41cc3);
 
   marker.bindTooltip(p["物件名"], {
     direction: "top",
@@ -451,13 +464,13 @@ propertyPoints.forEach((p) => {
 
   marker.on("click", function() {
     renderPanel(p);
-    map_0a5caf04824e7404487e421ce86d2aae.panTo([p.latitude, p.longitude]);
+    map_16d6beeb83b5076b20dca951c1a41cc3.panTo([p.latitude, p.longitude]);
   });
 });
 })();
     
-            var map_0a5caf04824e7404487e421ce86d2aae = L.map(
-                "map_0a5caf04824e7404487e421ce86d2aae",
+            var map_16d6beeb83b5076b20dca951c1a41cc3 = L.map(
+                "map_16d6beeb83b5076b20dca951c1a41cc3",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -469,14 +482,14 @@ propertyPoints.forEach((p) => {
 
                 }
             );
-            L.control.scale().addTo(map_0a5caf04824e7404487e421ce86d2aae);
+            L.control.scale().addTo(map_16d6beeb83b5076b20dca951c1a41cc3);
 
             
 
         
     
-            var tile_layer_7738ca7867ad09d200c53310ac786984 = L.tileLayer(
-                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+            var tile_layer_3b4554d30360b6b58e178cd5bef98b53 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
   "maxZoom": 20,
@@ -492,7 +505,7 @@ propertyPoints.forEach((p) => {
             );
         
     
-            tile_layer_7738ca7867ad09d200c53310ac786984.addTo(map_0a5caf04824e7404487e421ce86d2aae);
+            tile_layer_3b4554d30360b6b58e178cd5bef98b53.addTo(map_16d6beeb83b5076b20dca951c1a41cc3);
         
 </script>
 </html>

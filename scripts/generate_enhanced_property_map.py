@@ -160,7 +160,7 @@ def main():
     m = folium.Map(
         location=[34.3428, 134.0466],
         zoom_start=13,
-        tiles="CartoDB positron",
+        tiles="CartoDB Voyager",
         control_scale=True,
     )
 
@@ -322,8 +322,6 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   margin: 14px 0 18px;
-  background: #eadcc8;
-  color: #3a281b;
 }
 
 .badge {
@@ -336,17 +334,21 @@ body {
   border: 1px solid #c9ab85;
 }
 
-.panel-title {
-  font-size: 22px;
-  line-height: 1.35;
-  margin: 0;
-  color: #17110c;
+.panel-header {
+  background: var(--accent-color, #2d2016);
+  color: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin: -4px -4px 18px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.16);
 }
 
-.panel-address {
-  margin-top: 10px;
-  color: #3f352d;
-  line-height: 1.5;
+.panel-header .panel-title {
+  color: white;
+}
+
+.panel-header .panel-address {
+  color: rgba(255,255,255,0.88);
 }
 
 .info-grid {
@@ -359,6 +361,7 @@ body {
 .info-card {
   background: #fbf8f3;
   border: 1px solid #eee4d8;
+  border-top: 4px solid var(--accent-color, #2d2016);
   border-radius: 14px;
   padding: 12px;
 }
@@ -379,7 +382,7 @@ body {
 .section-title {
   margin: 22px 0 10px;
   font-size: 15px;
-  color: #2f261f;
+  color: var(--accent-color);
 }
 
 .comment-box {
@@ -403,13 +406,13 @@ body {
 }
 
 .link-primary {
-  background: #2d2016;
+  background: var(--accent-color, #2d2016);
   color: white !important;
 }
 
 .link-secondary {
-  background: #f4efe7;
-  color: #3b2d22 !important;
+  background: var(--accent-color, #f4efe7);
+  color: var(--accent-color, #3b2d22) !important;
 }
 
 .leaflet-control-zoom {
@@ -433,6 +436,7 @@ body {
     top: auto;
     width: auto;
     max-height: 42vh;
+    background: #efe5d6;
   }
 
   .legend-card {
@@ -475,6 +479,8 @@ function yen(value) {
 }
 
 function renderPanel(p) {
+  const accentColor = patternColors[p["事業成立パターン"]] || "#2d2016";
+  document.getElementById("sidePanel").style.setProperty("--accent-color", accentColor);
   const simButton = p["営業シミュレーションURL"]
     ? `<a class="link-button link-primary" href="${p["営業シミュレーションURL"]}">営業シミュレーションを見る</a>`
     : "";
@@ -483,10 +489,17 @@ function renderPanel(p) {
     ? `<a class="link-button link-secondary" href="${p["詳細URL"]}" target="_blank">掲載元詳細ページを見る</a>`
     : "";
 
+    const panel = document.getElementById("sidePanel");
+
+    panel.style.setProperty(
+        "--accent-color",
+        patternColors[p["事業成立パターン"]] || "#666");
+
   document.getElementById("sidePanel").innerHTML = `
-    <div class="panel-content">
-      <h2 class="panel-title">${safe(p["物件名"])}</h2>
-      <div class="panel-address">${safe(p["所在地"])}</div>
+    <div class="panel-header">
+        <h2 class="panel-title">${safe(p["物件名"])}</h2>
+        <div class="panel-address">${safe(p["所在地"])}</div>
+    </div>
 
       <div class="badges">
         <span class="badge">${safe(p["事業成立パターン"])}</span>
