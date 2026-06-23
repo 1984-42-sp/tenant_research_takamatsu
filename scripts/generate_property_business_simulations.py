@@ -2,6 +2,7 @@ from pathlib import Path
 from html import escape
 import math
 import re
+from turtle import color, left
 
 import pandas as pd
 
@@ -667,15 +668,95 @@ body {{
   border-left: 8px solid #999;
 }}
 
-.pattern-低固定費・小商圏型 {{ border-left-color: #2ca02c; }}
-.pattern-中心街・高回転型 {{ border-left-color: #d62728; }}
-.pattern-中心街・高単価型 {{ border-left-color: #ff7f0e; }}
-.pattern-郊外・駐車場依存型 {{ border-left-color: #1f77b4; }}
-.pattern-大型投資・高売上必須型 {{ border-left-color: #9467bd; }}
-.pattern-家賃未定・問い合わせ必要型 {{ border-left-color: #7f7f7f; }}
-.pattern-面積不明・詳細確認型 {{ border-left-color: #8c564b; }}
-.pattern-要確認・情報不足型 {{ border-left-color: #888; }}
-.pattern-家賃・面積不明型 {{ border-left-color: #888; }}
+.pattern-低固定費・小商圏型 {{
+  border-left-color: #2f80ed;
+  background: linear-gradient(
+    90deg,
+    rgba(47,128,237,0.10),
+    #ffffff 42%
+  );
+}}
+
+.pattern-中心街・高単価型 {{
+  border-left-color: #f2994a;
+  background: linear-gradient(
+    90deg,
+    rgba(242,153,74,0.12),
+    #ffffff 42%
+  );
+}}
+
+.pattern-中心街・高回転型 {{
+  border-left-color: #eb5757;
+  background: linear-gradient(
+    90deg,
+    rgba(235,87,87,0.10),
+    #ffffff 42%
+  );
+}}
+
+.pattern-準中心街・生活圏型 {{
+  border-left-color: #9b51e0;
+  background: linear-gradient(
+    90deg,
+    rgba(155,81,224,0.10),
+    #ffffff 42%
+  );
+}}
+
+.pattern-郊外・駐車場依存型 {{
+  border-left-color: #27ae60;
+  background: linear-gradient(
+    90deg,
+    rgba(39,174,96,0.10),
+    #ffffff 42%
+  );
+}}
+
+.pattern-大型投資・高売上必須型 {{
+  border-left-color: #8e44ad;
+  background: linear-gradient(
+    90deg,
+    rgba(142,68,173,0.10),
+    #ffffff 42%
+  );
+}}
+
+.pattern-家賃未定・問い合わせ必要型 {{
+  border-left-color: #828282;
+  background: linear-gradient(
+    90deg,
+    rgba(130,130,130,0.10),
+    #ffffff 42%
+  );
+}}
+
+.pattern-要確認・情報不足型 {{
+  border-left-color: #828282;
+  background: linear-gradient(
+    90deg,
+    rgba(130,130,130,0.10),
+    #ffffff 42%
+  );
+}}
+
+.pattern-面積不明・詳細確認型 {{
+  border-left-color: #8c564b;
+  background: linear-gradient(
+    90deg,
+    rgba(140,86,75,0.10),
+    #ffffff 42%
+  );
+}}
+
+.pattern-飲食不可・評価対象外型 {{
+  border-left-color: #000000;
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.08),
+    #ffffff 42%
+  );
+}}
 
 .card-header {{
   display: flex;

@@ -439,6 +439,11 @@ body {
 """
 
     custom_js = """
+(function bootEnhancedMap() {
+  if (typeof L === "undefined" || typeof __MAP_NAME__ === "undefined") {
+    setTimeout(bootEnhancedMap, 50);
+    return;
+  }
 const propertyPoints = __POINTS_JSON__;
 const patternColors = __PATTERN_COLORS__;
 
@@ -557,6 +562,7 @@ propertyPoints.forEach((p) => {
     __MAP_NAME__.panTo([p.latitude, p.longitude]);
   });
 });
+})();
 """
 
     custom_js = custom_js.replace("__POINTS_JSON__", points_json)
