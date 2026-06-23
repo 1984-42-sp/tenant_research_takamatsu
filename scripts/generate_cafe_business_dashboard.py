@@ -560,7 +560,7 @@ document.getElementById("chart").on("plotly_click", function(data) {{
   : "営業シミュレーション未生成";
 
   const mapUrlHtml = p["マップURL"]
-  ? `<a href="${{p["マップURL"]}}" target="_blank">マップで見る</a>`
+  ? p["マップURL"]
   : "マップリンクなし";
 
   document.getElementById("detail").innerHTML = `
