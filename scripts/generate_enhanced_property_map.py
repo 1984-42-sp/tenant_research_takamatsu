@@ -509,6 +509,9 @@ function renderPanel(p) {
 
   document.getElementById("sidePanel").innerHTML = `
     <div class="panel-header">
+    <button class="close-panel-btn" onclick="closePanel()">
+      ✕
+    </button>
         <h2 class="panel-title">${safe(p["物件名"])}</h2>
         <div class="panel-address">${safe(p["所在地"])}</div>
     </div>

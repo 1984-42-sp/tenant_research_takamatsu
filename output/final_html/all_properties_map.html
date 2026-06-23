@@ -280,7 +280,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_216082bf33225d24191d3cf224b70961 {
+                #map_9d6913441d2736072c7b947cd1306e38 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -340,14 +340,14 @@ body {
   </div>
 </div>
     
-            <div class="folium-map" id="map_216082bf33225d24191d3cf224b70961" ></div>
+            <div class="folium-map" id="map_9d6913441d2736072c7b947cd1306e38" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_216082bf33225d24191d3cf224b70961 === "undefined") {
+  if (typeof L === "undefined" || typeof map_9d6913441d2736072c7b947cd1306e38 === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -397,6 +397,9 @@ function renderPanel(p) {
 
   document.getElementById("sidePanel").innerHTML = `
     <div class="panel-header">
+    <button class="close-panel-btn" onclick="closePanel()">
+      ✕
+    </button>
         <h2 class="panel-title">${safe(p["物件名"])}</h2>
         <div class="panel-address">${safe(p["所在地"])}</div>
     </div>
@@ -469,7 +472,7 @@ propertyPoints.forEach((p) => {
     weight: 2,
     fillColor: p.color,
     fillOpacity: 0.92
-  }).addTo(map_216082bf33225d24191d3cf224b70961);
+  }).addTo(map_9d6913441d2736072c7b947cd1306e38);
 
   marker.bindTooltip(p["物件名"], {
     direction: "top",
@@ -478,7 +481,7 @@ propertyPoints.forEach((p) => {
 
   marker.on("click", function() {
     renderPanel(p);
-    map_216082bf33225d24191d3cf224b70961.panTo([p.latitude, p.longitude]);
+    map_9d6913441d2736072c7b947cd1306e38.panTo([p.latitude, p.longitude]);
   });
 });
 
@@ -491,14 +494,14 @@ if (targetProperty) {
 
   if (target) {
     renderPanel(target);
-    map_216082bf33225d24191d3cf224b70961.setView([target.latitude, target.longitude], 17);
+    map_9d6913441d2736072c7b947cd1306e38.setView([target.latitude, target.longitude], 17);
   }
 }
 
 })();
     
-            var map_216082bf33225d24191d3cf224b70961 = L.map(
-                "map_216082bf33225d24191d3cf224b70961",
+            var map_9d6913441d2736072c7b947cd1306e38 = L.map(
+                "map_9d6913441d2736072c7b947cd1306e38",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -510,13 +513,13 @@ if (targetProperty) {
 
                 }
             );
-            L.control.scale().addTo(map_216082bf33225d24191d3cf224b70961);
+            L.control.scale().addTo(map_9d6913441d2736072c7b947cd1306e38);
 
             
 
         
     
-            var tile_layer_c5fb5d861e14c700f93705ed954ae6a0 = L.tileLayer(
+            var tile_layer_3b1ba83759d87bc7ca7adf6c0014b9f9 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -533,7 +536,7 @@ if (targetProperty) {
             );
         
     
-            tile_layer_c5fb5d861e14c700f93705ed954ae6a0.addTo(map_216082bf33225d24191d3cf224b70961);
+            tile_layer_3b1ba83759d87bc7ca7adf6c0014b9f9.addTo(map_9d6913441d2736072c7b947cd1306e38);
         
 </script>
 </html>
