@@ -180,6 +180,7 @@ def make_star_sections(df, simulation_link_map):
                         <th>タイプ</th>
                         <th>詳細</th>
                         <th>営業SIM</th>
+                        <th>マップ</th>
                     </tr>
                 </thead>
                 <tbody>
