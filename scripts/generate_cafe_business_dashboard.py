@@ -1,6 +1,7 @@
 from html import escape
 from os import name
 from pathlib import Path
+from urllib.parse import quote
 import json
 
 import pandas as pd
@@ -165,6 +166,7 @@ def main():
             "ダッシュボード表示コメント": safe(row.get("ダッシュボード表示コメント")),
             "marker_size": size,
             "営業シミュレーションURL": safe(row.get("営業シミュレーションURL")),
+            "マップURL": (f'all_properties_map.html?property={quote(str(row.get("物件名", "")).strip())}'),
         })
 
     table_cols = [
@@ -185,8 +187,13 @@ def main():
         "店舗規模",
         "掲載サイト",
         "詳細URL",
-        "営業シミュレーションURL"
+        "営業シミュレーションURL",
+        "マップURL"
     ]
+
+    df["マップURL"] = df["物件名"].apply(
+        lambda name: f'all_properties_map.html?property={quote(str(name).strip())}'
+    )
 
     table_df = df[table_cols].copy()
 
@@ -211,8 +218,15 @@ def main():
                 f'target="_blank" '
                 f'rel="noopener noreferrer">{name}</a>'
             )
-
+        
         return name
+    
+    def format_map_link(row):
+        url = str(row.get("マップURL", "")).strip()
+        if not url:
+            return ""
+        return f'<a href="{escape(url)}">マップで見る</a>'
+        
 
     table_df["物件名"] = table_df.apply(
         make_property_link,
@@ -233,7 +247,21 @@ def main():
 
     table_df["営業シミュレーションURL"] = table_df["営業シミュレーションURL"].apply(make_sim_link)
 
-    table_df = table_df.drop(columns=["詳細URL"])
+    def make_map_link(value):
+        url = str(value).strip()
+
+        if not url:
+            return ""
+
+        return (
+          f'<a href="{escape(url)}" '
+          f'target="_blank" '
+          f'rel="noopener noreferrer">マップ</a>'
+      )
+
+    table_df["マップURL"] = table_df["マップURL"].apply(make_map_link)
+    table_df["マップ"] = table_df.apply(format_map_link, axis=1)
+    table_df = table_df.drop(columns=["詳細URL", "マップURL"])
     
     html_table = table_df.to_html(
         index=False,
@@ -531,6 +559,10 @@ document.getElementById("chart").on("plotly_click", function(data) {{
   ? `<a href="${{p["営業シミュレーションURL"]}}" target="_blank">個別営業シミュレーションを開く</a>`
   : "営業シミュレーション未生成";
 
+  const mapUrlHtml = p["マップURL"]
+  ? `<a href="${{p["マップURL"]}}" target="_blank">マップで見る</a>`
+  : "マップリンクなし";
+
   document.getElementById("detail").innerHTML = `
     <h2>${{p["物件名"]}}</h2>
     <p><b>星評価：</b>${{p["星評価"]}}</p>
@@ -549,6 +581,7 @@ document.getElementById("chart").on("plotly_click", function(data) {{
     <p><b>評価コメント：</b>${{p["評価コメント"]}}</p>
     <p>${{urlHtml}}</p>
     <p>${{simUrlHtml}}</p>
+    <p>${{mapUrlHtml}}</p>
   `;
 }});
 
