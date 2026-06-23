@@ -221,39 +221,39 @@ body {
 }
 
 .brand {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: 0.02em;
 }
 
 .subtitle {
-  font-size: 12px;
+  font-size: 10px;
   color: #fff1d8;
   margin-top: 4px;
 }
 
 .top-stats {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .stat {
   background: rgba(255,255,255,0.12);
   border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 14px;
-  padding: 8px 14px;
-  min-width: 92px;
+  border-radius: 10px;
+  padding: 4px 10px;
+  min-width: 70px;
   text-align: center;
 }
 
 .stat span {
   display: block;
-  font-size: 11px;
+  font-size: 9px;
   color: #e6d8c5;
 }
 
 .stat strong {
-  font-size: 20px;
+  font-size: 14px;
   color: #ffd36a;
 }
 
@@ -468,13 +468,13 @@ body {
 
 @media (max-width: 900px) {
   .topbar {
-    right: 18px;
-    height: auto;
-    padding: 14px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    top: 12px;
+    left: 12px;
+    right: 390px;
+    height: 52px;
+    padding: 0 16px;
   }
+
 
   .side-panel {
     left: 12px;

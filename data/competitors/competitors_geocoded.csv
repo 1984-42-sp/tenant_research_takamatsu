@@ -1,0 +1,5 @@
+﻿competitor_id,store_name,source,genre,address,lat,lng,rating,review_count,business_hours,closed_days,url,memo
+competitor_id,store_name,source,genre,高松市address,,,,,business_hours,closed_days,url,memo
+C00002,umie,manual,カフェ,高松市北浜町3-2,,,,,,,,
+C00003,206 TSU MA MU,manual,カフェ,高松市北浜町4-14,,,,,,,,
+C00004,半空,manual,カフェ,高松市瓦町1丁目10-18,,,,,,,,
