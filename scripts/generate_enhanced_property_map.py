@@ -324,18 +324,22 @@ body {
   margin: 14px 0 18px;
 }
 
-.badge {
+.property-badge {
   display: inline-block;
   padding: 6px 10px;
   border-radius: 999px;
-  font-weight: 700;
-  color: #111;
-  background: rgba(255,255,255,0.88);
-  border: 1px solid rgba(0,0,0,0.15);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #111 !important;
+  background: #f3eadc !important;
+  border: 1px solid #c9ab85;
 }
 
-.badge-pattern {
+.property-badge-pattern {
   color: #fff !important;
+  background: var(--accent-color, #2d2016) !important;
+  border: none;
 }
 
 .panel-header {
@@ -510,11 +514,11 @@ function renderPanel(p) {
     </div>
 
       <div class="badges">
-        <span class="badge badge-pattern" style="background:${accentColor}; color:#fff; border:none;">
-          ${safe(p["事業成立パターン"])}
+        <span class="property-badge property-badge-pattern">
+            ${safe(p["事業成立パターン"])}
         </span>
-        <span class="badge">${safe(p["飲食可否"])}</span>
-        <span class="badge">${safe(p["評価ランク"])}</span>
+        <span class="property-badge">${safe(p["飲食可否"])}</span>
+        <span class="property-badge">${safe(p["評価ランク"])}</span>
       </div>
 
       <div class="info-grid">
