@@ -35,3 +35,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+TOP_PAGE = BASE_DIR / "templates" / "netlify_index.html"
+
+if TOP_PAGE.exists():
+    shutil.copy2(
+        TOP_PAGE,
+        TARGET_DIR / "index.html"
+    )
+    print("[FILE] index.html")
