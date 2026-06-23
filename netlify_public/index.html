@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>高松市 カフェ開業候補地分析システム</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    margin:0;
+    background:#f5f6f8;
+    color:#222;
+}
+
+header{
+    background:#2c3e50;
+    color:white;
+    padding:50px 20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:36px;
+}
+
+header p{
+    margin-top:12px;
+    opacity:0.9;
+}
+
+.container{
+    max-width:1200px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+.summary{
+    background:white;
+    border-radius:12px;
+    padding:24px;
+    margin-bottom:30px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    line-height:1.8;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:24px;
+    text-decoration:none;
+    color:#222;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    transition:0.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+}
+
+.card h2{
+    margin-top:0;
+    color:#2c3e50;
+}
+
+.card p{
+    line-height:1.7;
+    color:#555;
+}
+
+footer{
+    text-align:center;
+    color:#777;
+    padding:40px 0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>高松市 カフェ開業候補地分析システム</h1>
+    <p>216件の店舗・事業用賃貸物件を対象に事業成立性を分析</p>
+</header>
+
+<div class="container">
+
+    <div class="summary">
+        <h2>プロジェクト概要</h2>
+
+        <p>
+        本システムは、高松市内で掲載中の店舗・事業用賃貸物件を統合し、
+        「どの物件で、どのカフェ業態なら成立しやすいか」
+        を分析するためのデータベースです。
+        </p>
+
+        <ul>
+            <li>対象物件：216件</li>
+            <li>ジオコード成功：196件</li>
+            <li>事業性評価モデル実装済み</li>
+            <li>営業シミュレーション実装済み</li>
+            <li>Netlify公開版</li>
+        </ul>
+    </div>
+
+    <div class="cards">
+
+        <a class="card" href="cafe_business_dashboard.html">
+            <h2>📊 カフェ事業性ダッシュボード</h2>
+            <p>
+            必要月商・必要客数・評価ランク・事業成立パターンを
+            散布図と一覧で分析できます。
+            </p>
+        </a>
+
+        <a class="card" href="simulation_index.html">
+            <h2>☕ 営業シミュレーション一覧</h2>
+            <p>
+            各物件について、
+            必要客数・想定売上・投資規模を確認できます。
+            </p>
+        </a>
+
+        <a class="card" href="cafe_property_evaluation.html">
+            <h2>🏆 物件評価一覧</h2>
+            <p>
+            A〜D評価と事業成立性スコアを一覧表示します。
+            </p>
+        </a>
+
+        <a class="card" href="all_properties_map.html">
+            <h2>🗺️ 物件マップ</h2>
+            <p>
+            高松市内の物件位置を地図上で確認できます。
+            </p>
+        </a>
+
+        <a class="card" href="business_plan_dashboard.html">
+            <h2>📈 ビジネスプランダッシュボード</h2>
+            <p>
+            カフェ業態別の事業計画や収益構造を確認できます。
+            </p>
+        </a>
+
+    </div>
+
+</div>
+
+<footer>
+    Takamatsu Cafe Property Analysis System
+</footer>
+
+</body>
+</html>
