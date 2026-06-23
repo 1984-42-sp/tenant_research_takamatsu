@@ -5,16 +5,10 @@ import re
 import unicodedata
 
 
-def normalize_key(value):
-    if value is None:
-        return ""
-    text = unicodedata.normalize("NFKC", str(value))
-    text = re.sub(r"\s+", "", text)
-    return text.strip()
+DETAIL_DIR = Path("data/html/tenant_kagawa/detail")
+OUT_DIR = Path("output/tenant_kagawa")
+OUT_CSV = OUT_DIR / "tenant_kagawa_detail.csv"
 
-DETAIL_DIR = Path(
-    "data/html/tenant_kagawa/detail"
-)
 
 IGNORE_KEYS = {
     "",
@@ -26,82 +20,118 @@ IGNORE_KEYS = {
     "-",
     "Home",
     "End",
-    "Page Up",
-    "Page Down",
+    "PageUp",
+    "PageDown",
 }
 
-records = []
 
-for file in DETAIL_DIR.glob("*.html"):
+def normalize_key(value):
+    if value is None:
+        return ""
 
-    article_id = file.stem
+    text = unicodedata.normalize("NFKC", str(value))
+    text = re.sub(r"\s+", "", text)
+    text = text.strip()
 
-    html = file.read_text(
-        encoding="utf-8",
-        errors="ignore"
-    )
-
-    soup = BeautifulSoup(
-        html,
-        "lxml"
-    )
-
-    record = {
-        "article_id": article_id
+    aliases = {
+        "賃料": "賃料",
+        "賃料(税込)": "賃料",
+        "賃料（税込）": "賃料",
+        "家賃": "賃料",
     }
 
-    for tr in soup.select("tr"):
+    return aliases.get(text, text)
 
-        cells = tr.find_all(
-            ["th", "td"]
-        )
 
-        if len(cells) < 2:
+def clean_value(value):
+    if value is None:
+        return ""
+
+    text = unicodedata.normalize("NFKC", str(value))
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def extract_pairs_from_tr(tr):
+    cells = tr.find_all(["th", "td"])
+
+    pairs = []
+
+    i = 0
+    while i < len(cells) - 1:
+        if cells[i].name != "th":
+            i += 1
             continue
 
         key = normalize_key(
-            cells[0].get_text(
-                " ",
-                strip=True
-            )
+            cells[i].get_text(" ", strip=True)
         )
 
-        value = cells[1].get_text(
-            " ",
-            strip=True
+        value = clean_value(
+            cells[i + 1].get_text(" ", strip=True)
         )
 
-        if key in IGNORE_KEYS:
-            continue
+        if key and key not in IGNORE_KEYS:
+            pairs.append((key, value))
 
-        record[key] = value
+        i += 2
 
-    records.append(record)
+    return pairs
 
-df = pd.DataFrame(records)
 
-print(df.shape)
+def main():
+    records = []
 
-print(df.columns.tolist())
+    files = sorted(DETAIL_DIR.glob("*.html"))
 
-print()
+    print(f"files: {len(files)}")
 
-for col in sorted(df.columns):
-    print(col)
+    for file in files:
+        article_id = file.stem
+
+        html = file.read_text(
+            encoding="utf-8",
+            errors="ignore"
+        )
+
+        soup = BeautifulSoup(html, "lxml")
+
+        record = {
+            "article_id": article_id
+        }
+
+        for tr in soup.select("tr"):
+            for key, value in extract_pairs_from_tr(tr):
+                if key in record and record[key] != value:
+                    record[f"{key}_2"] = value
+                else:
+                    record[key] = value
+
+        records.append(record)
+
+    df = pd.DataFrame(records)
+
+    print(df.shape)
+    print(df.columns.tolist())
 
     print()
-print(df.isna().sum())
+    print("賃料 column exists:", "賃料" in df.columns)
 
-Path("output/tenant_kagawa").mkdir(
-    parents=True,
-    exist_ok=True
-)
+    if "賃料" in df.columns:
+        print()
+        print(df[["article_id", "賃料"]].head(20))
 
-df.to_csv(
-    "output/tenant_kagawa/tenant_kagawa_detail.csv",
-    index=False,
-    encoding="utf-8-sig"
-)
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-print()
-print("saved detail csv")
+    df.to_csv(
+        OUT_CSV,
+        index=False,
+        encoding="utf-8-sig"
+    )
+
+    print()
+    print(f"saved detail csv: {OUT_CSV}")
+
+
+if __name__ == "__main__":
+    main()

@@ -612,7 +612,7 @@ def make_index(rows):
           </div>
 
           <div class="actions">
-            <a href="property_business_simulations/{escape(row["file_name"])}">個別シミュレーションを見る</a>
+            <a class="btn" href="property_business_simulations/{escape(row["file_name"])}">個別シミュレーションを見る</a>
           </div>
         </div>
         """)
@@ -779,6 +779,16 @@ body {{
   text-decoration: none;
   padding: 9px 14px;
   border-radius: 8px;
+}}
+
+.sim-link {{
+  display: inline-block;
+  background: #2f3a45;
+  color: white !important;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
 }}
 
 a {{

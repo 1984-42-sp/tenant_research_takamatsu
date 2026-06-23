@@ -73,7 +73,7 @@ def load_simulation_link_map():
 
     file_col = None
     for col in sim_df.columns:
-        if col in ["ファイル名", "html_file", "simulation_file", "filename", "file_name"]:
+        if col in ["営業シミュレーションURL", "ファイル名", "html_file", "simulation_file", "filename", "file_name"]:
             file_col = col
             break
 
@@ -111,40 +111,35 @@ def make_property_table(df, simulation_link_map):
         detail_url = esc(row.get("詳細URL", ""))
         link = f'<a href="{detail_url}" target="_blank">詳細</a>' if detail_url else ""
 
+        property_name = str(row.get("物件名", "")).strip()
+        simulation_path = simulation_link_map.get(property_name, "")
 
-    detail_url = esc(row.get("詳細URL", ""))
-    link = f'<a href="{detail_url}" target="_blank">詳細</a>' if detail_url else ""
+        simulation_link = (
+            f'<a href="{esc(simulation_path)}">営業SIM</a>'
+            if simulation_path
+            else ""
+        )
 
-    property_name = str(row.get("物件名", "")).strip()
+        rows.append(f"""
+        <tr>
+            <td>{esc(row.get("seongsu_rank"))}</td>
+            <td class="star">{esc(row.get("seongsu_fit_stars"))}</td>
+            <td>{esc(row.get("seongsu_fit_score"))}</td>
+            <td>{esc(row.get("物件名"))}</td>
+            <td>{esc(row.get("所在地"))}</td>
+            <td>{esc(row.get("坪数_補正"))}</td>
+            <td>{esc(row.get("家賃"))}</td>
+            <td>{esc(row.get("駐車場判定"))}</td>
+            <td>{esc(row.get("seongsu_fit_type"))}</td>
+            <td>{link}</td>
+            <td>{simulation_link}</td>
+        </tr>
 
-    simulation_path = simulation_link_map.get(property_name, "")
-
-    simulation_link = (
-        f'<a href="{esc(simulation_path)}">営業SIM</a>'
-        if simulation_path
-        else ""
-    )
-
-    rows.append(f"""
-    <tr>
-        <td>{esc(row.get("seongsu_rank"))}</td>
-        <td class="star">{esc(row.get("seongsu_fit_stars"))}</td>
-        <td>{esc(row.get("seongsu_fit_score"))}</td>
-        <td>{esc(row.get("物件名"))}</td>
-        <td>{esc(row.get("所在地"))}</td>
-        <td>{esc(row.get("坪数_補正"))}</td>
-        <td>{esc(row.get("家賃"))}</td>
-        <td>{esc(row.get("駐車場判定"))}</td>
-        <td>{esc(row.get("seongsu_fit_type"))}</td>
-        <td>{link}</td>
-        <td>{simulation_link}</td>
-    </tr>
-
-    <tr class="comment-row">
-        <td></td>
-        <td colspan="10">{esc(row.get("seongsu_fit_comment"))}</td>
-    </tr>
-    """)
+        <tr class="comment-row">
+            <td></td>
+            <td colspan="10">{esc(row.get("seongsu_fit_comment"))}</td>
+        </tr>
+        """)
 
     return "\n".join(rows)
 
@@ -200,7 +195,7 @@ def main():
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>韓国ソンス風ブランド実装ランキングダッシュボード</title>
+<title>実装可能ランキング</title>
 <style>
 body {{
     margin: 0;
@@ -356,7 +351,7 @@ a {{
 </head>
 <body>
 <header>
-    <h1>韓国ソンス風ブランド実装ランキングダッシュボード</h1>
+    <h1>実装可能ランキング</h1>
     <p>
         高松市内の店舗・事業用賃貸物件216件を対象に、韓国ソンス風フルーツカフェをどの程度現実的に実装できるかをランキング化したPhase5用ダッシュボード。
         個別物件の詳細確認ではなく、ブランド実装可能性の俯瞰と出店戦略のブラッシュアップを目的とする。

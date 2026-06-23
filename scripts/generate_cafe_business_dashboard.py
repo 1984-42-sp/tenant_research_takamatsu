@@ -116,10 +116,25 @@ def main():
 
     for _, row in plot_df.iterrows():
         initial_mid = row.get("初期投資中央値", "")
-        size = 10
+        size = 8
 
         if pd.notna(initial_mid) and initial_mid != "":
-            size = max(8, min(36, float(initial_mid) / 1_000_000))
+            initial_mid = float(initial_mid)
+
+            if initial_mid < 5_000_000:
+                size = 8
+            elif initial_mid < 10_000_000:
+                size = 10
+            elif initial_mid < 20_000_000:
+                size = 12
+            elif initial_mid < 40_000_000:
+                size = 14
+            elif initial_mid < 80_000_000:
+                size = 16
+            elif initial_mid < 150_000_000:
+                size = 18
+            else:
+                size = 20
 
         points.append({
             "物件名": safe(row.get("物件名")),
@@ -402,12 +417,14 @@ const points = {points_json};
 const patterns = [...new Set(points.map(p => p["事業成立パターン"]))];
 
 const patternColors = {{
-  "低固定費・小商圏型": "#2ca02c",
-  "中心街・高回転型": "#d62728",
-  "中心街・高単価型": "#ff7f0e",
-  "郊外・駐車場依存型": "#1f77b4",
-  "大型投資・高売上必須型": "#9467bd",
-  "家賃未定・問い合わせ必要型": "#7f7f7f",
+  "低固定費・小商圏型": "#2f80ed",
+  "中心街・高単価型": "#f2994a",
+  "中心街・高回転型": "#eb5757",
+  "準中心街・生活圏型": "#9b51e0",
+  "郊外・駐車場依存型": "#27ae60",
+  "大型投資・高売上必須型": "#8e44ad",
+  "家賃未定・問い合わせ必要型": "#828282",
+  "要確認・情報不足型": "#828282",
   "面積不明・詳細確認型": "#8c564b",
   "飲食不可・評価対象外型": "#000000"
 }};

@@ -395,7 +395,10 @@ def main():
     print(f"[SAVE] {geocoded_csv}: {len(geocoded)}件")
     print(f"[SAVE] {failed_csv}: {len(failed)}件")
 
-    save_map(all_df)
+    # 旧マップ生成は停止。
+    # マップは scripts/generate_enhanced_property_map.py で生成する。
+    # save_map(all_df)
+
     save_list_html(all_df)
 
 
