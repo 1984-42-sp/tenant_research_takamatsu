@@ -124,6 +124,31 @@ body {
   line-height: 1.8;
 }
 
+.close-panel-btn{
+    position:absolute;
+    top:12px;
+    right:12px;
+
+    width:34px;
+    height:34px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.25);
+    color:white;
+
+    cursor:pointer;
+    font-size:18px;
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.close-panel-btn:hover{
+    background:rgba(255,255,255,0.45);
+}
+
 .panel-content {
   padding: 24px;
 }
@@ -280,7 +305,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_9d6913441d2736072c7b947cd1306e38 {
+                #map_b9920cf484ceba335d130e971f65ce33 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -333,21 +358,21 @@ body {
   <div id="legendItems"></div>
 </div>
 
-<div class="side-panel" id="sidePanel">
+<div class="panel-empty" id="panel-empty">
   <div class="panel-empty">
     <h2>物件を選択してください</h2>
     <p>地図上のピンをクリックすると、ここに事業性評価・営業シミュレーション・ソンス評価が表示されます。</p>
   </div>
 </div>
     
-            <div class="folium-map" id="map_9d6913441d2736072c7b947cd1306e38" ></div>
+            <div class="folium-map" id="map_b9920cf484ceba335d130e971f65ce33" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_9d6913441d2736072c7b947cd1306e38 === "undefined") {
+  if (typeof L === "undefined" || typeof map_b9920cf484ceba335d130e971f65ce33 === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -365,6 +390,18 @@ Object.entries(patternColors).forEach(([label, color]) => {
   legend.appendChild(item);
 });
 
+function closePanel() {
+    document.getElementById("panel-empty").innerHTML = `
+        <div class="panel-empty">
+            <h2>物件を選択してください</h2>
+            <p>
+                地図上の物件をクリックすると、
+                詳細情報・事業成立性・営業シミュレーションへのリンクを表示します。
+            </p>
+        </div>
+    `;
+}
+
 function safe(value) {
   if (value === null || value === undefined || value === "" || Number.isNaN(value)) return "-";
   return value;
@@ -379,7 +416,7 @@ function yen(value) {
 
 function renderPanel(p) {
   const accentColor = patternColors[p["事業成立パターン"]] || "#2d2016";
-  document.getElementById("sidePanel").style.setProperty("--accent-color", accentColor);
+  document.getElementById("panel-empty").style.setProperty("--accent-color", accentColor);
 
   const simButton = p["営業シミュレーションURL"]
     ? `<a class="link-button link-primary" href="${p["営業シミュレーションURL"]}">営業シミュレーションを見る</a>`
@@ -389,13 +426,13 @@ function renderPanel(p) {
     ? `<a class="link-button link-secondary" href="${p["詳細URL"]}" target="_blank">掲載元詳細ページを見る</a>`
     : "";
 
-    const panel = document.getElementById("sidePanel");
+    const panel = document.getElementById("panel-empty");
 
     panel.style.setProperty(
         "--accent-color",
         patternColors[p["事業成立パターン"]] || "#666");
 
-  document.getElementById("sidePanel").innerHTML = `
+  document.getElementById("panel-empty").innerHTML = `
     <div class="panel-header">
     <button class="close-panel-btn" onclick="closePanel()">
       ✕
@@ -472,7 +509,7 @@ propertyPoints.forEach((p) => {
     weight: 2,
     fillColor: p.color,
     fillOpacity: 0.92
-  }).addTo(map_9d6913441d2736072c7b947cd1306e38);
+  }).addTo(map_b9920cf484ceba335d130e971f65ce33);
 
   marker.bindTooltip(p["物件名"], {
     direction: "top",
@@ -481,7 +518,7 @@ propertyPoints.forEach((p) => {
 
   marker.on("click", function() {
     renderPanel(p);
-    map_9d6913441d2736072c7b947cd1306e38.panTo([p.latitude, p.longitude]);
+    map_b9920cf484ceba335d130e971f65ce33.panTo([p.latitude, p.longitude]);
   });
 });
 
@@ -494,14 +531,14 @@ if (targetProperty) {
 
   if (target) {
     renderPanel(target);
-    map_9d6913441d2736072c7b947cd1306e38.setView([target.latitude, target.longitude], 17);
+    map_b9920cf484ceba335d130e971f65ce33.setView([target.latitude, target.longitude], 17);
   }
 }
 
 })();
     
-            var map_9d6913441d2736072c7b947cd1306e38 = L.map(
-                "map_9d6913441d2736072c7b947cd1306e38",
+            var map_b9920cf484ceba335d130e971f65ce33 = L.map(
+                "map_b9920cf484ceba335d130e971f65ce33",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -513,13 +550,13 @@ if (targetProperty) {
 
                 }
             );
-            L.control.scale().addTo(map_9d6913441d2736072c7b947cd1306e38);
+            L.control.scale().addTo(map_b9920cf484ceba335d130e971f65ce33);
 
             
 
         
     
-            var tile_layer_3b1ba83759d87bc7ca7adf6c0014b9f9 = L.tileLayer(
+            var tile_layer_a8437e7dfab36a6d6d39c7afb976a392 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -536,7 +573,7 @@ if (targetProperty) {
             );
         
     
-            tile_layer_3b1ba83759d87bc7ca7adf6c0014b9f9.addTo(map_9d6913441d2736072c7b947cd1306e38);
+            tile_layer_a8437e7dfab36a6d6d39c7afb976a392.addTo(map_b9920cf484ceba335d130e971f65ce33);
         
 </script>
 </html>

@@ -184,7 +184,7 @@ def main():
   <div id="legendItems"></div>
 </div>
 
-<div class="side-panel" id="sidePanel">
+<div class="panel-empty" id="panel-empty">
   <div class="panel-empty">
     <h2>物件を選択してください</h2>
     <p>地図上のピンをクリックすると、ここに事業性評価・営業シミュレーション・ソンス評価が表示されます。</p>
@@ -311,6 +311,31 @@ body {
   padding: 28px;
   color: #4a4037;
   line-height: 1.8;
+}
+
+.close-panel-btn{
+    position:absolute;
+    top:12px;
+    right:12px;
+
+    width:34px;
+    height:34px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.25);
+    color:white;
+
+    cursor:pointer;
+    font-size:18px;
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.close-panel-btn:hover{
+    background:rgba(255,255,255,0.45);
 }
 
 .panel-content {
@@ -477,6 +502,18 @@ Object.entries(patternColors).forEach(([label, color]) => {
   legend.appendChild(item);
 });
 
+function closePanel() {
+    document.getElementById("panel-empty").innerHTML = `
+        <div class="panel-empty">
+            <h2>物件を選択してください</h2>
+            <p>
+                地図上の物件をクリックすると、
+                詳細情報・事業成立性・営業シミュレーションへのリンクを表示します。
+            </p>
+        </div>
+    `;
+}
+
 function safe(value) {
   if (value === null || value === undefined || value === "" || Number.isNaN(value)) return "-";
   return value;
@@ -491,7 +528,7 @@ function yen(value) {
 
 function renderPanel(p) {
   const accentColor = patternColors[p["事業成立パターン"]] || "#2d2016";
-  document.getElementById("sidePanel").style.setProperty("--accent-color", accentColor);
+  document.getElementById("panel-empty").style.setProperty("--accent-color", accentColor);
 
   const simButton = p["営業シミュレーションURL"]
     ? `<a class="link-button link-primary" href="${p["営業シミュレーションURL"]}">営業シミュレーションを見る</a>`
@@ -501,13 +538,13 @@ function renderPanel(p) {
     ? `<a class="link-button link-secondary" href="${p["詳細URL"]}" target="_blank">掲載元詳細ページを見る</a>`
     : "";
 
-    const panel = document.getElementById("sidePanel");
+    const panel = document.getElementById("panel-empty");
 
     panel.style.setProperty(
         "--accent-color",
         patternColors[p["事業成立パターン"]] || "#666");
 
-  document.getElementById("sidePanel").innerHTML = `
+  document.getElementById("panel-empty").innerHTML = `
     <div class="panel-header">
     <button class="close-panel-btn" onclick="closePanel()">
       ✕
