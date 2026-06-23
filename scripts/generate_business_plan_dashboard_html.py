@@ -110,8 +110,14 @@ def make_property_table(df, simulation_link_map):
     for _, row in df.iterrows():
         detail_url = esc(row.get("詳細URL", ""))
         link = f'<a href="{detail_url}" target="_blank">詳細</a>' if detail_url else ""
-
+        from urllib.parse import quote
         property_name = str(row.get("物件名", "")).strip()
+
+        map_link = (
+            f'<a href="all_properties_map.html?property={quote(property_name)}">'
+            'マップで見る'
+            '</a>'
+        )
         simulation_path = simulation_link_map.get(property_name, "")
 
         simulation_link = (
@@ -133,6 +139,7 @@ def make_property_table(df, simulation_link_map):
             <td>{esc(row.get("seongsu_fit_type"))}</td>
             <td>{link}</td>
             <td>{simulation_link}</td>
+            <td>{map_link}</td>
         </tr>
 
         <tr class="comment-row">

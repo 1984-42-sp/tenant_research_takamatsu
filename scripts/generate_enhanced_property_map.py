@@ -593,6 +593,20 @@ propertyPoints.forEach((p) => {
     __MAP_NAME__.panTo([p.latitude, p.longitude]);
   });
 });
+
+const params = new URLSearchParams(window.location.search);
+const targetProperty = params.get("property");
+
+if (targetProperty) {
+  const decodedTarget = decodeURIComponent(targetProperty);
+  const target = propertyPoints.find(p => p["物件名"] === decodedTarget);
+
+  if (target) {
+    renderPanel(target);
+    __MAP_NAME__.setView([target.latitude, target.longitude], 17);
+  }
+}
+
 })();
 """
 
