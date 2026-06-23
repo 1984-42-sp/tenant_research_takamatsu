@@ -330,8 +330,12 @@ body {
   border-radius: 999px;
   font-weight: 700;
   color: #111;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.88);
   border: 1px solid rgba(0,0,0,0.15);
+}
+
+.badge-pattern {
+  color: #fff !important;
 }
 
 .panel-header {
@@ -484,6 +488,7 @@ function yen(value) {
 function renderPanel(p) {
   const accentColor = patternColors[p["事業成立パターン"]] || "#2d2016";
   document.getElementById("sidePanel").style.setProperty("--accent-color", accentColor);
+
   const simButton = p["営業シミュレーションURL"]
     ? `<a class="link-button link-primary" href="${p["営業シミュレーションURL"]}">営業シミュレーションを見る</a>`
     : "";
@@ -505,20 +510,11 @@ function renderPanel(p) {
     </div>
 
       <div class="badges">
-        <span
-            class="badge badge-pattern"
-            style="background:${accentColor};color:white;border:none;"
-        >
-            ${safe(p["事業成立パターン"])}
+        <span class="badge badge-pattern" style="background:${accentColor}; color:#fff; border:none;">
+          ${safe(p["事業成立パターン"])}
         </span>
-
-        <span class="badge">
-            ${safe(p["飲食可否"])}
-        </span>
-
-        <span class="badge">
-            ${safe(p["評価ランク"])}
-        </span>
+        <span class="badge">${safe(p["飲食可否"])}</span>
+        <span class="badge">${safe(p["評価ランク"])}</span>
       </div>
 
       <div class="info-grid">

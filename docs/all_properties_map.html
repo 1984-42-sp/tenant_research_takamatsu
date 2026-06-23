@@ -141,8 +141,12 @@ body {
   border-radius: 999px;
   font-weight: 700;
   color: #111;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.88);
   border: 1px solid rgba(0,0,0,0.15);
+}
+
+.badge-pattern {
+  color: #fff !important;
 }
 
 .panel-header {
@@ -272,7 +276,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_4109fac9602e01cd1e1ef8c7c5b333dd {
+                #map_e320a2cc75334f7fc0385ec6dc13e605 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -332,14 +336,14 @@ body {
   </div>
 </div>
     
-            <div class="folium-map" id="map_4109fac9602e01cd1e1ef8c7c5b333dd" ></div>
+            <div class="folium-map" id="map_e320a2cc75334f7fc0385ec6dc13e605" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_4109fac9602e01cd1e1ef8c7c5b333dd === "undefined") {
+  if (typeof L === "undefined" || typeof map_e320a2cc75334f7fc0385ec6dc13e605 === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -372,6 +376,7 @@ function yen(value) {
 function renderPanel(p) {
   const accentColor = patternColors[p["事業成立パターン"]] || "#2d2016";
   document.getElementById("sidePanel").style.setProperty("--accent-color", accentColor);
+
   const simButton = p["営業シミュレーションURL"]
     ? `<a class="link-button link-primary" href="${p["営業シミュレーションURL"]}">営業シミュレーションを見る</a>`
     : "";
@@ -393,20 +398,11 @@ function renderPanel(p) {
     </div>
 
       <div class="badges">
-        <span
-            class="badge badge-pattern"
-            style="background:${accentColor};color:white;border:none;"
-        >
-            ${safe(p["事業成立パターン"])}
+        <span class="badge badge-pattern" style="background:${accentColor}; color:#fff; border:none;">
+          ${safe(p["事業成立パターン"])}
         </span>
-
-        <span class="badge">
-            ${safe(p["飲食可否"])}
-        </span>
-
-        <span class="badge">
-            ${safe(p["評価ランク"])}
-        </span>
+        <span class="badge">${safe(p["飲食可否"])}</span>
+        <span class="badge">${safe(p["評価ランク"])}</span>
       </div>
 
       <div class="info-grid">
@@ -469,7 +465,7 @@ propertyPoints.forEach((p) => {
     weight: 2,
     fillColor: p.color,
     fillOpacity: 0.92
-  }).addTo(map_4109fac9602e01cd1e1ef8c7c5b333dd);
+  }).addTo(map_e320a2cc75334f7fc0385ec6dc13e605);
 
   marker.bindTooltip(p["物件名"], {
     direction: "top",
@@ -478,13 +474,13 @@ propertyPoints.forEach((p) => {
 
   marker.on("click", function() {
     renderPanel(p);
-    map_4109fac9602e01cd1e1ef8c7c5b333dd.panTo([p.latitude, p.longitude]);
+    map_e320a2cc75334f7fc0385ec6dc13e605.panTo([p.latitude, p.longitude]);
   });
 });
 })();
     
-            var map_4109fac9602e01cd1e1ef8c7c5b333dd = L.map(
-                "map_4109fac9602e01cd1e1ef8c7c5b333dd",
+            var map_e320a2cc75334f7fc0385ec6dc13e605 = L.map(
+                "map_e320a2cc75334f7fc0385ec6dc13e605",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -496,13 +492,13 @@ propertyPoints.forEach((p) => {
 
                 }
             );
-            L.control.scale().addTo(map_4109fac9602e01cd1e1ef8c7c5b333dd);
+            L.control.scale().addTo(map_e320a2cc75334f7fc0385ec6dc13e605);
 
             
 
         
     
-            var tile_layer_7c7d23dda13268e88cdd05222bf303c4 = L.tileLayer(
+            var tile_layer_6a65e6eb270e9e326b32657c113e3788 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -519,7 +515,7 @@ propertyPoints.forEach((p) => {
             );
         
     
-            tile_layer_7c7d23dda13268e88cdd05222bf303c4.addTo(map_4109fac9602e01cd1e1ef8c7c5b333dd);
+            tile_layer_6a65e6eb270e9e326b32657c113e3788.addTo(map_e320a2cc75334f7fc0385ec6dc13e605);
         
 </script>
 </html>
