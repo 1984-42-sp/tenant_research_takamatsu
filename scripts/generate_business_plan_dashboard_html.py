@@ -6,7 +6,7 @@ import pandas as pd
 BASE_DIR = Path(__file__).resolve().parents[1]
 INPUT_CSV = BASE_DIR / "output" / "all_properties" / "business_plan_dashboard.csv"
 OUTPUT_HTML = BASE_DIR / "output" / "all_properties" / "business_plan_dashboard.html"
-
+SIM_INDEX_CSV = BASE_DIR / "output" / "archive_csv" / "property_business_simulations_index.csv"
 
 STAR_ORDER = ["★★★★★", "★★★★☆", "★★★☆☆", "★★☆☆☆", "★☆☆☆☆"]
 
@@ -62,37 +62,94 @@ def make_insight(df):
     </ul>
     """
 
+def load_simulation_link_map():
+    if not SIM_INDEX_CSV.exists():
+        print(f"[WARN] simulation index not found: {SIM_INDEX_CSV}")
+        return {}
 
-def make_property_table(df):
+    sim_df = pd.read_csv(SIM_INDEX_CSV)
+
+    name_col = "物件名"
+
+    file_col = None
+    for col in sim_df.columns:
+        if col in ["ファイル名", "html_file", "simulation_file", "filename", "file_name"]:
+            file_col = col
+            break
+
+    if file_col is None:
+        for col in sim_df.columns:
+            if "html" in col.lower() or "file" in col.lower() or "ファイル" in col:
+                file_col = col
+                break
+
+    if name_col not in sim_df.columns or file_col is None:
+        print("[WARN] simulation index columns not matched")
+        print(sim_df.columns.tolist())
+        return {}
+
+    result = {}
+
+    for _, row in sim_df.iterrows():
+        name = str(row.get(name_col, "")).strip()
+        filename = str(row.get(file_col, "")).strip()
+
+        if not name or not filename:
+            continue
+
+        if not filename.startswith("property_business_simulations/"):
+            filename = f"property_business_simulations/{filename}"
+
+        result[name] = filename
+
+    return result
+
+def make_property_table(df, simulation_link_map):
     rows = []
 
     for _, row in df.iterrows():
         detail_url = esc(row.get("詳細URL", ""))
         link = f'<a href="{detail_url}" target="_blank">詳細</a>' if detail_url else ""
 
-        rows.append(f"""
-        <tr>
-            <td>{esc(row.get("seongsu_rank"))}</td>
-            <td class="star">{esc(row.get("seongsu_fit_stars"))}</td>
-            <td>{esc(row.get("seongsu_fit_score"))}</td>
-            <td>{esc(row.get("物件名"))}</td>
-            <td>{esc(row.get("所在地"))}</td>
-            <td>{esc(row.get("坪数_補正"))}</td>
-            <td>{esc(row.get("家賃"))}</td>
-            <td>{esc(row.get("駐車場判定"))}</td>
-            <td>{esc(row.get("seongsu_fit_type"))}</td>
-            <td>{link}</td>
-        </tr>
-        <tr class="comment-row">
-            <td></td>
-            <td colspan="9">{esc(row.get("seongsu_fit_comment"))}</td>
-        </tr>
-        """)
+
+    detail_url = esc(row.get("詳細URL", ""))
+    link = f'<a href="{detail_url}" target="_blank">詳細</a>' if detail_url else ""
+
+    property_name = str(row.get("物件名", "")).strip()
+
+    simulation_path = simulation_link_map.get(property_name, "")
+
+    simulation_link = (
+        f'<a href="{esc(simulation_path)}">営業SIM</a>'
+        if simulation_path
+        else ""
+    )
+
+    rows.append(f"""
+    <tr>
+        <td>{esc(row.get("seongsu_rank"))}</td>
+        <td class="star">{esc(row.get("seongsu_fit_stars"))}</td>
+        <td>{esc(row.get("seongsu_fit_score"))}</td>
+        <td>{esc(row.get("物件名"))}</td>
+        <td>{esc(row.get("所在地"))}</td>
+        <td>{esc(row.get("坪数_補正"))}</td>
+        <td>{esc(row.get("家賃"))}</td>
+        <td>{esc(row.get("駐車場判定"))}</td>
+        <td>{esc(row.get("seongsu_fit_type"))}</td>
+        <td>{link}</td>
+        <td>{simulation_link}</td>
+    </tr>
+
+    <tr class="comment-row">
+        <td></td>
+        <td colspan="10">{esc(row.get("seongsu_fit_comment"))}</td>
+    </tr>
+    """)
 
     return "\n".join(rows)
 
 
-def make_star_sections(df):
+def make_star_sections(df, simulation_link_map):
     sections = []
 
     for star in STAR_ORDER:
@@ -119,11 +176,12 @@ def make_star_sections(df):
                         <th>家賃</th>
                         <th>駐車場</th>
                         <th>タイプ</th>
-                        <th>リンク</th>
+                        <th>詳細</th>
+                        <th>営業SIM</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {make_property_table(part)}
+                    {make_property_table(part, simulation_link_map)}
                 </tbody>
             </table>
         </details>
@@ -134,6 +192,7 @@ def make_star_sections(df):
 
 def main():
     df = pd.read_csv(INPUT_CSV)
+    simulation_link_map = load_simulation_link_map()
 
     df = df.sort_values("seongsu_fit_score", ascending=False).reset_index(drop=True)
 
@@ -321,7 +380,7 @@ a {{
 
     <section class="section">
         <h2>星ランク別候補物件リスト</h2>
-        {make_star_sections(df)}
+        {make_star_sections(df, simulation_link_map)}
     </section>
 </main>
 </body>
