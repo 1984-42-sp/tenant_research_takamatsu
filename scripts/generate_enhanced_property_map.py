@@ -228,7 +228,7 @@ body {
 
 .subtitle {
   font-size: 12px;
-  color: #e8dccc;
+  color: #fff1d8;
   margin-top: 4px;
 }
 
@@ -282,7 +282,8 @@ body {
   gap: 9px;
   font-size: 13px;
   margin: 9px 0;
-  color: #463b31;
+  color: #2f261f;
+  font-weight: 700;
 }
 
 .legend-dot {
@@ -321,6 +322,8 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   margin: 14px 0 18px;
+  background: #eadcc8;
+  color: #3a281b;
 }
 
 .badge {
@@ -337,12 +340,12 @@ body {
   font-size: 22px;
   line-height: 1.35;
   margin: 0;
-  color: #201914;
+  color: #17110c;
 }
 
 .panel-address {
   margin-top: 10px;
-  color: #6f665d;
+  color: #3f352d;
   line-height: 1.5;
 }
 
@@ -362,14 +365,15 @@ body {
 
 .info-label {
   font-size: 11px;
-  color: #8a7d70;
+  color: #5f5146;
+  font-weight: 700
   margin-bottom: 5px;
 }
 
 .info-value {
   font-size: 15px;
   font-weight: 800;
-  color: #2f261f;
+  color: #1f1712;
 }
 
 .section-title {
@@ -379,12 +383,12 @@ body {
 }
 
 .comment-box {
-  background: #fffaf2;
-  border: 1px solid #efdfc7;
+  background: #fff7e8;
+  border: 1px solid #d7bea0;
   border-radius: 14px;
   padding: 13px;
   line-height: 1.7;
-  color: #5a5047;
+  color: #332820;
   font-size: 13px;
 }
 
