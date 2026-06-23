@@ -184,7 +184,7 @@ def main():
   <div id="legendItems"></div>
 </div>
 
-<div class="panel-empty" id="panel-empty">
+<div class="side-panel" id="sidePanel">
   <div class="panel-empty">
     <h2>物件を選択してください</h2>
     <p>地図上のピンをクリックすると、ここに事業性評価・営業シミュレーション・ソンス評価が表示されます。</p>
@@ -503,7 +503,7 @@ Object.entries(patternColors).forEach(([label, color]) => {
 });
 
 function closePanel() {
-    document.getElementById("panel-empty").innerHTML = `
+    document.getElementById("sidePanel").innerHTML = `
         <div class="panel-empty">
             <h2>物件を選択してください</h2>
             <p>
@@ -528,7 +528,7 @@ function yen(value) {
 
 function renderPanel(p) {
   const accentColor = patternColors[p["事業成立パターン"]] || "#2d2016";
-  document.getElementById("panel-empty").style.setProperty("--accent-color", accentColor);
+  document.getElementById("sidePanel").style.setProperty("--accent-color", accentColor);
 
   const simButton = p["営業シミュレーションURL"]
     ? `<a class="link-button link-primary" href="${p["営業シミュレーションURL"]}">営業シミュレーションを見る</a>`
@@ -538,13 +538,13 @@ function renderPanel(p) {
     ? `<a class="link-button link-secondary" href="${p["詳細URL"]}" target="_blank">掲載元詳細ページを見る</a>`
     : "";
 
-    const panel = document.getElementById("panel-empty");
+    const panel = document.getElementById("sidePanel");
 
     panel.style.setProperty(
         "--accent-color",
         patternColors[p["事業成立パターン"]] || "#666");
 
-  document.getElementById("panel-empty").innerHTML = `
+  document.getElementById("sidePanel").innerHTML = `
     <div class="panel-header">
     <button class="close-panel-btn" onclick="closePanel()">
       ✕
