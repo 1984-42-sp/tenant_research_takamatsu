@@ -366,7 +366,7 @@ body {
 .info-label {
   font-size: 11px;
   color: #5f5146;
-  font-weight: 700
+  font-weight: 700;
   margin-bottom: 5px;
 }
 
