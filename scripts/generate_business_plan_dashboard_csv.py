@@ -315,7 +315,8 @@ def main():
     df = pd.read_csv(INPUT_CSV)
     # Phase5では、飲食可の物件のみをランキング対象にする
     df["飲食可否"] = df["飲食可否"].fillna("").astype(str)
-    df = df[df["飲食可否"].str.contains("可", na=False)].copy()
+    df["飲食可否"] = df["飲食可否"].fillna("").astype(str).str.strip()
+    df = df[df["飲食可否"] == "可"].copy()
     df = df.reset_index(drop=True)
     df["space_openness_score"] = df.apply(score_space_openness, axis=1)
     df["seongsu_design_score"] = df.apply(score_seongsu_design, axis=1)

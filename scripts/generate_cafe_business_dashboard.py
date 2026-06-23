@@ -17,6 +17,13 @@ SIM_INDEX_CSV = (
     / "property_business_simulations_index.csv"
 )
 
+BUSINESS_PLAN_CSV = (
+    BASE_DIR
+    / "output"
+    / "all_properties"
+    / "business_plan_dashboard.csv"
+)
+
 def yen(value):
     if pd.isna(value) or value == "":
         return ""
@@ -34,8 +41,47 @@ def safe(value):
 
 def main():
     df = pd.read_csv(INPUT_CSV).fillna("")
+
+    if BUSINESS_PLAN_CSV.exists():
+        business_df = pd.read_csv(BUSINESS_PLAN_CSV).fillna("")
+
+        merge_key = "詳細URL" if "詳細URL" in business_df.columns else "物件名"
+
+        business_df = business_df.drop_duplicates(
+            subset=[merge_key],
+            keep="first"
+        )
+
+        df = df.merge(
+            business_df[
+                [
+                    merge_key,
+                    "seongsu_rank",
+                    "seongsu_fit_score",
+                    "seongsu_fit_stars",
+                    "seongsu_fit_type",
+                ]
+            ],
+            on=merge_key,
+            how="left"
+        )
+
+        df["星評価"] = df["seongsu_fit_stars"].replace("", "評価不可")
+        df["星評価"] = df["星評価"].fillna("評価不可")
+
+        df["ブランド適合度"] = df["seongsu_fit_score"].replace("", "")
+        df["ブランド適合度"] = df["ブランド適合度"].fillna("")
+    else:
+        df["星評価"] = "評価不可"
+        df["ブランド適合度"] = ""
+        df["seongsu_rank"] = ""
+        df["seongsu_fit_type"] = ""
+
     if SIM_INDEX_CSV.exists():
         sim_df = pd.read_csv(SIM_INDEX_CSV).fillna("")
+        
+        sim_df = sim_df.drop_duplicates(subset=["物件名"], keep="first")
+        
         df = df.merge(
             sim_df,
             on="物件名",
@@ -57,8 +103,8 @@ def main():
         plot_df["初期投資中央値"],
         errors="coerce"
     )
-    plot_df["事業成立性スコア"] = pd.to_numeric(
-        plot_df["事業成立性スコア"],
+    plot_df["ブランド適合度"] = pd.to_numeric(
+        plot_df["ブランド適合度"],
         errors="coerce"
     )
 
@@ -98,8 +144,8 @@ def main():
             "理論必要日客数": safe(row.get("理論必要日客数")),
             "推奨必要日客数": safe(row.get("推奨必要日客数")),
             "初期投資中央値": yen(row.get("初期投資中央値")),
-            "事業成立性スコア": safe(row.get("事業成立性スコア")),
-            "評価ランク": safe(row.get("評価ランク")),
+            "ブランド適合度": safe(row.get("ブランド適合度")),
+            "星評価": safe(row.get("星評価")),
             "評価コメント": safe(row.get("評価コメント")),
             "ダッシュボード表示コメント": safe(row.get("ダッシュボード表示コメント")),
             "marker_size": size,
@@ -107,8 +153,8 @@ def main():
         })
 
     table_cols = [
-        "評価ランク",
-        "事業成立性スコア",
+        "星評価",
+        "ブランド適合度",
         "事業成立パターン",
         "不足理由",
         "物件名",
@@ -158,7 +204,19 @@ def main():
         axis=1
     )
 
-    table_df["物件名"] = table_df.apply(make_property_link, axis=1)
+    def make_sim_link(value):
+        url = str(value).strip()
+
+        if not url:
+            return ""
+
+        return (
+          f'<a href="{escape(url)}" '
+          f'target="_blank" '
+          f'rel="noopener noreferrer">営業シミュレーション</a>'
+      )
+
+    table_df["営業シミュレーションURL"] = table_df["営業シミュレーションURL"].apply(make_sim_link)
 
     table_df = table_df.drop(columns=["詳細URL"])
     
@@ -312,12 +370,14 @@ a {{
 </div>
 
 <div class="filters">
-  <b>評価ランク：</b>
-  <label><input type="checkbox" class="rank-filter" value="A" checked> A</label>
-  <label><input type="checkbox" class="rank-filter" value="B" checked> B</label>
-  <label><input type="checkbox" class="rank-filter" value="C" checked> C</label>
-  <label><input type="checkbox" class="rank-filter" value="D" checked> D</label>
-</div>
+    <b>星評価：</b>
+    <label><input type="checkbox" class="rank-filter" value="★★★★★" checked> ★★★★★</label>
+    <label><input type="checkbox" class="rank-filter" value="★★★★☆" checked> ★★★★☆</label>
+    <label><input type="checkbox" class="rank-filter" value="★★★☆☆" checked> ★★★☆☆</label>
+    <label><input type="checkbox" class="rank-filter" value="★★☆☆☆" checked> ★★☆☆☆</label>
+    <label><input type="checkbox" class="rank-filter" value="★☆☆☆☆" checked> ★☆☆☆☆</label>
+    <label><input type="checkbox" class="rank-filter" value="評価不可" checked> 評価不可</label>
+    <label><input type="checkbox" class="rank-filter" value="評価不可" checked> 評価不可</label>
 
 <div class="filters">
   <b>飲食可否：</b>
@@ -424,7 +484,7 @@ function updateChartFilters() {{
   const selectedFoods = selectedValues(".food-filter");
 
   const filteredPoints = points.filter(p =>
-    selectedRanks.includes(p["評価ランク"]) &&
+    selectedRanks.includes(p["星評価"]) &&
     selectedFoods.includes(p["飲食可否"])
   );
 
@@ -456,8 +516,8 @@ document.getElementById("chart").on("plotly_click", function(data) {{
 
   document.getElementById("detail").innerHTML = `
     <h2>${{p["物件名"]}}</h2>
-    <p><b>評価ランク：</b>${{p["評価ランク"]}}</p>
-    <p><b>事業成立性スコア：</b>${{p["事業成立性スコア"]}}</p>
+    <p><b>星評価：</b>${{p["星評価"]}}</p>
+    <p><b>ブランド適合度：</b>${{p["ブランド適合度"]}}</p>
     <p><b>所在地：</b>${{p["所在地"]}}</p>
     <p><b>掲載サイト：</b>${{p["掲載サイト"]}}</p>
     <p><b>家賃：</b>${{p["家賃"]}}（${{p["家賃_円"]}}）</p>

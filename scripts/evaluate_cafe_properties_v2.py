@@ -762,23 +762,114 @@ def main():
         rows.append(item)
 
     out_df = pd.DataFrame(rows)
+    business_plan_csv = OUTPUT_DIR / "all_properties" / "business_plan_dashboard.csv"
+
+    if business_plan_csv.exists():
+        business_df = pd.read_csv(business_plan_csv).fillna("")
+
+        merge_key = "詳細URL" if "詳細URL" in business_df.columns else "物件名"
+
+        business_df = business_df.drop_duplicates(
+            subset=[merge_key],
+            keep="first"
+        )
+
+        out_df = out_df.merge(
+            business_df[
+                [
+                    merge_key,
+                    "seongsu_rank",
+                    "seongsu_fit_score",
+                    "seongsu_fit_stars",
+                    "seongsu_fit_type",
+                ]
+            ],
+            on=merge_key,
+            how="left"
+        )
+
+        out_df["ブランド順位"] = out_df["seongsu_rank"]
+
+        out_df["星評価"] = out_df["seongsu_fit_stars"].replace("", "評価不可")
+        out_df["星評価"] = out_df["星評価"].fillna("評価不可")
+
+        out_df["ブランド適合度"] = out_df["seongsu_fit_score"].fillna("")
+
+        out_df["ブランドタイプ"] = out_df["seongsu_fit_type"].replace("", "飲食可否対象外")
+        out_df["ブランドタイプ"] = out_df["ブランドタイプ"].fillna("飲食可否対象外")
+    else:
+        out_df["ブランド順位"] = ""
+        out_df["星評価"] = "評価不可"
+        out_df["ブランド適合度"] = ""
+        out_df["ブランドタイプ"] = "飲食可否対象外"
     out_df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
 
     dashboard_cols = [
-        "物件名", "所在地", "掲載サイト", "詳細URL", "latitude", "longitude",
-        "家賃", "家賃_円", "面積", "面積_㎡_補正", "坪数", "坪数_補正", "坪単価",
-        "飲食可否", "立地区分", "店舗規模", "物件タイプ推定", "階数判定", "駐車場判定",
-        "事業成立パターン", "不足理由", "推奨カフェモデル", "推定席数", "想定客単価",
-        "月間固定費", "必要月商", "必要日商_26日営業", "必要日客数_26日営業","理論必要日客数","推奨必要日客数",
-        "初期投資中央値", "事業成立性スコア", "評価ランク", "評価コメント", "ダッシュボード表示コメント"
+        "物件名", "所在地", "掲載サイト", "詳細URL",
+        "latitude", "longitude",
+
+        "家賃", "家賃_円",
+        "面積", "面積_㎡_補正",
+        "坪数", "坪数_補正", "坪単価",
+
+        "飲食可否", "立地区分", "店舗規模", "物件タイプ推定",
+        "階数判定", "駐車場判定",
+
+        "事業成立パターン", "不足理由", "推奨カフェモデル",
+        "推定席数", "想定客単価",
+
+        "原価率", "人件費率", "利益率", "その他固定費", "月間固定費",
+
+        "必要月商",
+        "必要日商_26日営業",
+        "必要日客数_26日営業",
+        "理論必要日客数",
+        "推奨必要日客数",
+
+        "初期投資中央値",
+
+        "評価ランク",
+        "事業成立性スコア",
+
+        "ブランド順位",
+        "星評価",
+        "ブランド適合度",
+
+        "ダッシュボード表示コメント"
     ]
     out_df[dashboard_cols].to_csv(DASHBOARD_CSV, index=False, encoding="utf-8-sig")
 
     display_cols = [
-        "評価ランク", "事業成立性スコア", "事業成立パターン", "不足理由", "物件名", "所在地",
-        "家賃", "家賃_円", "坪数_補正", "坪単価", "飲食可否", "立地区分", "店舗規模",
-        "階数判定", "駐車場判定", "推奨カフェモデル", "推定席数", "月間固定費",
-        "必要月商", "必要日客数_26日営業","理論必要日客数","推奨必要日客数", "初期投資中央値", "掲載サイト", "詳細URL", "評価コメント"
+        "ブランド順位",
+        "星評価",
+        "ブランド適合度",
+
+        "評価ランク",
+        "事業成立性スコア",
+
+        "事業成立パターン",
+        "推奨カフェモデル",
+
+        "必要月商",
+        "理論必要日客数",
+        "推奨必要日客数",
+
+        "初期投資中央値",
+
+        "物件名",
+        "所在地",
+
+        "家賃",
+        "坪数_補正",
+        "坪単価",
+
+        "飲食可否",
+        "立地区分",
+        "階数判定",
+        "駐車場判定",
+
+        "掲載サイト",
+        "詳細URL"
     ]
 
     html_table = out_df[display_cols].to_html(index=False, escape=False, table_id="cafe_properties", classes="display nowrap")
@@ -808,7 +899,7 @@ a {{ color: #0066cc; }}
 $(document).ready(function() {{
   $('#cafe_properties').DataTable({{
     pageLength: 25,
-    order: [[1, 'desc']],
+    order: [[0, 'asc']],
     columnDefs: [{{
       targets: 21,
       render: function(data, type, row) {{
@@ -817,7 +908,7 @@ $(document).ready(function() {{
       }}
     }}],
     initComplete: function () {{
-      this.api().columns([0, 2, 9, 10, 11, 12, 13, 14, 20]).every(function () {{
+      this.api().columns([1, 3, 5, 6, 16, 17, 18, 19, 20]).every(function () {{
         var column = this;
         var select = $('<select><option value="">すべて</option></select>')
           .appendTo($(column.header()))

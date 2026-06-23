@@ -10,11 +10,21 @@ BASE_DIR = Path(__file__).resolve().parent
 
 TASKS = [
     "scripts/merge_all_properties.py",
+
     "scripts/evaluate_cafe_properties_v2.py",
-    "scripts/generate_property_business_simulations.py",
-    "scripts/generate_cafe_business_dashboard.py",
+
     "scripts/generate_business_plan_dashboard_csv.py",
+
+    # ブランド順位・星評価を
+    # cafe_property_evaluation.csv / cafe_business_dashboard.csv
+    # に反映するため再実行
+    "scripts/evaluate_cafe_properties_v2.py",
+
     "scripts/generate_business_plan_dashboard_html.py",
+
+    "scripts/generate_property_business_simulations.py",
+
+    "scripts/generate_cafe_business_dashboard.py",
 ]
 
 

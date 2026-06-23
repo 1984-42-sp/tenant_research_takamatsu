@@ -446,8 +446,8 @@ a {{
 <div class="container">
 
   <div class="grid">
-    <div class="card"><div class="label">評価ランク</div><div class="value">{escape(safe(row.get("評価ランク")))}</div></div>
-    <div class="card"><div class="label">事業成立性スコア</div><div class="value">{escape(safe(row.get("事業成立性スコア")))}</div></div>
+    <div class="card"><div class="label">星評価</div><div class="value">{escape(safe(row.get("星評価")))}</div></div>
+    <div class="card"><div class="label">ブランド適合度</div><div class="value">{escape(safe(row.get("ブランド適合度")))}</div></div>
     <div class="card"><div class="label">必要月商</div><div class="value">{yen(monthly_sales)}</div></div>
     <div class="card"><div class="label">推奨必要日客数</div><div class="value">{people(recommended_customers)}</div></div>
     <div class="card"><div class="label">推定席数</div><div class="value">{people(seats)}</div></div>
@@ -564,9 +564,8 @@ def make_index(rows):
     for row in rows:
         cards.append(f"""
         <div
-          class="property-card rank-{escape(safe(row["評価ランク"]))}"
-          data-search="{escape((safe(row["物件名"]) + ' ' + safe(row["所在地"]) + ' ' + safe(row["事業成立パターン"]) + ' ' + safe(row["商品構成戦略"])).lower())}"
-          data-rank="{escape(safe(row["評価ランク"]))}"
+          class="property-card rank-{escape(safe(row["星評価"]))} pattern-{escape(safe(row["事業成立パターン"]))}"          data-search="{escape((safe(row["物件名"]) + ' ' + safe(row["所在地"]) + ' ' + safe(row["事業成立パターン"]) + ' ' + safe(row["商品構成戦略"])).lower())}"
+          data-rank="{escape(safe(row["星評価"]))}"
           data-score="{num(row.get("事業成立性スコア"), 0)}"
           data-sales="{num(row.get("必要月商"), 999999999)}"
           data-customers="{num(row.get("推奨必要日客数"), 999999)}"
@@ -583,8 +582,8 @@ def make_index(rows):
               </div>
             </div>
             <div class="rank-box">
-              <div class="rank">{escape(safe(row["評価ランク"]))}</div>
-              <div class="score">{escape(safe(row["事業成立性スコア"]))}点</div>
+              <div class="rank">{escape(safe(row["星評価"]))}</div>
+              <div class="score">{escape(safe(row["ブランド適合度"]))}点</div>
             </div>
           </div>
 
@@ -668,11 +667,15 @@ body {{
   border-left: 8px solid #999;
 }}
 
-.rank-A {{ border-left-color: #2ca02c; }}
-.rank-B {{ border-left-color: #1f77b4; }}
-.rank-C {{ border-left-color: #ffbf00; }}
-.rank-D {{ border-left-color: #d62728; }}
-.rank-要確認 {{ border-left-color: #888; }}
+.pattern-低固定費・小商圏型 {{ border-left-color: #2ca02c; }}
+.pattern-中心街・高回転型 {{ border-left-color: #d62728; }}
+.pattern-中心街・高単価型 {{ border-left-color: #ff7f0e; }}
+.pattern-郊外・駐車場依存型 {{ border-left-color: #1f77b4; }}
+.pattern-大型投資・高売上必須型 {{ border-left-color: #9467bd; }}
+.pattern-家賃未定・問い合わせ必要型 {{ border-left-color: #7f7f7f; }}
+.pattern-面積不明・詳細確認型 {{ border-left-color: #8c564b; }}
+.pattern-要確認・情報不足型 {{ border-left-color: #888; }}
+.pattern-家賃・面積不明型 {{ border-left-color: #888; }}
 
 .card-header {{
   display: flex;
@@ -800,8 +803,8 @@ a {{
     <input id="searchInput" type="text" placeholder="物件名・所在地・パターン・商品構成で検索">
 
     <select id="sortSelect">
-      <option value="rank">評価ランク順</option>
-      <option value="score_desc">スコア高い順</option>
+      <option value="rank">星評価順</option>
+      <option value="score_desc">ブランド適合度高い順</option>
       <option value="sales_asc">必要月商低い順</option>
       <option value="customers_asc">推奨必要日客数少ない順</option>
       <option value="profit_desc">営業利益高い順</option>
@@ -815,11 +818,13 @@ a {{
 </div>
 <script>
 const rankOrder = {{
-  "A": 1,
-  "B": 2,
-  "C": 3,
-  "D": 4,
-  "要確認": 5
+  "★★★★★": 1,
+  "★★★★☆": 2,
+  "★★★☆☆": 3,
+  "★★☆☆☆": 4,
+  "★☆☆☆☆": 5,
+  "評価不可": 6,
+  "未評価": 7
 }};
 
 function applyFiltersAndSort() {{
