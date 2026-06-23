@@ -502,7 +502,7 @@ Object.entries(patternColors).forEach(([label, color]) => {
   legend.appendChild(item);
 });
 
-function closePanel() {
+window.closePanel = function() {
     document.getElementById("sidePanel").innerHTML = `
         <div class="panel-empty">
             <h2>物件を選択してください</h2>
