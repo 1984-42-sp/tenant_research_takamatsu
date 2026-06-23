@@ -549,7 +549,7 @@ a {{
     <p>{escape(safe(row.get("ダッシュボード表示コメント")))}</p>
   </div>
 
-  <p><a href="index.html">一覧へ戻る</a></p>
+  <a href="../simulation_index.html">一覧へ戻る</a>
 
 </div>
 </body>
