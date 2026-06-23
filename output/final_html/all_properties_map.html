@@ -250,10 +250,8 @@ body {
 }
 
 .link-primary {
-  background: var(--accent-color);
-  color: white !important;
-  text-shadow: 0 1px 2px rgba(0,0,0,.45);
-  border: 2px solid rgba(255,255,255,.35);
+    background: var(--accent-color);
+    color: #ffffff !important;
 }
 
 .link-secondary {
@@ -308,7 +306,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_80cf247ca8e9a00fa38804620c8bf73a {
+                #map_c80c49abee24f08499417ea90aa223f7 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -368,14 +366,14 @@ body {
   </div>
 </div>
     
-            <div class="folium-map" id="map_80cf247ca8e9a00fa38804620c8bf73a" ></div>
+            <div class="folium-map" id="map_c80c49abee24f08499417ea90aa223f7" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_80cf247ca8e9a00fa38804620c8bf73a === "undefined") {
+  if (typeof L === "undefined" || typeof map_c80c49abee24f08499417ea90aa223f7 === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -512,7 +510,7 @@ propertyPoints.forEach((p) => {
     weight: 2,
     fillColor: p.color,
     fillOpacity: 0.92
-  }).addTo(map_80cf247ca8e9a00fa38804620c8bf73a);
+  }).addTo(map_c80c49abee24f08499417ea90aa223f7);
 
   marker.bindTooltip(p["物件名"], {
     direction: "top",
@@ -521,7 +519,7 @@ propertyPoints.forEach((p) => {
 
   marker.on("click", function() {
     renderPanel(p);
-    map_80cf247ca8e9a00fa38804620c8bf73a.panTo([p.latitude, p.longitude]);
+    map_c80c49abee24f08499417ea90aa223f7.panTo([p.latitude, p.longitude]);
   });
 });
 
@@ -534,14 +532,14 @@ if (targetProperty) {
 
   if (target) {
     renderPanel(target);
-    map_80cf247ca8e9a00fa38804620c8bf73a.setView([target.latitude, target.longitude], 17);
+    map_c80c49abee24f08499417ea90aa223f7.setView([target.latitude, target.longitude], 17);
   }
 }
 
 })();
     
-            var map_80cf247ca8e9a00fa38804620c8bf73a = L.map(
-                "map_80cf247ca8e9a00fa38804620c8bf73a",
+            var map_c80c49abee24f08499417ea90aa223f7 = L.map(
+                "map_c80c49abee24f08499417ea90aa223f7",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -553,13 +551,13 @@ if (targetProperty) {
 
                 }
             );
-            L.control.scale().addTo(map_80cf247ca8e9a00fa38804620c8bf73a);
+            L.control.scale().addTo(map_c80c49abee24f08499417ea90aa223f7);
 
             
 
         
     
-            var tile_layer_63cbffe25846a02b4aed2ee0d310b223 = L.tileLayer(
+            var tile_layer_fb7b7b58f80341cfd1b39f4591f6ab6d = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -576,7 +574,7 @@ if (targetProperty) {
             );
         
     
-            tile_layer_63cbffe25846a02b4aed2ee0d310b223.addTo(map_80cf247ca8e9a00fa38804620c8bf73a);
+            tile_layer_fb7b7b58f80341cfd1b39f4591f6ab6d.addTo(map_c80c49abee24f08499417ea90aa223f7);
         
 </script>
 </html>
