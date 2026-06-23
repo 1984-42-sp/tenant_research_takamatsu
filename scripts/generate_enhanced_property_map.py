@@ -429,28 +429,33 @@ body {
 }
 
 .link-button {
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 14px;
-  padding: 13px 14px;
-  margin-top: 10px;
-  font-weight: 800;
+    display: block;
+    padding: 10px 12px;
+    margin-top: 8px;
+    border-left: 4px solid var(--accent-color);
+    background: rgba(0,0,0,0.03);
+    border-radius: 8px;
+    color: #222 !important;
+    text-decoration: none;
+    font-weight: 700;
 }
 
-..link-button {
-    text-decoration: none;
-    color: inherit;
+.link-button:hover {
+    text-decoration: underline;
 }
 
 .link-primary {
-    background: var(--accent-color);
-    color: #ffffff !important;
+    background: transparent;
+    color: #1f1f1f !important;
+    border: none;
+    box-shadow: none;
 }
 
 .link-secondary {
-    background: #3d2e22;
-    color: white !important;
+    background: transparent;
+    color: #1f1f1f !important;
+    border: none;
+    box-shadow: none;
 }
 
 .link-secondary:hover {
