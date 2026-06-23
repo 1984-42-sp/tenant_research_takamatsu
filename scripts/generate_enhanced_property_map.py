@@ -53,7 +53,7 @@ def load_simulation_link_map():
 
     file_col = None
     for col in sim_df.columns:
-        if col in ["ファイル名", "html_file", "simulation_file", "filename", "file_name"]:
+        if col in ["営業シミュレーションURL", "ファイル名", "html_file", "simulation_file", "filename", "file_name"]:
             file_col = col
             break
 

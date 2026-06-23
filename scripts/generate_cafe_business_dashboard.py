@@ -221,12 +221,7 @@ def main():
         
         return name
     
-    def format_map_link(row):
-        url = str(row.get("マップURL", "")).strip()
-        if not url:
-            return ""
-        return f'<a href="{escape(url)}">マップで見る</a>'
-        
+
 
     table_df["物件名"] = table_df.apply(
         make_property_link,
@@ -259,8 +254,7 @@ def main():
           f'rel="noopener noreferrer">マップ</a>'
       )
 
-    table_df["マップURL"] = table_df["マップURL"].apply(make_map_link)
-    table_df["マップ"] = table_df.apply(format_map_link, axis=1)
+    table_df["マップ"] = table_df["マップURL"].apply(make_map_link)
     table_df = table_df.drop(columns=["詳細URL", "マップURL"])
     
     html_table = table_df.to_html(
