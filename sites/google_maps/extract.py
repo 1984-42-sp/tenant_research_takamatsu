@@ -1,6 +1,8 @@
 from pathlib import Path
 import csv
+import html as html_lib
 import re
+from urllib.parse import parse_qs, unquote, urlparse
 from bs4 import BeautifulSoup
 
 BASE_DIR = Path(__file__).resolve().parents[2]
@@ -21,16 +23,12 @@ COLUMNS = [
     "business_hours",
     "closed_days",
     "url",
+    "linked_site_name",
+    "linked_url",
     "memo",
 ]
 
-GENRE_KEYWORDS = [
-    "カフェ",
-    "喫茶",
-    "コーヒー",
-    "スイーツ",
-    "ベーカリー",
-]
+GENRE_KEYWORDS = ["カフェ", "喫茶", "コーヒー", "スイーツ", "ベーカリー"]
 
 SKIP_LINES = {
     "共有",
@@ -67,15 +65,11 @@ def clean_line(line: str) -> str:
 def normalize_address(address: str) -> str:
     if not address:
         return ""
-
     address = address.strip()
-
     if address.startswith("香川県"):
         return address
-
     if address.startswith("高松市"):
         return "香川県" + address
-
     return "香川県高松市" + address
 
 
@@ -83,11 +77,112 @@ def clean_business_hours(value: str) -> str:
     return value.replace("·", "").strip()
 
 
+def normalize_url(url: str) -> str:
+    if not url:
+        return ""
+
+    url = html_lib.unescape(unquote(url.strip()))
+
+    parsed = urlparse(url)
+
+    if "google." in parsed.netloc and parsed.path.startswith("/url"):
+        qs = parse_qs(parsed.query)
+        if "q" in qs:
+            return qs["q"][0]
+        if "url" in qs:
+            return qs["url"][0]
+
+    return url
+
+
+def classify_site_name(url: str) -> str:
+    if not url:
+        return ""
+
+    netloc = urlparse(url).netloc.lower()
+
+    if "tabelog.com" in netloc:
+        return "食べログ"
+    if "hotpepper.jp" in netloc:
+        return "ホットペッパーグルメ"
+    if "instagram.com" in netloc:
+        return "Instagram"
+    if "facebook.com" in netloc:
+        return "Facebook"
+    if "x.com" in netloc or "twitter.com" in netloc:
+        return "X"
+    if "google." in netloc:
+        return "Google Maps"
+    if "retty.me" in netloc:
+        return "Retty"
+    if "tripadvisor." in netloc:
+        return "Tripadvisor"
+    if "gnavi.co.jp" in netloc:
+        return "ぐるなび"
+    if "r.gnavi.co.jp" in netloc:
+        return "ぐるなび"
+
+    return "公式サイト候補"
+
+
+def is_external_candidate(url: str) -> bool:
+    if not url.startswith("http"):
+        return False
+
+    netloc = urlparse(url).netloc.lower()
+
+    ignore_domains = [
+        "google.com",
+        "google.co.jp",
+        "gstatic.com",
+        "googleusercontent.com",
+        "schema.org",
+    ]
+
+    return not any(domain in netloc for domain in ignore_domains)
+
+
+def extract_google_maps_url(soup: BeautifulSoup, store_name: str) -> str:
+    for a in soup.find_all("a", href=True):
+        label = " ".join(
+            [
+                a.get_text(" ", strip=True),
+                a.get("aria-label", ""),
+                a.get("title", ""),
+            ]
+        )
+
+        href = normalize_url(a["href"])
+
+        if store_name in label and ("google.com/maps" in href or "google.co.jp/maps" in href):
+            return href
+
+    return ""
+
+
+def extract_linked_url(raw_html: str, store_name: str) -> tuple[str, str]:
+    pos = raw_html.find(store_name)
+    if pos == -1:
+        return "", ""
+
+    window = raw_html[max(0, pos - 4000) : pos + 12000]
+    window = html_lib.unescape(unquote(window))
+
+    urls = re.findall(r"https?://[^\s\"'<>\\]+", window)
+
+    for url in urls:
+        url = normalize_url(url)
+        if is_external_candidate(url):
+            return classify_site_name(url), url
+
+    return "", ""
+
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    html = HTML_PATH.read_text(encoding="utf-8")
-    soup = BeautifulSoup(html, "html.parser")
+    raw_html = HTML_PATH.read_text(encoding="utf-8")
+    soup = BeautifulSoup(raw_html, "html.parser")
 
     text = soup.get_text("\n", strip=True)
     lines = [clean_line(x) for x in text.splitlines()]
@@ -146,6 +241,9 @@ def main():
 
         seen.add(store_name)
 
+        google_maps_url = extract_google_maps_url(soup, store_name)
+        linked_site_name, linked_url = extract_linked_url(raw_html, store_name)
+
         rows.append(
             {
                 "competitor_id": f"GMP{len(rows) + 1:05d}",
@@ -159,7 +257,9 @@ def main():
                 "review_count": review_count,
                 "business_hours": clean_business_hours(business_hours),
                 "closed_days": "",
-                "url": "",
+                "url": google_maps_url,
+                "linked_site_name": linked_site_name,
+                "linked_url": linked_url,
                 "memo": "",
             }
         )
