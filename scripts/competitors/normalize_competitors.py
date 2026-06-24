@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 
 TABELOG_CSV = BASE_DIR / "data" / "competitors" / "competitors_geocoded.csv"
 HOTPEPPER_CSV = BASE_DIR / "data" / "competitors" / "raw" / "hotpepper_cafe_competitors.csv"
+GOOGLE_MAPS_CSV = BASE_DIR / "output" / "google_maps" / "google_maps_geocoded.csv"
 
 OUT_CSV = BASE_DIR / "data" / "competitors" / "competitors_master.csv"
 
@@ -126,12 +127,67 @@ def load_hotpepper() -> pd.DataFrame:
         ]
     ]
 
+def load_google_maps() -> pd.DataFrame:
+    df = pd.read_csv(GOOGLE_MAPS_CSV)
+
+    rename_map = {
+        "name": "store_name",
+        "latitude": "lat",
+        "longitude": "lng",
+        "map_url": "url",
+        "google_maps_url": "url",
+    }
+    df = df.rename(columns=rename_map)
+
+    for col in [
+        "competitor_id",
+        "store_name",
+        "source",
+        "genre",
+        "address",
+        "rating",
+        "review_count",
+        "business_hours",
+        "closed_days",
+        "url",
+        "memo",
+        "lat",
+        "lng",
+    ]:
+        if col not in df.columns:
+            df[col] = ""
+
+    if (df["competitor_id"].fillna("") == "").all():
+        df["competitor_id"] = [
+            f"google_maps_{i + 1:04d}" for i in range(len(df))
+        ]
+
+    df["source"] = "google_maps"
+
+    return df[
+        [
+            "competitor_id",
+            "store_name",
+            "source",
+            "genre",
+            "address",
+            "rating",
+            "review_count",
+            "business_hours",
+            "closed_days",
+            "url",
+            "memo",
+            "lat",
+            "lng",
+        ]
+    ]
 
 def main() -> None:
     tabelog = load_tabelog()
     hotpepper = load_hotpepper()
+    google_maps = load_google_maps()
 
-    df = pd.concat([tabelog, hotpepper], ignore_index=True)
+    df = pd.concat([tabelog, hotpepper, google_maps], ignore_index=True)
 
     df["store_name_norm"] = df["store_name"].apply(normalize_text)
     df["address_norm"] = df["address"].apply(normalize_text)
@@ -148,7 +204,7 @@ def main() -> None:
     OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUT_CSV, index=False, encoding="utf-8-sig")
 
-    print(f"[LOAD] tabelog={len(tabelog)} hotpepper={len(hotpepper)}")
+    print(f"[LOAD] tabelog={len(tabelog)} hotpepper={len(hotpepper)} google_maps={len(google_maps)}")
     print(f"[DEDUP] before={before} after={len(df)} removed={before - len(df)}")
     print(f"[SAVE] {OUT_CSV}")
 

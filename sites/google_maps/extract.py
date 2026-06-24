@@ -64,6 +64,25 @@ def clean_line(line: str) -> str:
     return line.strip().replace("\u3000", " ")
 
 
+def normalize_address(address: str) -> str:
+    if not address:
+        return ""
+
+    address = address.strip()
+
+    if address.startswith("香川県"):
+        return address
+
+    if address.startswith("高松市"):
+        return "香川県" + address
+
+    return "香川県高松市" + address
+
+
+def clean_business_hours(value: str) -> str:
+    return value.replace("·", "").strip()
+
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -91,11 +110,9 @@ def main():
         if store_name in seen:
             continue
 
-        # rating の次に口コミ数が来る想定
         if i + 1 < len(lines) and is_review_count(lines[i + 1]):
             review_count = clean_review_count(lines[i + 1])
 
-        # rating以降15行程度からジャンル・住所・営業時間を拾う
         window = lines[i + 1 : i + 18]
 
         for w in window:
@@ -107,7 +124,6 @@ def main():
                 business_hours = w
                 continue
 
-            # 住所候補: ジャンル取得後に出てくる、日本語住所っぽい行
             if genre and not address:
                 if (
                     "町" in w
@@ -125,7 +141,6 @@ def main():
         if not store_name or len(store_name) <= 1:
             continue
 
-        # 明らかなUI文言を除外
         if any(x in store_name for x in ["Google", "検索", "フィルタ", "サイドパネル"]):
             continue
 
@@ -137,12 +152,12 @@ def main():
                 "store_name": store_name,
                 "source": "google_maps",
                 "genre": genre,
-                "address": address,
+                "address": normalize_address(address),
                 "lat": "",
                 "lng": "",
                 "rating": rating,
                 "review_count": review_count,
-                "business_hours": business_hours,
+                "business_hours": clean_business_hours(business_hours),
                 "closed_days": "",
                 "url": "",
                 "memo": "",
