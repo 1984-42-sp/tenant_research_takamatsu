@@ -826,7 +826,14 @@ window.closeCompetitorPanel = function() {
     competitorPanel.style.setProperty("--accent-color", "#7f1d1d");
 
     const source = String(c.source || "").toLowerCase().trim();
-    const sourceLabel = source === "hotpepper" ? "ホットペッパー" : "食べログ";
+
+    let sourceLabel = "食べログ";
+    if (source === "hotpepper") {
+      sourceLabel = "ホットペッパー";
+    } else if (source === "google_maps") {
+      sourceLabel = "Googleマップ";
+    }
+
     const urlButton = c.url
       ? '<a class="link-button link-primary" href="' + c.url + '" target="_blank" rel="noopener">' + sourceLabel + 'ページを見る</a>'
       : "";

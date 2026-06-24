@@ -437,7 +437,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_284095b8b9a1877e32884b27df4a5baa {
+                #map_d5f41d99a65540802491e8e85ece8f93 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -499,14 +499,14 @@ body {
 <div class="competitor-panel" id="competitorPanel"></div>
 <div class="side-panel" id="sidePanel"></div>
     
-            <div class="folium-map" id="map_284095b8b9a1877e32884b27df4a5baa" ></div>
+            <div class="folium-map" id="map_d5f41d99a65540802491e8e85ece8f93" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_284095b8b9a1877e32884b27df4a5baa === "undefined") {
+  if (typeof L === "undefined" || typeof map_d5f41d99a65540802491e8e85ece8f93 === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -617,7 +617,14 @@ window.closeCompetitorPanel = function() {
     competitorPanel.style.setProperty("--accent-color", "#7f1d1d");
 
     const source = String(c.source || "").toLowerCase().trim();
-    const sourceLabel = source === "hotpepper" ? "ホットペッパー" : "食べログ";
+
+    let sourceLabel = "食べログ";
+    if (source === "hotpepper") {
+      sourceLabel = "ホットペッパー";
+    } else if (source === "google_maps") {
+      sourceLabel = "Googleマップ";
+    }
+
     const urlButton = c.url
       ? '<a class="link-button link-primary" href="' + c.url + '" target="_blank" rel="noopener">' + sourceLabel + 'ページを見る</a>'
       : "";
@@ -651,7 +658,7 @@ window.closeCompetitorPanel = function() {
       weight: 2,
       fillColor: p.color,
       fillOpacity: 0.92
-    }).addTo(map_284095b8b9a1877e32884b27df4a5baa);
+    }).addTo(map_d5f41d99a65540802491e8e85ece8f93);
 
     marker.bindTooltip(p["物件名"], {
       direction: "top",
@@ -660,7 +667,7 @@ window.closeCompetitorPanel = function() {
 
     marker.on("click", function() {
       renderPanel(p);
-      map_284095b8b9a1877e32884b27df4a5baa.panTo([p.latitude, p.longitude]);
+      map_d5f41d99a65540802491e8e85ece8f93.panTo([p.latitude, p.longitude]);
     });
   });
 
@@ -682,9 +689,9 @@ window.closeCompetitorPanel = function() {
       })
       .on("click", function() {
         renderCompetitorPanel(c);
-        map_284095b8b9a1877e32884b27df4a5baa.panTo([Number(c.lat), Number(c.lng)]);
+        map_d5f41d99a65540802491e8e85ece8f93.panTo([Number(c.lat), Number(c.lng)]);
       })
-      .addTo(map_284095b8b9a1877e32884b27df4a5baa);
+      .addTo(map_d5f41d99a65540802491e8e85ece8f93);
   });
 
   const params = new URLSearchParams(window.location.search);
@@ -696,13 +703,13 @@ window.closeCompetitorPanel = function() {
 
     if (target) {
       renderPanel(target);
-      map_284095b8b9a1877e32884b27df4a5baa.setView([target.latitude, target.longitude], 17);
+      map_d5f41d99a65540802491e8e85ece8f93.setView([target.latitude, target.longitude], 17);
     }
   }
 })();
     
-            var map_284095b8b9a1877e32884b27df4a5baa = L.map(
-                "map_284095b8b9a1877e32884b27df4a5baa",
+            var map_d5f41d99a65540802491e8e85ece8f93 = L.map(
+                "map_d5f41d99a65540802491e8e85ece8f93",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -714,13 +721,13 @@ window.closeCompetitorPanel = function() {
 
                 }
             );
-            L.control.scale().addTo(map_284095b8b9a1877e32884b27df4a5baa);
+            L.control.scale().addTo(map_d5f41d99a65540802491e8e85ece8f93);
 
             
 
         
     
-            var tile_layer_5c1db8b89c2342ca8638ccee24173c02 = L.tileLayer(
+            var tile_layer_525cde7a12a617b1c507da453d1d0793 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -737,10 +744,10 @@ window.closeCompetitorPanel = function() {
             );
         
     
-            tile_layer_5c1db8b89c2342ca8638ccee24173c02.addTo(map_284095b8b9a1877e32884b27df4a5baa);
+            tile_layer_525cde7a12a617b1c507da453d1d0793.addTo(map_d5f41d99a65540802491e8e85ece8f93);
         
     
-            tile_layer_5c1db8b89c2342ca8638ccee24173c02.addTo(map_284095b8b9a1877e32884b27df4a5baa);
+            tile_layer_525cde7a12a617b1c507da453d1d0793.addTo(map_d5f41d99a65540802491e8e85ece8f93);
         
 </script>
 </html>
