@@ -26,7 +26,7 @@ INPUT_COMPETITORS = (
     BASE_DIR
     / "data"
     / "competitors"
-    / "competitors_geocoded.csv"
+    / "competitors_master.csv"
 )
 
 OUTPUT_HTML = (
@@ -229,6 +229,7 @@ def make_competitor_points():
                 "url": row.get("url", ""),
                 "lat": lat,
                 "lng": lng,
+                "source": str(row.get("source", "")),
             }
         )
 
@@ -824,8 +825,10 @@ window.closeCompetitorPanel = function() {
     competitorPanel.style.display = "block";
     competitorPanel.style.setProperty("--accent-color", "#7f1d1d");
 
+    const source = String(c.source || "").toLowerCase().trim();
+    const sourceLabel = source === "hotpepper" ? "ホットペッパー" : "食べログ";
     const urlButton = c.url
-      ? '<a class="link-button link-primary" href="' + c.url + '" target="_blank" rel="noopener">食べログページを見る</a>'
+      ? '<a class="link-button link-primary" href="' + c.url + '" target="_blank" rel="noopener">' + sourceLabel + 'ページを見る</a>'
       : "";
 
     competitorPanel.innerHTML =
@@ -837,7 +840,7 @@ window.closeCompetitorPanel = function() {
       '<div class="panel-body">' +
         '<div class="badges">' +
           '<span class="property-badge property-badge-pattern">競合店舗</span>' +
-          '<span class="property-badge">食べログ</span>' +
+          '<span class="property-badge">' + sourceLabel + '</span>' +
         '</div>' +
         '<h3 class="section-title">店舗ジャンル</h3>' +
         '<div class="comment-box">' + safe(c.genre) + '</div>' +

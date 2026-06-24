@@ -17,7 +17,7 @@ PROPERTY_CSV = next(
     PROPERTY_CSV_CANDIDATES[0],
 )
 
-COMPETITOR_CSV = BASE_DIR / "data" / "competitors" / "competitors_geocoded.csv"
+COMPETITOR_CSV = BASE_DIR / "data" / "competitors" / "competitors_master.csv"
 
 OUT_DIR = BASE_DIR / "output" / "competitors"
 NEARBY_OUT = OUT_DIR / "property_nearby_competitors.csv"

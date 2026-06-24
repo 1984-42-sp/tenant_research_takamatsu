@@ -1,131 +1,199 @@
-from pathlib import Path
+from __future__ import annotations
+
 import os
 import time
-import requests
+from pathlib import Path
+from typing import Any
+
 import pandas as pd
+import requests
+
+API_URL = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+
+MIDDLE_AREAS = ["Y650", "Y652"]
+GENRE = "G014"
+
+OUT_CSV = Path("data/competitors/raw/hotpepper_cafe_competitors.csv")
+
+COUNT = 100
+SLEEP_SECONDS = 1.0
 
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-
-OUT_PATH = BASE_DIR / "data" / "competitors" / "raw" / "hotpepper_competitors.csv"
-
-API_URL = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
-
-# 高松市をざっくり面で拾うための検索中心点
-SEARCH_POINTS = [
-    ("高松中心部", 34.342787, 134.046574),
-    ("瓦町・常磐町", 34.338900, 134.052800),
-    ("北浜・サンポート", 34.352900, 134.046300),
-    ("栗林・三条", 34.323600, 134.048600),
-    ("木太町", 34.318900, 134.077000),
-    ("屋島", 34.336500, 134.101000),
-    ("仏生山", 34.283700, 134.045700),
-    ("国分寺", 34.304300, 133.956700),
-]
-
-KEYWORDS = [
-    "カフェ",
-    "喫茶",
-    "コーヒー",
-]
-
-COLUMNS = [
-    "competitor_id",
-    "store_name",
-    "source",
-    "genre",
-    "address",
-    "lat",
-    "lng",
-    "rating",
-    "review_count",
-    "business_hours",
-    "closed_days",
-    "url",
-    "memo",
-]
+def get_nested(obj: dict[str, Any], *keys: str) -> str:
+    cur: Any = obj
+    for key in keys:
+        if not isinstance(cur, dict):
+            return ""
+        cur = cur.get(key)
+    return "" if cur is None else str(cur)
 
 
-def fetch(api_key, area_name, lat, lng, keyword):
+def is_cafe_like(shop: dict[str, Any]) -> bool:
+    text = " ".join(
+        [
+            str(shop.get("name", "")),
+            get_nested(shop, "genre", "name"),
+            get_nested(shop, "genre", "catch"),
+            get_nested(shop, "sub_genre", "name"),
+            str(shop.get("catch", "")),
+            str(shop.get("open", "")),
+            str(shop.get("access", "")),
+        ]
+    ).lower()
+
+    include_words = [
+        "カフェ",
+        "cafe",
+        "喫茶",
+        "珈琲",
+        "コーヒー",
+        "coffee",
+        "ブックカフェ",
+        "スイーツ",
+        "クレープ",
+        "バーガー",
+    ]
+
+    return any(word.lower() in text for word in include_words)
+
+
+def fetch_page(api_key: str, middle_area: str, start: int) -> dict[str, Any]:
     params = {
         "key": api_key,
-        "lat": lat,
-        "lng": lng,
-        "range": 5,
-        "keyword": keyword,
-        "count": 100,
+        "middle_area": middle_area,
+       # "genre": GENRE,
         "format": "json",
+        "count": COUNT,
+        "start": start,
     }
 
-    res = requests.get(API_URL, params=params, timeout=20)
+    res = requests.get(API_URL, params=params, timeout=30)
     res.raise_for_status()
+
     data = res.json()
+    results = data.get("results", {})
 
-    shops = data.get("results", {}).get("shop", [])
-    records = []
+    if "error" in results:
+        raise RuntimeError(results["error"])
 
-    for shop in shops:
-        genre = shop.get("genre", {}) or {}
-        urls = shop.get("urls", {}) or {}
-
-        records.append(
-            {
-                "competitor_id": "",
-                "store_name": shop.get("name", ""),
-                "source": "hotpepper",
-                "genre": genre.get("name", ""),
-                "address": shop.get("address", ""),
-                "lat": shop.get("lat", ""),
-                "lng": shop.get("lng", ""),
-                "rating": "",
-                "review_count": "",
-                "business_hours": shop.get("open", ""),
-                "closed_days": shop.get("close", ""),
-                "url": urls.get("pc", ""),
-                "memo": f"search_area={area_name}; keyword={keyword}",
-            }
-        )
-
-    return records
+    return results
 
 
-def main():
-    api_key = os.getenv("HOTPEPPER_API_KEY")
+def flatten_shop(shop: dict[str, Any], middle_area_query: str) -> dict[str, Any]:
+    hotpepper_id = str(shop.get("id", "")).strip()
 
+    memo_parts = [
+        f"hotpepper_id={hotpepper_id}",
+        f"name_kana={shop.get('name_kana', '')}",
+        f"station_name={shop.get('station_name', '')}",
+        f"access={shop.get('access', '')}",
+        f"budget={get_nested(shop, 'budget', 'name')}",
+        f"parking={shop.get('parking', '')}",
+        f"wifi={shop.get('wifi', '')}",
+        f"card={shop.get('card', '')}",
+        f"non_smoking={shop.get('non_smoking', '')}",
+        f"middle_area_query={middle_area_query}",
+        f"middle_area_code={get_nested(shop, 'middle_area', 'code')}",
+        f"middle_area_name={get_nested(shop, 'middle_area', 'name')}",
+        f"small_area_code={get_nested(shop, 'small_area', 'code')}",
+        f"small_area_name={get_nested(shop, 'small_area', 'name')}",
+        f"lat={shop.get('lat', '')}",
+        f"lng={shop.get('lng', '')}",
+        f"photo_url={get_nested(shop, 'photo', 'pc', 'l')}",
+        f"catch={shop.get('catch', '')}",
+        f"genre_catch={get_nested(shop, 'genre', 'catch')}",
+    ]
+
+    return {
+        "competitor_id": f"hotpepper_{hotpepper_id}",
+        "store_name": shop.get("name", ""),
+        "source": "hotpepper",
+        "genre": get_nested(shop, "genre", "name"),
+        "address": shop.get("address", ""),
+        "rating": "",
+        "review_count": "",
+        "business_hours": shop.get("open", ""),
+        "closed_days": shop.get("close", ""),
+        "url": get_nested(shop, "urls", "pc"),
+        "memo": " | ".join(memo_parts),
+    }
+
+
+def main() -> None:
+    api_key = os.environ.get("HOTPEPPER_API_KEY")
     if not api_key:
-        raise RuntimeError(
-            "環境変数 HOTPEPPER_API_KEY が未設定です。"
-            'PowerShellで $env:HOTPEPPER_API_KEY="あなたのAPIキー" を実行してください。'
-        )
+        raise SystemExit("環境変数 HOTPEPPER_API_KEY が未設定です。")
 
-    all_records = []
+    rows: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
 
-    for area_name, lat, lng in SEARCH_POINTS:
-        for keyword in KEYWORDS:
-            print(f"[FETCH] {area_name} / {keyword}")
+    for middle_area in MIDDLE_AREAS:
+        print(f"[FETCH] middle_area={middle_area}")
 
-            records = fetch(api_key, area_name, lat, lng, keyword)
-            print(f"  -> {len(records)} rows")
+        start = 1
 
-            all_records.extend(records)
-            time.sleep(1)
+        while True:
+            results = fetch_page(api_key, middle_area, start)
 
-    df = pd.DataFrame(all_records, columns=COLUMNS)
+            available = int(results.get("results_available", 0))
+            returned = int(results.get("results_returned", 0))
+            shops = results.get("shop", [])
 
-    if not df.empty:
-        df = df.drop_duplicates(
-            subset=["store_name", "address", "source"],
-            keep="first",
-        ).reset_index(drop=True)
+            if isinstance(shops, dict):
+                shops = [shops]
 
-        df["competitor_id"] = [
-            f"HP{i + 1:05d}" for i in range(len(df))
-        ]
+            print(
+                f"  start={start} available={available} returned={returned} shops={len(shops)}"
+            )
 
-    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(OUT_PATH, index=False, encoding="utf-8-sig")
+            if not shops:
+                break
 
-    print(f"[SAVE] {OUT_PATH}: {len(df)} rows")
+            for shop in shops:
+                hotpepper_id = str(shop.get("id", "")).strip()
+
+                if not hotpepper_id:
+                    continue
+
+                if hotpepper_id in seen_ids:
+                    continue
+
+                if not is_cafe_like(shop):
+                    continue
+
+                rows.append(flatten_shop(shop, middle_area))
+                seen_ids.add(hotpepper_id)
+
+            next_start = start + returned
+
+            if returned <= 0 or next_start > available:
+                break
+
+            start = next_start
+            time.sleep(SLEEP_SECONDS)
+
+    df = pd.DataFrame(rows)
+
+    columns = [
+        "competitor_id",
+        "store_name",
+        "source",
+        "genre",
+        "address",
+        "rating",
+        "review_count",
+        "business_hours",
+        "closed_days",
+        "url",
+        "memo",
+    ]
+
+    df = df.reindex(columns=columns)
+
+    OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(OUT_CSV, index=False, encoding="utf-8-sig")
+
+    print(f"[SAVE] {OUT_CSV} rows={len(df)} cols={len(df.columns)}")
 
 
 if __name__ == "__main__":
