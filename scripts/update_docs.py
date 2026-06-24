@@ -3,15 +3,17 @@ import shutil
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 
-SOURCE_DIR = BASE_DIR / "output" / "final_html"
+FINAL_HTML_DIR = BASE_DIR / "output" / "final_html"
+COMPETITORS_DIR = BASE_DIR / "output" / "competitors"
 TARGET_DIR = BASE_DIR / "docs"
 
-PUBLIC_FILES = [
-    "all_properties_map.html",
-    "business_plan_dashboard.html",
-    "cafe_business_dashboard.html",
-    "simulation_index.html",
-]
+# docs上では従来通り all_properties_map.html として公開する
+PUBLIC_FILE_MAP = {
+    "all_properties_map.html": COMPETITORS_DIR / "integrated_property_map.html",
+    "business_plan_dashboard.html": FINAL_HTML_DIR / "business_plan_dashboard.html",
+    "cafe_business_dashboard.html": FINAL_HTML_DIR / "cafe_business_dashboard.html",
+    "simulation_index.html": FINAL_HTML_DIR / "simulation_index.html",
+}
 
 PUBLIC_DIRS = [
     "property_business_simulations",
@@ -30,20 +32,19 @@ def clean_target_dir():
             item.unlink()
 
 
-def copy_file(filename: str):
-    src = SOURCE_DIR / filename
-    dst = TARGET_DIR / filename
+def copy_file_as(src: Path, dst_name: str):
+    dst = TARGET_DIR / dst_name
 
     if not src.exists():
         print(f"[SKIP] not found: {src}")
         return
 
     shutil.copy2(src, dst)
-    print(f"[FILE] {filename}")
+    print(f"[FILE] {dst_name} <- {src}")
 
 
 def copy_dir(dirname: str):
-    src = SOURCE_DIR / dirname
+    src = FINAL_HTML_DIR / dirname
     dst = TARGET_DIR / dirname
 
     if not src.exists():
@@ -68,16 +69,16 @@ def main():
 
     copy_top_page()
 
-    for filename in PUBLIC_FILES:
-        copy_file(filename)
+    for dst_name, src_path in PUBLIC_FILE_MAP.items():
+        copy_file_as(src_path, dst_name)
 
     for dirname in PUBLIC_DIRS:
         copy_dir(dirname)
 
     print()
     print("[DONE] docs updated")
+    print("[MAP ] docs/all_properties_map.html is integrated_property_map.html")
 
 
 if __name__ == "__main__":
     main()
-
