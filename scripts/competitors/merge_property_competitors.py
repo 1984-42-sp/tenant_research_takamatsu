@@ -116,40 +116,52 @@ def main():
                     }
                 )
 
-    nearby_df = pd.DataFrame(nearby_records)
+        nearby_df = pd.DataFrame(nearby_records)
 
-    if nearby_df.empty:
-        summary_df = pd.DataFrame(
-            columns=[
-                "property_index",
-                "物件名",
-                "所在地",
-                "nearby_500m_count",
-                "nearby_1000m_count",
-                "nearest_competitor_name",
-                "nearest_competitor_distance_m",
-            ]
+    summary_records = []
+
+    for p_index, p in properties.iterrows():
+        p_lat = to_float(p.get("latitude"))
+        p_lng = to_float(p.get("longitude"))
+
+        property_name = get_property_name(p)
+        property_address = get_property_address(p)
+
+        base_record = {
+            "property_index": p_index,
+            "物件名": property_name,
+            "所在地": property_address,
+            "nearby_500m_count": 0,
+            "nearby_1000m_count": 0,
+            "nearest_competitor_name": "",
+            "nearest_competitor_distance_m": "",
+        }
+
+        if p_lat is None or p_lng is None or nearby_df.empty:
+            summary_records.append(base_record)
+            continue
+
+        group = nearby_df[nearby_df["property_index"] == p_index]
+
+        if group.empty:
+            summary_records.append(base_record)
+            continue
+
+        group_sorted = group.sort_values("distance_m")
+        first = group_sorted.iloc[0]
+
+        base_record.update(
+            {
+                "nearby_500m_count": int(group["within_500m"].sum()),
+                "nearby_1000m_count": int(group["within_1000m"].sum()),
+                "nearest_competitor_name": first.get("competitor_name", ""),
+                "nearest_competitor_distance_m": first.get("distance_m", ""),
+            }
         )
-    else:
-        summary_records = []
 
-        for property_index, group in nearby_df.groupby("property_index"):
-            group_sorted = group.sort_values("distance_m")
-            first = group_sorted.iloc[0]
+        summary_records.append(base_record)
 
-            summary_records.append(
-                {
-                    "property_index": property_index,
-                    "物件名": first.get("物件名", ""),
-                    "所在地": first.get("所在地", ""),
-                    "nearby_500m_count": int(group["within_500m"].sum()),
-                    "nearby_1000m_count": int(group["within_1000m"].sum()),
-                    "nearest_competitor_name": first.get("competitor_name", ""),
-                    "nearest_competitor_distance_m": first.get("distance_m", ""),
-                }
-            )
-
-        summary_df = pd.DataFrame(summary_records)
+    summary_df = pd.DataFrame(summary_records)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 

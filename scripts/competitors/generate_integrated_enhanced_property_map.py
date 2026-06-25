@@ -29,6 +29,13 @@ INPUT_COMPETITORS = (
     / "competitors_master.csv"
 )
 
+INPUT_COMPETITOR_SUMMARY = (
+    BASE_DIR
+    / "output"
+    / "competitors"
+    / "property_competitor_summary.csv"
+)
+
 OUTPUT_HTML = (
     BASE_DIR
     / "output"
@@ -152,6 +159,32 @@ def load_data():
                 df = df.drop(columns=duplicate_cols)
 
             df = df.merge(bp, on="物件名", how="left")
+        if INPUT_COMPETITOR_SUMMARY.exists():
+          summary = pd.read_csv(INPUT_COMPETITOR_SUMMARY)
+
+          summary_cols = [
+              col
+              for col in [
+                  "物件名",
+                  "nearby_500m_count",
+                  "nearby_1000m_count",
+                  "nearest_competitor_name",
+                  "nearest_competitor_distance_m",
+              ]
+              if col in summary.columns
+          ]
+
+          if "物件名" in summary_cols:
+              summary = summary[summary_cols].drop_duplicates(subset=["物件名"], keep="first")
+
+              duplicate_cols = [
+                  col for col in summary_cols
+                  if col != "物件名" and col in df.columns
+              ]
+              if duplicate_cols:
+                  df = df.drop(columns=duplicate_cols)
+
+              df = df.merge(summary, on="物件名", how="left")
 
     sim_map = load_simulation_link_map()
     df["営業シミュレーションURL"] = df["物件名"].map(sim_map).fillna("")
