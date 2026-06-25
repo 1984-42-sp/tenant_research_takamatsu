@@ -395,7 +395,7 @@ body {
   flex: 1;
   display: flex;
   align-items: stretch;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .topbar-filter-block {
