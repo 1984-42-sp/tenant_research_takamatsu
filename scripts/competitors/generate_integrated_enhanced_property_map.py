@@ -317,7 +317,7 @@ def main():
     </div>
 
     <div class="topbar-filter-block topbar-dropdown-block">
-      <button class="topbar-dropdown-button" onclick="toggleTopbarDropdown('sourceDropdown')">
+      <button class="topbar-dropdown-button" data-dropdown-id="sourceDropdown">
         競合ソース ▾
       </button>
       <div class="topbar-dropdown-content" id="sourceDropdown">
@@ -327,7 +327,7 @@ def main():
     </div>
 
     <div class="topbar-filter-block topbar-dropdown-block topbar-pattern-block">
-      <button class="topbar-dropdown-button" onclick="toggleTopbarDropdown('patternDropdown')">
+      <button class="topbar-dropdown-button" data-dropdown-id="patternDropdown">
         事業成立パターン ▾
       </button>
       <div class="topbar-dropdown-content pattern-dropdown-content" id="patternDropdown">
@@ -505,10 +505,6 @@ body {
 .topbar-dropdown-button,
 .topbar-dropdown-content {
   pointer-events: auto;
-}
-
-.topbar-dropdown-content.is-open {
-  display: block;
 }
 
 .source-list {
@@ -947,47 +943,48 @@ body {
     });
   }
 
-  window.toggleTopbarDropdown = function(id) {
+    function closeTopbarDropdowns() {
+    document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
+      el.classList.remove("is-open");
+    });
+  }
+
+  function toggleTopbarDropdownById(id) {
     const target = document.getElementById(id);
     if (!target) return;
 
-    document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
-      if (el.id !== id) {
-        el.classList.remove("is-open");
-      }
-    });
+    const shouldOpen = !target.classList.contains("is-open");
 
-    target.classList.toggle("is-open");
-  };
+    closeTopbarDropdowns();
 
-  document.addEventListener("click", function(event) {
-    if (!event.target.closest(".topbar-dropdown-block")) {
-      document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
-        el.classList.remove("is-open");
-      });
+    if (shouldOpen) {
+      target.classList.add("is-open");
     }
+  }
+
+  document.querySelectorAll(".topbar-dropdown-button").forEach(function(button) {
+    button.addEventListener("click", function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const id = button.getAttribute("data-dropdown-id");
+      toggleTopbarDropdownById(id);
+    });
   });
 
-  window.closePropertyPanel = function() {
+  document.querySelectorAll(".topbar-dropdown-content").forEach(function(dropdown) {
+    dropdown.addEventListener("click", function(event) {
+      event.stopPropagation();
+    });
+  });
+
+  document.addEventListener("click", function() {
+    closeTopbarDropdowns();
+  });
+
+    window.closePropertyPanel = function() {
     document.getElementById("sidePanel").style.display = "none";
   };
-
-  window.closeCompetitorPanel = function() {
-    document.getElementById("competitorPanel").style.display = "none";
-  };
-
-  window.toggleTopbarDropdown = function(id) {
-  const target = document.getElementById(id);
-  if (!target) return;
-
-  document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
-    if (el.id !== id) {
-      el.classList.remove("is-open");
-    }
-  });
-
-  target.classList.toggle("is-open");
-};
 
   function safe(value) {
     if (value === null || value === undefined || value === "" || Number.isNaN(value)) return "-";

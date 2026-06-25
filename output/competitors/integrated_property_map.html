@@ -168,10 +168,6 @@ body {
   pointer-events: auto;
 }
 
-.topbar-dropdown-content.is-open {
-  display: block;
-}
-
 .source-list {
   display: grid;
   gap: 6px;
@@ -565,7 +561,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_b18f353c9b467631677af197583cfbde {
+                #map_e7661392f1ce8e795939be03065326f0 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -620,7 +616,7 @@ body {
     </div>
 
     <div class="topbar-filter-block topbar-dropdown-block">
-      <button class="topbar-dropdown-button" onclick="toggleTopbarDropdown('sourceDropdown')">
+      <button class="topbar-dropdown-button" data-dropdown-id="sourceDropdown">
         競合ソース ▾
       </button>
       <div class="topbar-dropdown-content" id="sourceDropdown">
@@ -630,7 +626,7 @@ body {
     </div>
 
     <div class="topbar-filter-block topbar-dropdown-block topbar-pattern-block">
-      <button class="topbar-dropdown-button" onclick="toggleTopbarDropdown('patternDropdown')">
+      <button class="topbar-dropdown-button" data-dropdown-id="patternDropdown">
         事業成立パターン ▾
       </button>
       <div class="topbar-dropdown-content pattern-dropdown-content" id="patternDropdown">
@@ -644,14 +640,14 @@ body {
 <div class="competitor-panel" id="competitorPanel"></div>
 <div class="side-panel" id="sidePanel"></div>
     
-            <div class="folium-map" id="map_b18f353c9b467631677af197583cfbde" ></div>
+            <div class="folium-map" id="map_e7661392f1ce8e795939be03065326f0" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_b18f353c9b467631677af197583cfbde === "undefined") {
+  if (typeof L === "undefined" || typeof map_e7661392f1ce8e795939be03065326f0 === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -704,47 +700,48 @@ body {
     });
   }
 
-  window.toggleTopbarDropdown = function(id) {
+    function closeTopbarDropdowns() {
+    document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
+      el.classList.remove("is-open");
+    });
+  }
+
+  function toggleTopbarDropdownById(id) {
     const target = document.getElementById(id);
     if (!target) return;
 
-    document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
-      if (el.id !== id) {
-        el.classList.remove("is-open");
-      }
-    });
+    const shouldOpen = !target.classList.contains("is-open");
 
-    target.classList.toggle("is-open");
-  };
+    closeTopbarDropdowns();
 
-  document.addEventListener("click", function(event) {
-    if (!event.target.closest(".topbar-dropdown-block")) {
-      document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
-        el.classList.remove("is-open");
-      });
+    if (shouldOpen) {
+      target.classList.add("is-open");
     }
+  }
+
+  document.querySelectorAll(".topbar-dropdown-button").forEach(function(button) {
+    button.addEventListener("click", function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const id = button.getAttribute("data-dropdown-id");
+      toggleTopbarDropdownById(id);
+    });
   });
 
-  window.closePropertyPanel = function() {
+  document.querySelectorAll(".topbar-dropdown-content").forEach(function(dropdown) {
+    dropdown.addEventListener("click", function(event) {
+      event.stopPropagation();
+    });
+  });
+
+  document.addEventListener("click", function() {
+    closeTopbarDropdowns();
+  });
+
+    window.closePropertyPanel = function() {
     document.getElementById("sidePanel").style.display = "none";
   };
-
-  window.closeCompetitorPanel = function() {
-    document.getElementById("competitorPanel").style.display = "none";
-  };
-
-  window.toggleTopbarDropdown = function(id) {
-  const target = document.getElementById(id);
-  if (!target) return;
-
-  document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
-    if (el.id !== id) {
-      el.classList.remove("is-open");
-    }
-  });
-
-  target.classList.toggle("is-open");
-};
 
   function safe(value) {
     if (value === null || value === undefined || value === "" || Number.isNaN(value)) return "-";
@@ -874,7 +871,7 @@ body {
       weight: 2,
       fillColor: p.color,
       fillOpacity: 0.92
-    }).addTo(map_b18f353c9b467631677af197583cfbde);
+    }).addTo(map_e7661392f1ce8e795939be03065326f0);
 
     marker.bindTooltip(p["物件名"], {
       direction: "top",
@@ -883,7 +880,7 @@ body {
 
     marker.on("click", function() {
       renderPanel(p);
-      map_b18f353c9b467631677af197583cfbde.panTo([p.latitude, p.longitude]);
+      map_e7661392f1ce8e795939be03065326f0.panTo([p.latitude, p.longitude]);
     });
   });
 
@@ -905,9 +902,9 @@ body {
       })
       .on("click", function() {
         renderCompetitorPanel(c);
-        map_b18f353c9b467631677af197583cfbde.panTo([Number(c.lat), Number(c.lng)]);
+        map_e7661392f1ce8e795939be03065326f0.panTo([Number(c.lat), Number(c.lng)]);
       })
-      .addTo(map_b18f353c9b467631677af197583cfbde);
+      .addTo(map_e7661392f1ce8e795939be03065326f0);
   });
 
   const params = new URLSearchParams(window.location.search);
@@ -919,13 +916,13 @@ body {
 
     if (target) {
       renderPanel(target);
-      map_b18f353c9b467631677af197583cfbde.setView([target.latitude, target.longitude], 17);
+      map_e7661392f1ce8e795939be03065326f0.setView([target.latitude, target.longitude], 17);
     }
   }
 })();
     
-            var map_b18f353c9b467631677af197583cfbde = L.map(
-                "map_b18f353c9b467631677af197583cfbde",
+            var map_e7661392f1ce8e795939be03065326f0 = L.map(
+                "map_e7661392f1ce8e795939be03065326f0",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -937,13 +934,13 @@ body {
 
                 }
             );
-            L.control.scale().addTo(map_b18f353c9b467631677af197583cfbde);
+            L.control.scale().addTo(map_e7661392f1ce8e795939be03065326f0);
 
             
 
         
     
-            var tile_layer_f22c2805eb5588370dae7795fa0766d8 = L.tileLayer(
+            var tile_layer_4628029bb48c944d917e285df0c6743e = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -960,10 +957,10 @@ body {
             );
         
     
-            tile_layer_f22c2805eb5588370dae7795fa0766d8.addTo(map_b18f353c9b467631677af197583cfbde);
+            tile_layer_4628029bb48c944d917e285df0c6743e.addTo(map_e7661392f1ce8e795939be03065326f0);
         
     
-            tile_layer_f22c2805eb5588370dae7795fa0766d8.addTo(map_b18f353c9b467631677af197583cfbde);
+            tile_layer_4628029bb48c944d917e285df0c6743e.addTo(map_e7661392f1ce8e795939be03065326f0);
         
 </script>
 </html>
