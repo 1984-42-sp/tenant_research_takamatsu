@@ -230,6 +230,7 @@ def make_competitor_points():
                 "lat": lat,
                 "lng": lng,
                 "source": str(row.get("source", "")),
+                "linked_site_name": row.get("linked_site_name", ""),
             }
         )
 
@@ -283,8 +284,8 @@ def main():
     </div>
 
     <div class="topbar-filter-block topbar-dropdown-block">
-      <button class="topbar-dropdown-button" type="button" onclick="toggleTopbarDropdown('sourceDropdown')">
-        競合ソース <span class="dropdown-arrow">▾</span>
+      <button class="topbar-dropdown-button" onclick="toggleTopbarDropdown('sourceDropdown')">
+        競合ソース ▾
       </button>
       <div class="topbar-dropdown-content" id="sourceDropdown">
         <div class="dropdown-section-title">競合データソース</div>
@@ -293,8 +294,8 @@ def main():
     </div>
 
     <div class="topbar-filter-block topbar-dropdown-block topbar-pattern-block">
-      <button class="topbar-dropdown-button" type="button" onclick="toggleTopbarDropdown('patternDropdown')">
-        事業成立パターン <span class="dropdown-arrow">▾</span>
+      <button class="topbar-dropdown-button" onclick="toggleTopbarDropdown('patternDropdown')">
+        事業成立パターン ▾
       </button>
       <div class="topbar-dropdown-content pattern-dropdown-content" id="patternDropdown">
         <div class="dropdown-section-title">事業成立パターン凡例</div>
@@ -461,6 +462,20 @@ body {
   color: #2f8f2f;
   font-size: 12px;
   font-weight: 800;
+}
+
+.suumo-like-topbar {
+  pointer-events: auto;
+}
+
+.topbar-dropdown-block,
+.topbar-dropdown-button,
+.topbar-dropdown-content {
+  pointer-events: auto;
+}
+
+.topbar-dropdown-content.is-open {
+  display: block;
 }
 
 .source-list {
@@ -928,6 +943,19 @@ body {
     document.getElementById("competitorPanel").style.display = "none";
   };
 
+  window.toggleTopbarDropdown = function(id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  document.querySelectorAll(".topbar-dropdown-content").forEach(function(el) {
+    if (el.id !== id) {
+      el.classList.remove("is-open");
+    }
+  });
+
+  target.classList.toggle("is-open");
+};
+
   function safe(value) {
     if (value === null || value === undefined || value === "" || Number.isNaN(value)) return "-";
     return value;
@@ -1017,8 +1045,14 @@ body {
       sourceLabel = "Googleマップ";
     }
 
+    const linkedSiteName = String(c.linked_site_name || "").trim();
+
+    const buttonLabel = linkedSiteName
+      ? linkedSiteName
+      : sourceLabel;
+
     const urlButton = c.url
-      ? '<a class="link-button link-primary" href="' + c.url + '" target="_blank" rel="noopener">' + sourceLabel + 'ページを見る</a>'
+      ? '<a class="link-button link-primary" href="' + c.url + '" target="_blank" rel="noopener">' + buttonLabel + 'を見る</a>'
       : "";
 
     competitorPanel.innerHTML =

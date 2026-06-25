@@ -55,6 +55,7 @@ def load_tabelog() -> pd.DataFrame:
         "memo",
         "lat",
         "lng",
+        "linked_site_name",
     ]:
         if col not in df.columns:
             df[col] = ""
@@ -81,6 +82,7 @@ def load_tabelog() -> pd.DataFrame:
             "memo",
             "lat",
             "lng",
+            "linked_site_name",
         ]
     ]
 
@@ -100,6 +102,7 @@ def load_hotpepper() -> pd.DataFrame:
         "closed_days",
         "url",
         "memo",
+        "linked_site_name",
     ]:
         if col not in df.columns:
             df[col] = ""
@@ -124,6 +127,7 @@ def load_hotpepper() -> pd.DataFrame:
             "memo",
             "lat",
             "lng",
+            "linked_site_name",
         ]
     ]
 
@@ -153,6 +157,8 @@ def load_google_maps() -> pd.DataFrame:
         "memo",
         "lat",
         "lng",
+        "linked_site_name",
+        "linked_url",    
     ]:
         if col not in df.columns:
             df[col] = ""
@@ -163,6 +169,14 @@ def load_google_maps() -> pd.DataFrame:
         ]
 
     df["source"] = "google_maps"
+    df["linked_url"] = df["linked_url"].fillna("").astype(str).str.strip()
+    df["linked_site_name"] = df["linked_site_name"].fillna("").astype(str).str.strip()
+    df["google_maps_url"] = df["url"].fillna("").astype(str).str.strip()
+
+    df["url"] = df.apply(
+        lambda row: row["linked_url"] if row["linked_url"] else row["google_maps_url"],
+        axis=1,
+    )
 
     return df[
         [
@@ -179,8 +193,20 @@ def load_google_maps() -> pd.DataFrame:
             "memo",
             "lat",
             "lng",
+            "linked_site_name",
+            "linked_url",
         ]
     ]
+
+    df["memo"] = df.apply(
+        lambda row: (
+            str(row.get("memo", "")) +
+            f" | linked_site_name={row['linked_site_name']}" +
+            f" | linked_url={row['linked_url']}" +
+            f" | google_maps_url={row['google_maps_url']}"
+        ).strip(" |"),
+        axis=1,
+    )
 
 def main() -> None:
     tabelog = load_tabelog()
