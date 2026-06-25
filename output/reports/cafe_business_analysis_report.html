@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>高松市カフェ開業 事業計画・融資向け分析レポート</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --green:#2f8f2f;
+  --bg:#f7f2ea;
+  --ink:#221a14;
+  --muted:#6f6258;
+  --card:#fff;
+  --line:#e6d8c8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+.header {
+  background:#fff;
+  border-bottom:4px solid var(--green);
+  padding:24px 36px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.header h1 { margin:0; font-size:26px; }
+.header p { margin:8px 0 0; color:var(--muted); }
+main { padding:28px 36px 56px; max-width:1440px; margin:auto; }
+.section { margin:0 0 34px; }
+.section h2 { font-size:22px; margin:0 0 14px; }
+.summary-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(180px,1fr));
+  gap:14px;
+}
+.summary-card {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+.summary-card span { display:block; color:var(--muted); font-weight:700; font-size:13px; }
+.summary-card b { display:block; margin-top:8px; font-size:28px; }
+.insight {
+  background:#fff;
+  border-left:7px solid var(--green);
+  border-radius:16px;
+  padding:20px 22px;
+  line-height:1.85;
+  box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+.table-wrap {
+  overflow:auto;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+}
+table { width:100%; border-collapse:collapse; min-width:980px; }
+th,td { padding:13px 14px; border-bottom:1px solid #eee2d5; text-align:right; }
+th:first-child,td:first-child { text-align:left; }
+th { background:#fbf8f3; color:#4b4038; font-size:13px; }
+td { font-size:14px; }
+.dot {
+  display:inline-block;
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  margin-right:8px;
+}
+.pattern-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(320px,1fr));
+  gap:18px;
+}
+.pattern-card {
+  background:#fff;
+  border:1px solid var(--line);
+  border-top:7px solid var(--accent);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 8px 22px rgba(0,0,0,.06);
+}
+.pattern-head {
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+}
+.pattern-head h3 { margin:0; font-size:19px; }
+.pattern-head p { margin:6px 0 0; color:var(--muted); }
+.pattern-badge {
+  background:var(--accent);
+  color:#fff;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.metric-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:18px;
+}
+.metric {
+  background:#fbf8f3;
+  border:1px solid #eee2d5;
+  border-radius:14px;
+  padding:11px;
+}
+.metric span { display:block; color:var(--muted); font-size:11px; font-weight:800; }
+.metric b { display:block; margin-top:5px; font-size:15px; }
+.note {
+  margin:14px 0 0;
+  color:#5d5149;
+  font-size:12px;
+  line-height:1.8;
+}
+.chart-card {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+}
+.bar {
+  margin:12px 0;
+}
+.bar-label {
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  font-weight:800;
+}
+.bar-track {
+  height:13px;
+  background:#eee4d8;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:6px;
+}
+.bar-fill {
+  height:100%;
+  border-radius:999px;
+}
+a { color:#1d6f1d; font-weight:800; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.footer-note {
+  margin-top:34px;
+  color:var(--muted);
+  line-height:1.8;
+  font-size:13px;
+}
+@media(max-width:900px) {
+  main { padding:18px; }
+  .header { padding:18px; }
+  .summary-grid,.pattern-grid { grid-template-columns:1fr; }
+  .metric-grid { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <h1>高松市カフェ開業 事業計画・融資向け分析レポート</h1>
+  <p>物件CSV・競合CSV・事業評価CSVを根拠に、売上目標・集客目安・競合環境・ソンス風再現可能性を定量整理。</p>
+</header>
+
+<main>
+  <section class="section">
+    <div class="summary-grid">
+      <div class="summary-card"><span>分析対象物件</span><b>216件</b></div>
+      <div class="summary-card"><span>緯度経度あり物件</span><b>192件</b></div>
+      <div class="summary-card"><span>競合店舗</span><b>157件</b></div>
+      <div class="summary-card"><span>google_maps</span><b>75件</b></div><div class="summary-card"><span>hotpepper</span><b>42件</b></div><div class="summary-card"><span>tabelog</span><b>40件</b></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>結論</h2>
+    <div class="insight">
+      本レポートは、取得済みCSVに含まれる「必要月商」「推奨必要日客数」「事業成立パターン」「近隣競合数」「ソンス適性スコア」を用いて、
+      カフェ開業候補地を金融機関説明に耐える形で整理したものです。
+      目標月商は推測値ではなく、各物件CSV上の必要月商をパターン別に集計し、
+      標準水準は中央値、理想水準は75パーセンタイルに20%の安全余力を加えた値として算出しています。
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>事業成立パターン別 売上・集客目安</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>事業成立パターン</th>
+            <th>件数</th>
+            <th>中央値家賃</th>
+            <th>標準必要月商</th>
+            <th>理想月商</th>
+            <th>必要日客数中央値</th>
+            <th>500m競合中央値</th>
+            <th>ソンス適性中央値</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td><span class="dot" style="background:#f2994a"></span>中心街・高単価型</td>
+          <td>47</td>
+          <td>60,500円</td>
+          <td>453,226円</td>
+          <td>708,788円</td>
+          <td>22.0人</td>
+          <td>38.0件</td>
+          <td>47.8点</td>
+        </tr>
+        
+
+        <tr>
+          <td><span class="dot" style="background:#8e44ad"></span>大型投資・高売上必須型</td>
+          <td>46</td>
+          <td>330,000円</td>
+          <td>2,148,148円</td>
+          <td>3,717,245円</td>
+          <td>118.0人</td>
+          <td>0.0件</td>
+          <td>63.3点</td>
+        </tr>
+        
+
+        <tr>
+          <td><span class="dot" style="background:#2f80ed"></span>低固定費・小商圏型</td>
+          <td>40</td>
+          <td>93,500円</td>
+          <td>539,474円</td>
+          <td>983,764円</td>
+          <td>32.0人</td>
+          <td>1.0件</td>
+          <td>59.2点</td>
+        </tr>
+        
+
+        <tr>
+          <td><span class="dot" style="background:#9b51e0"></span>準中心街・生活圏型</td>
+          <td>30</td>
+          <td>80,750円</td>
+          <td>527,142円</td>
+          <td>899,593円</td>
+          <td>30.5人</td>
+          <td>1.0件</td>
+          <td>51.8点</td>
+        </tr>
+        
+
+        <tr>
+          <td><span class="dot" style="background:#eb5757"></span>中心街・高回転型</td>
+          <td>27</td>
+          <td>220,000円</td>
+          <td>1,350,000円</td>
+          <td>1,788,309円</td>
+          <td>80.0人</td>
+          <td>34.0件</td>
+          <td>73.0点</td>
+        </tr>
+        
+
+        <tr>
+          <td><span class="dot" style="background:#27ae60"></span>郊外・駐車場依存型</td>
+          <td>20</td>
+          <td>162,500円</td>
+          <td>1,121,212円</td>
+          <td>1,563,636円</td>
+          <td>61.5人</td>
+          <td>0.0件</td>
+          <td>67.4点</td>
+        </tr>
+        
+
+        <tr>
+          <td><span class="dot" style="background:#666"></span>家賃・面積不明型</td>
+          <td>4</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>34.0件</td>
+          <td>57.4点</td>
+        </tr>
+        
+
+        <tr>
+          <td><span class="dot" style="background:#828282"></span>家賃未定・問い合わせ必要型</td>
+          <td>1</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>1.0件</td>
+          <td>-</td>
+        </tr>
+        
+
+        <tr>
+          <td><span class="dot" style="background:#828282"></span>要確認・情報不足型</td>
+          <td>1</td>
+          <td>330,000円</td>
+          <td>1,414,286円</td>
+          <td>1,697,143円</td>
+          <td>82.0人</td>
+          <td>34.0件</td>
+          <td>-</td>
+        </tr>
+        
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>パターン別 詳細カード</h2>
+    <div class="pattern-grid">
+      
+        <section class="pattern-card" style="--accent:#f2994a">
+          <div class="pattern-head">
+            <div>
+              <h3>中心街・高単価型</h3>
+              <p>47件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>60,500円</b></div>
+            <div class="metric"><span>中央値坪数</span><b>8.5坪</b></div>
+            <div class="metric"><span>標準必要月商</span><b>453,226円</b></div>
+            <div class="metric"><span>理想月商</span><b>708,788円</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>22.0人/日</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>28.5人/日</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>38.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>47.8点</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+
+        <section class="pattern-card" style="--accent:#8e44ad">
+          <div class="pattern-head">
+            <div>
+              <h3>大型投資・高売上必須型</h3>
+              <p>46件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>330,000円</b></div>
+            <div class="metric"><span>中央値坪数</span><b>67.7坪</b></div>
+            <div class="metric"><span>標準必要月商</span><b>2,148,148円</b></div>
+            <div class="metric"><span>理想月商</span><b>3,717,245円</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>118.0人/日</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>172.0人/日</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>0.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>63.3点</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+
+        <section class="pattern-card" style="--accent:#2f80ed">
+          <div class="pattern-head">
+            <div>
+              <h3>低固定費・小商圏型</h3>
+              <p>40件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>93,500円</b></div>
+            <div class="metric"><span>中央値坪数</span><b>19.2坪</b></div>
+            <div class="metric"><span>標準必要月商</span><b>539,474円</b></div>
+            <div class="metric"><span>理想月商</span><b>983,764円</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>32.0人/日</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>49.0人/日</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>1.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>59.2点</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+
+        <section class="pattern-card" style="--accent:#9b51e0">
+          <div class="pattern-head">
+            <div>
+              <h3>準中心街・生活圏型</h3>
+              <p>30件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>80,750円</b></div>
+            <div class="metric"><span>中央値坪数</span><b>14.4坪</b></div>
+            <div class="metric"><span>標準必要月商</span><b>527,142円</b></div>
+            <div class="metric"><span>理想月商</span><b>899,593円</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>30.5人/日</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>43.0人/日</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>1.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>51.8点</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+
+        <section class="pattern-card" style="--accent:#eb5757">
+          <div class="pattern-head">
+            <div>
+              <h3>中心街・高回転型</h3>
+              <p>27件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>220,000円</b></div>
+            <div class="metric"><span>中央値坪数</span><b>35.4坪</b></div>
+            <div class="metric"><span>標準必要月商</span><b>1,350,000円</b></div>
+            <div class="metric"><span>理想月商</span><b>1,788,309円</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>80.0人/日</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>88.0人/日</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>34.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>73.0点</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+
+        <section class="pattern-card" style="--accent:#27ae60">
+          <div class="pattern-head">
+            <div>
+              <h3>郊外・駐車場依存型</h3>
+              <p>20件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>162,500円</b></div>
+            <div class="metric"><span>中央値坪数</span><b>32.8坪</b></div>
+            <div class="metric"><span>標準必要月商</span><b>1,121,212円</b></div>
+            <div class="metric"><span>理想月商</span><b>1,563,636円</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>61.5人/日</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>71.8人/日</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>0.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>67.4点</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+
+        <section class="pattern-card" style="--accent:#666">
+          <div class="pattern-head">
+            <div>
+              <h3>家賃・面積不明型</h3>
+              <p>4件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>-</b></div>
+            <div class="metric"><span>中央値坪数</span><b>-</b></div>
+            <div class="metric"><span>標準必要月商</span><b>-</b></div>
+            <div class="metric"><span>理想月商</span><b>-</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>-</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>-</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>34.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>57.4点</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+
+        <section class="pattern-card" style="--accent:#828282">
+          <div class="pattern-head">
+            <div>
+              <h3>家賃未定・問い合わせ必要型</h3>
+              <p>1件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>-</b></div>
+            <div class="metric"><span>中央値坪数</span><b>68.4坪</b></div>
+            <div class="metric"><span>標準必要月商</span><b>-</b></div>
+            <div class="metric"><span>理想月商</span><b>-</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>-</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>-</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>1.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>-</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+
+        <section class="pattern-card" style="--accent:#828282">
+          <div class="pattern-head">
+            <div>
+              <h3>要確認・情報不足型</h3>
+              <p>1件</p>
+            </div>
+            <div class="pattern-badge">中央値ベース</div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><span>中央値家賃</span><b>330,000円</b></div>
+            <div class="metric"><span>中央値坪数</span><b>33.2坪</b></div>
+            <div class="metric"><span>標準必要月商</span><b>1,414,286円</b></div>
+            <div class="metric"><span>理想月商</span><b>1,697,143円</b></div>
+            <div class="metric"><span>標準必要日客数</span><b>82.0人/日</b></div>
+            <div class="metric"><span>上位日客数目安</span><b>82.0人/日</b></div>
+            <div class="metric"><span>500m競合中央値</span><b>34.0件</b></div>
+            <div class="metric"><span>ソンス適性中央値</span><b>-</b></div>
+          </div>
+
+          <p class="note">
+            理想月商は、同パターン内の必要月商75パーセンタイルに20%の安全余力を加えた水準。
+            返済・広告費・人件費変動に耐えるための金融機関説明用ラインとして設定。
+          </p>
+        </section>
+        
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>理想月商 比較</h2>
+    <div class="chart-card" id="salesChart"></div>
+  </section>
+
+  <section class="section">
+    <h2>ソンス風再現可能性の見方</h2>
+    <div class="insight">
+      ソンス風再現可能性は、単に韓国風内装にできるかではなく、
+      「高単価を許容できる立地か」「競合が多すぎず、かつカフェ需要が見込めるか」
+      「必要月商に対して日客数が現実的か」を見るための補助指標です。
+      ソンス適性スコアが高く、理想月商に対する必要日客数が過大でない物件ほど、
+      世界観型・SNS型・高単価型カフェとして金融機関へ説明しやすい候補になります。
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>候補物件ランキング</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>物件名</th>
+            <th>事業成立パターン</th>
+            <th>家賃</th>
+            <th>必要月商</th>
+            <th>必要日客数</th>
+            <th>500m競合</th>
+            <th>ソンス適性</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td><a href="all_properties_map.html?property=パールコート 1階">パールコート 1階</a></td>
+          <td>中心街・高回転型</td>
+          <td>22万円</td>
+          <td>1468750.0</td>
+          <td>86.0</td>
+          <td>34</td>
+          <td>76.8</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗・事務所(一部) パールコート 1階">貸店舗・事務所(一部) パールコート 1階</a></td>
+          <td>中心街・高回転型</td>
+          <td>22 万円</td>
+          <td>1468750.0</td>
+          <td>86.0</td>
+          <td>34</td>
+          <td>76.8</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=京都興産ビル ５F">京都興産ビル ５F</a></td>
+          <td>中心街・高回転型</td>
+          <td>16.5万円</td>
+          <td>1220588.0</td>
+          <td>73.0</td>
+          <td>41</td>
+          <td>75.9</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗（一部） 京都興産ビル ５F">貸店舗（一部） 京都興産ビル ５F</a></td>
+          <td>中心街・高回転型</td>
+          <td>16.5 万円</td>
+          <td>1220588.0</td>
+          <td>73.0</td>
+          <td>0</td>
+          <td>75.9</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=大内ビル 1階">大内ビル 1階</a></td>
+          <td>中心街・高回転型</td>
+          <td>15万円</td>
+          <td>968750.0</td>
+          <td>57.0</td>
+          <td>40</td>
+          <td>75.0</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗（一部） 大内ビル 1階">貸店舗（一部） 大内ビル 1階</a></td>
+          <td>中心街・高回転型</td>
+          <td>15 万円</td>
+          <td>968750.0</td>
+          <td>57.0</td>
+          <td>0</td>
+          <td>75.0</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=カーラビル １F">カーラビル １F</a></td>
+          <td>中心街・高回転型</td>
+          <td>49.5万円</td>
+          <td>2397656.0</td>
+          <td>141.0</td>
+          <td>35</td>
+          <td>74.7</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗（一部） カーラビル １F">貸店舗（一部） カーラビル １F</a></td>
+          <td>中心街・高回転型</td>
+          <td>49.5 万円</td>
+          <td>2397656.0</td>
+          <td>141.0</td>
+          <td>38</td>
+          <td>74.7</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=高松市 百間町 (瓦町駅) の貸店舗（一部）">高松市 百間町 (瓦町駅) の貸店舗（一部）</a></td>
+          <td>中心街・高回転型</td>
+          <td>22万円</td>
+          <td>1382353.0</td>
+          <td>82.0</td>
+          <td>34</td>
+          <td>73.0</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗（一部） 高松市 百間町 (瓦町駅) の貸店舗（一部）">貸店舗（一部） 高松市 百間町 (瓦町駅) の貸店舗（一部）</a></td>
+          <td>中心街・高回転型</td>
+          <td>22 万円</td>
+          <td>1382353.0</td>
+          <td>82.0</td>
+          <td>34</td>
+          <td>73.0</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=高松市 鍛冶屋町 (瓦町駅) の貸店舗（一部）">高松市 鍛冶屋町 (瓦町駅) の貸店舗（一部）</a></td>
+          <td>中心街・高回転型</td>
+          <td>26.4万円</td>
+          <td>1511765.0</td>
+          <td>90.0</td>
+          <td>49</td>
+          <td>72.8</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗（一部） 高松市 鍛冶屋町 (瓦町駅) の貸店舗（一部）">貸店舗（一部） 高松市 鍛冶屋町 (瓦町駅) の貸店舗（一部）</a></td>
+          <td>中心街・高回転型</td>
+          <td>26.4 万円</td>
+          <td>1511765.0</td>
+          <td>90.0</td>
+          <td>49</td>
+          <td>72.8</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=内外テナント1階【国分寺町福家】">内外テナント1階【国分寺町福家】</a></td>
+          <td>郊外・駐車場依存型</td>
+          <td>300,000 円</td>
+          <td>1393939.0</td>
+          <td>77.0</td>
+          <td>0</td>
+          <td>71.8</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=京都興産ビル 3F">京都興産ビル 3F</a></td>
+          <td>中心街・高回転型</td>
+          <td>22万円</td>
+          <td>1382353.0</td>
+          <td>82.0</td>
+          <td>41</td>
+          <td>70.7</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗（一部） 京都興産ビル 3F">貸店舗（一部） 京都興産ビル 3F</a></td>
+          <td>中心街・高回転型</td>
+          <td>22 万円</td>
+          <td>1382353.0</td>
+          <td>82.0</td>
+          <td>0</td>
+          <td>70.7</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=下田井町貸店舗事務所 1階">下田井町貸店舗事務所 1階</a></td>
+          <td>低固定費・小商圏型</td>
+          <td>16.5万円</td>
+          <td>855263.0</td>
+          <td>51.0</td>
+          <td>1</td>
+          <td>70.5</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗・事務所(一部) 下田井町貸店舗事務所 1階">貸店舗・事務所(一部) 下田井町貸店舗事務所 1階</a></td>
+          <td>低固定費・小商圏型</td>
+          <td>16.5 万円</td>
+          <td>855263.0</td>
+          <td>51.0</td>
+          <td>1</td>
+          <td>70.5</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=MN店舗1F【香川町川東】">MN店舗1F【香川町川東】</a></td>
+          <td>大型投資・高売上必須型</td>
+          <td>121,000 円</td>
+          <td>1374074.0</td>
+          <td>76.0</td>
+          <td>0</td>
+          <td>70.2</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=ＡＫビル片原町Ⅱ　２階　北西 （２０２号）">ＡＫビル片原町Ⅱ　２階　北西 （２０２号）</a></td>
+          <td>中心街・高回転型</td>
+          <td>13.2万円</td>
+          <td>858824.0</td>
+          <td>51.0</td>
+          <td>21</td>
+          <td>68.8</td>
+        </tr>
+        
+
+        <tr>
+          <td><a href="all_properties_map.html?property=貸店舗（一部） ＡＫビル片原町Ⅱ　２階　北西 （２０２号）">貸店舗（一部） ＡＫビル片原町Ⅱ　２階　北西 （２０２号）</a></td>
+          <td>中心街・高回転型</td>
+          <td>13.2 万円</td>
+          <td>858824.0</td>
+          <td>51.0</td>
+          <td>21</td>
+          <td>68.8</td>
+        </tr>
+        
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    参照CSV：
+    output\archive_csv\cafe_business_dashboard.csv,
+    output\competitors\business_plan_dashboard_with_competitors.csv,
+    output\competitors\property_competitor_summary.csv,
+    data\competitors\competitors_master.csv。
+    本レポートの数値は上記CSVを読み込み、スクリプト実行時点で再計算しています。
+  </div>
+</main>
+
+<script>
+const patternData = [{"pattern": "中心街・高単価型", "count": 47, "ideal_sales": 708787.7999999999, "need_sales_median": 453226.0, "color": "#f2994a"}, {"pattern": "大型投資・高売上必須型", "count": 46, "ideal_sales": 3717244.8, "need_sales_median": 2148148.0, "color": "#8e44ad"}, {"pattern": "低固定費・小商圏型", "count": 40, "ideal_sales": 983763.6, "need_sales_median": 539474.0, "color": "#2f80ed"}, {"pattern": "準中心街・生活圏型", "count": 30, "ideal_sales": 899593.2, "need_sales_median": 527142.5, "color": "#9b51e0"}, {"pattern": "中心街・高回転型", "count": 27, "ideal_sales": 1788309.0, "need_sales_median": 1350000.0, "color": "#eb5757"}, {"pattern": "郊外・駐車場依存型", "count": 20, "ideal_sales": 1563636.0, "need_sales_median": 1121212.0, "color": "#27ae60"}, {"pattern": "家賃・面積不明型", "count": 4, "ideal_sales": 0, "need_sales_median": 0, "color": "#666"}, {"pattern": "家賃未定・問い合わせ必要型", "count": 1, "ideal_sales": 0, "need_sales_median": 0, "color": "#828282"}, {"pattern": "要確認・情報不足型", "count": 1, "ideal_sales": 1697143.2, "need_sales_median": 1414286.0, "color": "#828282"}];
+
+function yen(v) {
+  if (!v) return "-";
+  return Math.round(v).toLocaleString() + "円";
+}
+
+const maxSales = Math.max(...patternData.map(d => d.ideal_sales || 0), 1);
+const chart = document.getElementById("salesChart");
+
+patternData.forEach(d => {
+  const width = Math.max(3, (d.ideal_sales / maxSales) * 100);
+  const row = document.createElement("div");
+  row.className = "bar";
+  row.innerHTML = `
+    <div class="bar-label">
+      <span>${d.pattern}</span>
+      <span>理想月商：${yen(d.ideal_sales)} / 標準：${yen(d.need_sales_median)}</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${width}%; background:${d.color}"></div>
+    </div>
+  `;
+  chart.appendChild(row);
+});
+</script>
+</body>
+</html>

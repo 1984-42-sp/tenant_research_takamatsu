@@ -42,6 +42,7 @@ def build_index_html(template_text):
 
 FINAL_HTML_DIR = BASE_DIR / "output" / "final_html"
 COMPETITORS_DIR = BASE_DIR / "output" / "competitors"
+REPORTS_DIR = BASE_DIR / "output" / "reports"
 TARGET_DIR = BASE_DIR / "docs"
 
 # docs上では従来通り all_properties_map.html として公開する
@@ -50,6 +51,7 @@ PUBLIC_FILE_MAP = {
     "business_plan_dashboard.html": FINAL_HTML_DIR / "business_plan_dashboard.html",
     "cafe_business_dashboard.html": FINAL_HTML_DIR / "cafe_business_dashboard.html",
     "simulation_index.html": FINAL_HTML_DIR / "simulation_index.html",
+    "cafe_business_analysis_report.html": REPORTS_DIR / "cafe_business_analysis_report.html",
 }
 
 PUBLIC_DIRS = [
