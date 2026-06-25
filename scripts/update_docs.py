@@ -1,7 +1,44 @@
 from pathlib import Path
 import shutil
+import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parents[1]
+def read_csv_count(path):
+    if not path.exists():
+        return 0
+    return len(pd.read_csv(path))
+
+
+def build_index_html(template_text):
+    properties_path = BASE_DIR / "output" / "archive_csv" / "all_properties.csv"
+    dashboard_path = BASE_DIR / "output" / "archive_csv" / "cafe_business_dashboard.csv"
+    competitors_path = BASE_DIR / "data" / "competitors" / "competitors_master.csv"
+
+    property_count = read_csv_count(properties_path)
+    geocoded_count = read_csv_count(dashboard_path)
+
+    if competitors_path.exists():
+        competitors = pd.read_csv(competitors_path)
+        competitor_count = len(competitors)
+        source_counts = competitors["source"].fillna("").value_counts()
+        tabelog_count = int(source_counts.get("tabelog", 0))
+        hotpepper_count = int(source_counts.get("hotpepper", 0))
+        google_maps_count = int(source_counts.get("google_maps", 0))
+    else:
+        competitor_count = 0
+        tabelog_count = 0
+        hotpepper_count = 0
+        google_maps_count = 0
+
+    return (
+        template_text
+        .replace("{{PROPERTY_COUNT}}", str(property_count))
+        .replace("{{GEOCODED_PROPERTY_COUNT}}", str(geocoded_count))
+        .replace("{{COMPETITOR_COUNT}}", str(competitor_count))
+        .replace("{{TABELOG_COUNT}}", str(tabelog_count))
+        .replace("{{HOTPEPPER_COUNT}}", str(hotpepper_count))
+        .replace("{{GOOGLE_MAPS_COUNT}}", str(google_maps_count))
+    )
 
 FINAL_HTML_DIR = BASE_DIR / "output" / "final_html"
 COMPETITORS_DIR = BASE_DIR / "output" / "competitors"
@@ -60,7 +97,10 @@ def copy_top_page():
         print(f"[SKIP] not found: {TOP_PAGE}")
         return
 
-    shutil.copy2(TOP_PAGE, TARGET_DIR / "index.html")
+    text = TOP_PAGE.read_text(encoding="utf-8")
+    text = build_index_html(text)
+
+    (TARGET_DIR / "index.html").write_text(text, encoding="utf-8")
     print("[FILE] index.html")
 
 
