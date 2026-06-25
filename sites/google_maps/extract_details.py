@@ -71,7 +71,18 @@ def is_valid_linked_url(url: str) -> bool:
 
 
 def clean_url(url: str) -> str:
-    return unquote(url).strip().rstrip("),.;]")
+    url = unquote(url).strip().rstrip("),.;]")
+
+    parsed = urlparse(url)
+    netloc = parsed.netloc.lower()
+
+    if "instagram.com" in netloc:
+        parts = [p for p in parsed.path.split("/") if p]
+        if parts:
+            username = parts[0]
+            return f"https://www.instagram.com/{username}/"
+
+    return url
 
 
 def extract_linked_url_from_website_button(soup: BeautifulSoup):
