@@ -561,7 +561,7 @@ body {
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_7c5df971b78c3df5560ad98e1674d987 {
+                #map_c379d1bb30d8291f710a19766a609258 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -640,14 +640,14 @@ body {
 <div class="competitor-panel" id="competitorPanel"></div>
 <div class="side-panel" id="sidePanel"></div>
     
-            <div class="folium-map" id="map_7c5df971b78c3df5560ad98e1674d987" ></div>
+            <div class="folium-map" id="map_c379d1bb30d8291f710a19766a609258" ></div>
         
 </body>
 <script>
     
     
 (function bootEnhancedMap() {
-  if (typeof L === "undefined" || typeof map_7c5df971b78c3df5560ad98e1674d987 === "undefined") {
+  if (typeof L === "undefined" || typeof map_c379d1bb30d8291f710a19766a609258 === "undefined") {
     setTimeout(bootEnhancedMap, 50);
     return;
   }
@@ -742,6 +742,14 @@ body {
     window.closePropertyPanel = function() {
     document.getElementById("sidePanel").style.display = "none";
   };
+
+  window.closeCompetitorPanel = function() {
+  const competitorPanel = document.getElementById("competitorPanel");
+  if (competitorPanel) {
+    competitorPanel.style.display = "none";
+    competitorPanel.innerHTML = "";
+  }
+};
 
   function safe(value) {
     if (value === null || value === undefined || value === "" || Number.isNaN(value)) return "-";
@@ -871,7 +879,7 @@ body {
       weight: 2,
       fillColor: p.color,
       fillOpacity: 0.92
-    }).addTo(map_7c5df971b78c3df5560ad98e1674d987);
+    }).addTo(map_c379d1bb30d8291f710a19766a609258);
 
     marker.bindTooltip(p["物件名"], {
       direction: "top",
@@ -880,7 +888,7 @@ body {
 
     marker.on("click", function() {
       renderPanel(p);
-      map_7c5df971b78c3df5560ad98e1674d987.panTo([p.latitude, p.longitude]);
+      map_c379d1bb30d8291f710a19766a609258.panTo([p.latitude, p.longitude]);
     });
   });
 
@@ -902,9 +910,9 @@ body {
       })
       .on("click", function() {
         renderCompetitorPanel(c);
-        map_7c5df971b78c3df5560ad98e1674d987.panTo([Number(c.lat), Number(c.lng)]);
+        map_c379d1bb30d8291f710a19766a609258.panTo([Number(c.lat), Number(c.lng)]);
       })
-      .addTo(map_7c5df971b78c3df5560ad98e1674d987);
+      .addTo(map_c379d1bb30d8291f710a19766a609258);
   });
 
   const params = new URLSearchParams(window.location.search);
@@ -916,13 +924,13 @@ body {
 
     if (target) {
       renderPanel(target);
-      map_7c5df971b78c3df5560ad98e1674d987.setView([target.latitude, target.longitude], 17);
+      map_c379d1bb30d8291f710a19766a609258.setView([target.latitude, target.longitude], 17);
     }
   }
 })();
     
-            var map_7c5df971b78c3df5560ad98e1674d987 = L.map(
-                "map_7c5df971b78c3df5560ad98e1674d987",
+            var map_c379d1bb30d8291f710a19766a609258 = L.map(
+                "map_c379d1bb30d8291f710a19766a609258",
                 {
                     center: [34.3428, 134.0466],
                     crs: L.CRS.EPSG3857,
@@ -934,13 +942,13 @@ body {
 
                 }
             );
-            L.control.scale().addTo(map_7c5df971b78c3df5560ad98e1674d987);
+            L.control.scale().addTo(map_c379d1bb30d8291f710a19766a609258);
 
             
 
         
     
-            var tile_layer_fe1fc6ca4c27fbb325e3ffb13ffad71c = L.tileLayer(
+            var tile_layer_8011ff50c95739fa5584f99c54bfd523 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -957,10 +965,10 @@ body {
             );
         
     
-            tile_layer_fe1fc6ca4c27fbb325e3ffb13ffad71c.addTo(map_7c5df971b78c3df5560ad98e1674d987);
+            tile_layer_8011ff50c95739fa5584f99c54bfd523.addTo(map_c379d1bb30d8291f710a19766a609258);
         
     
-            tile_layer_fe1fc6ca4c27fbb325e3ffb13ffad71c.addTo(map_7c5df971b78c3df5560ad98e1674d987);
+            tile_layer_8011ff50c95739fa5584f99c54bfd523.addTo(map_c379d1bb30d8291f710a19766a609258);
         
 </script>
 </html>

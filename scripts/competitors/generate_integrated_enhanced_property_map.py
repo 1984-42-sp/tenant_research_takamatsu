@@ -986,6 +986,14 @@ body {
     document.getElementById("sidePanel").style.display = "none";
   };
 
+  window.closeCompetitorPanel = function() {
+  const competitorPanel = document.getElementById("competitorPanel");
+  if (competitorPanel) {
+    competitorPanel.style.display = "none";
+    competitorPanel.innerHTML = "";
+  }
+};
+
   function safe(value) {
     if (value === null || value === undefined || value === "" || Number.isNaN(value)) return "-";
     return value;
