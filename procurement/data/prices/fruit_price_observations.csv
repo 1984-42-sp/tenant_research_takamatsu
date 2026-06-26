@@ -1,0 +1,41 @@
+﻿fruit_price_id,item_name,product_form,variety,origin,season,grade,spec,unit,quantity,price_yen,tax_included,unit_price_yen,supplier,source_url,checked_date,notes
+FP001,いちご,冷凍,,,,,冷凍いちご25-35mm,kg,1,850,yes,850,Mマート,https://www.m-mart.co.jp/search/cate_sub.php?cate=8&cate2=4&cate3=50,2026-06-25,加工・スムージー向け
+FP002,いちご,冷凍,,,,,冷凍いちご ジャム・スムージー用,kg,1,1209,yes,1209,Mマート,https://www.m-mart.co.jp/search/cate_sub.php?cate=8&cate2=4&cate3=50,2026-06-25,1kg袋
+FP003,いちご,冷凍,,,,,冷凍いちご業務用1kg×5袋,kg,5,7500,yes,1500,Mマート少量販売,https://www.m-mart.co.jp/shouryou/index.php?p_c1=8&p_c1_2=0&p_c2=4&p_c3=50,2026-06-25,5kgロット
+FP004,いちご,冷凍削り,長野県産,,,冷凍削りイチゴ,kg,1,3000,yes,3000,Mマート少量販売,https://www.m-mart.co.jp/shouryou/index.php?p_c1=8&p_c1_2=0&p_c2=4&p_c3=50,2026-06-25,削りいちご,
+FP005,いちご,冷凍,,,,,トロピカルマリア 2kg,kg,2,2958,yes,1479,価格.com,https://search.kakaku.com/%E3%81%84%E3%81%A1%E3%81%94%201kg/,2026-06-25,楽天掲載参考
+FP006,いちご,冷凍,,,,,アスク ストロベリー丸1kg,kg,1,1080,yes,1080,価格.com,https://search.kakaku.com/%E3%81%84%E3%81%A1%E3%81%94%201kg/,2026-06-25,業務用
+FP007,いちご,冷凍,,,,,1kg×10袋,kg,10,11610,yes,1161,Foodies Marche,https://foodiesmarche.com/view/item/000000001691,2026-06-25,箱売
+FP008,いちご,冷凍,,,,,冷凍ストロベリー1kg,kg,1,2300,yes,2300,Amazon,https://www.amazon.co.jp/dp/B0DXPL3DJ2,2026-06-25,500g×2袋
+FP009,いちご,冷凍,徳島産,,,訳ありB品冷凍いちご,kg,5,11730,yes,2346,楽天市場/NORUCA,https://search.rakuten.co.jp/search/mall/%E6%A5%AD%2B%E3%82%AB%E3%83%AB%E3%83%9E/304588/,2026-06-25,国産5kg,
+FP010,バナナ,冷凍,オーガニック,,,冷凍オーガニックバナナ,kg,1,1980,yes,1980,Mマート,https://www.m-mart.co.jp/search/cate_sub.php?cate=8&cate2=4&cate3=35,2026-06-25,500g×2,
+FP011,バナナ,冷凍スライス,,,,冷凍バナナスライス,kg,1,1350,yes,1350,Mマート,https://www.m-mart.co.jp/search/cate_sub.php?cate=8&cate2=4&cate3=35,2026-06-25,1kg,
+FP012,バナナ,生鮮,甘熟王,フィリピン産,,訳あり,約85本 15kg,kg,15,4280,yes,285.33,価格.com/楽天市場,https://search.kakaku.com/%E3%83%90%E3%83%8A%E3%83%8A%201kg/,2026-06-25,業務用訳あり
+FP013,バナナ,生鮮,加工用,エクアドルほか,,,1kg位,kg,1,228,no,228,八面六臂,https://hachimenroppi.com/item/7/72/,2026-06-25,税抜価格
+FP014,バナナ,生鮮,フィリピン産,,,全国平均小売価格,kg,1,361,yes,361,小売物価統計参考,https://www.jpmarket-conditions.com/1581/,2026-06-25,2026年5月全国平均,
+FP015,オレンジ,冷凍,,,,,冷凍オレンジ,kg,1,1620,yes,1620,Mマート少量販売,https://www.m-mart.co.jp/shouryou/index.php?p_c1=8&p_c1_2=0&p_c2=4&p_c3=40,2026-06-25,KIMONO FRUITS
+FP016,オレンジ,生鮮,訳あり,オーストラリア産,,,2kg,kg,2,1980,yes,990,楽天市場,https://search.rakuten.co.jp/search/mall/%E6%A5%AD%E5%8B%99%E7%94%A8/304593/,2026-06-25,送料無料参考
+FP017,オレンジ,生鮮,,,,,17kgケース,kg,17,12000,yes,705.88,楽天市場,https://search.rakuten.co.jp/search/mall/%E6%A5%AD%E5%8B%99%E7%94%A8/304593/,2026-06-25,ケース参考
+FP018,ブルーベリー,冷凍,カルチベート,,,冷凍ブルーベリー,kg,1,2627,yes,2627,楽天市場,https://search.rakuten.co.jp/search/mall/%E5%86%B7%E5%87%8D%E3%83%96%E3%83%AB%E3%83%BC%E3%83%99%E3%83%AA%E3%83%BC%2B1kg/,2026-06-25,送料別,
+FP019,ブルーベリー,冷凍,カルチベート,,,冷凍ブルーベリー送料込相当,kg,1,3427,yes,3427,楽天市場,https://search.rakuten.co.jp/search/mall/%E5%86%B7%E5%87%8D%E3%83%96%E3%83%AB%E3%83%BC%E3%83%99%E3%83%AA%E3%83%BC%2B1kg/,2026-06-25,価格+送料,
+FP020,ブルーベリー,冷凍,無選別,宮城県産,,訳あり,1kg,kg,1,3780,yes,3780,伊豆沼農産,https://www.izunuma.com/SHOP/BB-017.html,2026-06-25,国産冷凍
+FP021,マンゴー,冷凍カット,,,,,冷凍マンゴーカット,kg,1,1188,yes,1188,マルストック,https://marustock.com/product.php?id=1011,2026-06-25,税込換算
+FP022,マンゴー,冷凍カット,,,,,冷凍カットマンゴー,kg,1,1900,yes,1900,餃子の王国,https://www.oukoku-f.com/i/h1073,2026-06-25,1kg
+FP023,マンゴー,冷凍カット,スミフル,ベトナム産,,,1kg,kg,1,2980,yes,2980,楽天市場,https://search.rakuten.co.jp/search/mall/%E5%86%B7%E5%87%8D%2B%E3%83%9E%E3%83%B3%E3%82%B4%E3%83%BC%2B1kg/,2026-06-25,送料無料参考
+FP024,マンゴー,冷凍カット,,,,,500g,kg,0.5,620,yes,1240,楽天市場,https://search.rakuten.co.jp/search/mall/%E5%86%B7%E5%87%8D%2B%E3%83%9E%E3%83%B3%E3%82%B4%E3%83%BC%2B1kg/,2026-06-25,500g価格
+FP025,キウイ,生鮮,ゼスプリミックス,,,グリーン/ゴールド,1kg,kg,1,2980,yes,2980,楽天市場,https://search.rakuten.co.jp/search/mall/%E3%82%AD%E3%82%A6%E3%82%A4%2B%E6%A5%AD%E5%8B%99%E7%94%A8/,2026-06-25,送料無料参考
+FP026,キウイ,生鮮,ゴールドキウイ,ニュージーランド産,,,10玉位1kg,kg,1,450,yes,450,八面六臂,https://hachimenroppi.com/detail/341655/,2026-06-25,税込価格/pc
+FP027,キウイ,冷凍ダイス,トロピカルマリア,チリ産,,,500g,kg,0.5,777,yes,1554,フーヅフリッジ,https://foodsfridge.jp/products/762001349,2026-06-25,500g
+FP028,キウイ,冷凍ピューレ,,,,,FEキウイフルーツピューレ1kg,kg,1,4862,yes,4862,Yahooショッピング,https://shopping.yahoo.co.jp/search/%E5%86%B7%E5%87%8D%E3%82%AD%E3%82%A6%E3%82%A4%E3%83%95%E3%83%AB%E3%83%BC%E3%83%84/1034/,2026-06-25,ピューレ
+FP029,パイナップル,冷凍ダイス,,,,,冷凍パイナップルダイス,kg,1,1780,yes,1780,楽天市場,https://search.rakuten.co.jp/search/mall/%E5%86%B7%E5%87%8D%E3%83%91%E3%82%A4%E3%83%8A%E3%83%83%E3%83%97%E3%83%AB%2B1kg/,2026-06-25,送料別
+FP030,パイナップル,冷凍カット,,,,,冷凍カットパイナップル,kg,1,1458,yes,1458,餃子の王国,https://www.oukoku-f.com/i/h1078,2026-06-25,1kg
+FP031,パイナップル,冷凍チャンク,トロピカルマリア,,,500g×2,kg,1,2938,yes,2938,Yahooショッピング,https://shopping.yahoo.co.jp/search/%E5%86%B7%E5%87%8D%E3%83%91%E3%82%A4%E3%83%8A%E3%83%83%E3%83%97%E3%83%AB%2B%E6%A5%AD%E5%8B%99%E7%94%A8/2498/,2026-06-25,1kg,
+FP032,パイナップル,冷凍カット,,,,,1kg×2袋,kg,2,4650,yes,2325,Amazon,https://www.amazon.co.jp/%E5%86%B7%E5%87%8D%E3%83%91%E3%82%A4%E3%83%8A%E3%83%83%E3%83%97%E3%83%AB/b?ie=UTF8&node=26172923051,2026-06-25,2kg
+FP033,ラズベリー,冷凍,フランボワーズ,セルビア・チリ産,,,1kg,kg,1,2580,yes,2580,価格.com/NORUCA,https://search.kakaku.com/%E5%86%B7%E5%87%8D%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC/,2026-06-25,業務用
+FP034,ラズベリー,冷凍,オーガニック,ブルガリア産,,,1kg,kg,1,2980,yes,2980,楽天市場,https://search.rakuten.co.jp/search/mall/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%2B1kg/,2026-06-25,送料別
+FP035,ラズベリー,冷凍,,,,,500g,kg,0.5,2300,yes,4600,Yahooショッピング,https://store.shopping.yahoo.co.jp/sawada-potato/b103.html,2026-06-25,500g
+FP036,ラズベリー,冷凍,加工用B品,北海道十勝産,,有機JAS,1kg,kg,1,5200,yes,5200,食べチョク,https://www.tabechoku.com/products/keywords/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC-%E5%86%B7%E5%87%8D,2026-06-25,送料別
+FP037,アサイー,冷凍ピューレ,AMAZON POLPAS,,,無糖,400g,g,400,1980,yes,4.95,楽天市場,https://search.rakuten.co.jp/search/mall/%E3%82%A2%E3%82%B5%E3%82%A4%E3%83%BC%2B%E6%A5%AD%E5%8B%99%E7%94%A8/,2026-06-25,100g×4袋
+FP038,アサイー,冷凍ピューレ,,,,,12kg,g,12000,22680,yes,1.89,キョウダイマーケット,https://kyodaimarket.com/?pid=188845874,2026-06-25,業務用12kg
+FP039,アサイー,冷凍ピューレ,,,,,12L,ml,12000,29980,yes,2.498,価格.com/Amazon,https://search.kakaku.com/%E5%86%B7%E5%87%8D%E3%82%A2%E3%82%B5%E3%82%A4%E3%83%BC/,2026-06-25,業務用
+FP040,アサイー,冷凍ピューレ,フルッタフルッタ,,,100g×7,700g,g,700,2598,yes,3.711,価格.com/楽天市場,https://search.kakaku.com/%E5%86%B7%E5%87%8D%E3%82%A2%E3%82%B5%E3%82%A4%E3%83%BC/,2026-06-25,700g

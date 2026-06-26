@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>仕入れ先マップ</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f6f4ef;
+  color: #222;
+}
+header {
+  background: #2f241d;
+  color: white;
+  padding: 14px 20px;
+}
+header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+header p {
+  margin: 4px 0 0;
+  color: #ddd;
+  font-size: 13px;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  height: calc(100vh - 72px);
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  background: #fff;
+  min-width: 0;
+}
+.controls {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+.search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.filter {
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #fafafa;
+  cursor: pointer;
+  font-size: 13px;
+}
+.filter.active {
+  background: #2f241d;
+  color: white;
+}
+.summary {
+  margin-top: 10px;
+  color: #666;
+  font-size: 13px;
+}
+.list {
+  overflow-y: auto;
+  padding: 10px;
+  flex: 1;
+  scroll-behavior: smooth;
+}
+.item {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background: #fff;
+}
+.item:hover {
+  background: #faf6f0;
+}
+.item.active {
+  border-color: #2f241d;
+  background: #f4ede4;
+  box-shadow: 0 2px 8px rgba(47,36,29,.18);
+}
+.item-title {
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #eee2d2;
+  font-size: 12px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+.badge.online {
+  background: #dde7f7;
+}
+.items {
+  margin-top: 10px;
+  line-height: 1.55;
+  font-size: 14px;
+}
+.notes {
+  margin-top: 8px;
+  line-height: 1.55;
+  font-size: 14px;
+}
+.links {
+  margin-top: 10px;
+  font-size: 14px;
+}
+.addr {
+  margin-top: 8px;
+  color: #666;
+  font-size: 12px;
+}
+.right {
+  display: grid;
+  grid-template-rows: 1fr 250px;
+  min-width: 0;
+}
+#map {
+  width: 100%;
+  height: 100%;
+}
+.detail {
+  background: #fff;
+  border-top: 1px solid #ddd;
+  padding: 14px;
+  overflow-y: auto;
+}
+.detail h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 6px 12px;
+  font-size: 14px;
+}
+.label {
+  color: #777;
+}
+a {
+  color: #0645ad;
+}
+.empty {
+  color: #777;
+  padding: 16px;
+}
+.leaflet-popup-content {
+  font-size: 13px;
+  line-height: 1.45;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>仕入れ先マップ</h1>
+  <p>取得済み仕入先175件（地図マーカー48件 / オンライン127件）。オンライン仕入先は一覧・詳細のみ表示します。</p>
+</header>
+
+<div class="layout">
+  <section class="left">
+    <div class="controls">
+      <input id="searchBox" class="search" placeholder="名称・住所・取扱商品・メモで検索">
+      <div class="filters">
+        <button class="filter active" data-category="all">すべて</button>
+        <button class="filter" data-category="fruit">フルーツ</button>
+        <button class="filter" data-category="coffee">コーヒー</button>
+        <button class="filter" data-category="consumables">消耗品</button>
+        <button class="filter" data-category="materials">原材料</button>
+        <button class="filter" data-category="ice">氷</button>
+      </div>
+      <div class="summary" id="summary"></div>
+    </div>
+    <div class="list" id="supplierList"></div>
+  </section>
+
+  <section class="right">
+    <div id="map"></div>
+    <div class="detail" id="detail">
+      <div class="empty">左の一覧または地図上のピンから仕入先を選択してください。</div>
+    </div>
+  </section>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const suppliers = [{"supplier_id": "FRT001", "source_category": "fruit", "name": "高松青果株式会社", "type": "中央卸売市場・青果卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://takamatsuseika.co.jp/about", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=高松青果株式会社", "main_items": "青果全般", "notes": "高松市中央卸売市場内の青果卸。外食産業等への販売先記載あり。", "_uid": "FRT001"}, {"supplier_id": "FRT002", "source_category": "fruit", "name": "高松大一青果株式会社", "type": "中央卸売市場・青果卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://t-daiichiseika.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=高松大一青果株式会社", "main_items": "青果全般", "notes": "高松中央卸売市場系の青果卸候補。", "_uid": "FRT002"}, {"supplier_id": "FRT003", "source_category": "fruit", "name": "株式会社笠井青果", "type": "中央卸売市場・仲卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://www.kasaiseika.com/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=株式会社笠井青果 高松市中央卸売市場", "main_items": "高級野菜・青果", "notes": "スーパー・百貨店・飲食店・病院等へ青果物を納品と明記。", "_uid": "FRT003"}, {"supplier_id": "FRT004", "source_category": "fruit", "name": "株式会社五色青果", "type": "中央卸売市場・仲卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://www.goshiki-seika.co.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=株式会社五色青果 高松市朝日町", "main_items": "青果・小売用加工・販売", "notes": "高松市中央卸売市場内の青果仲卸。通販部門あり。", "_uid": "FRT004"}, {"supplier_id": "FRT005", "source_category": "fruit", "name": "株式会社フレッシュ", "type": "中央卸売市場・仲卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://seaandsunmarket.com/company/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=株式会社フレッシュ 高松市中央卸売市場", "main_items": "青果", "notes": "高松市中央卸売市場の場内業者一覧に掲載。", "_uid": "FRT005"}, {"supplier_id": "FRT006", "source_category": "fruit", "name": "丸協青果株式会社", "type": "中央卸売市場・仲卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://www.city.takamatsu.kagawa.jp/smph/kurashi/kurashi/shisetsu/chuoichiba/shoukai/jonaigyosha.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=丸協青果株式会社 高松市中央卸売市場", "main_items": "青果", "notes": "高松市中央卸売市場の青果部仲卸候補。", "_uid": "FRT006"}, {"supplier_id": "FRT007", "source_category": "fruit", "name": "有限会社丸二青果", "type": "中央卸売市場・仲卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://www.city.takamatsu.kagawa.jp/smph/kurashi/kurashi/shisetsu/chuoichiba/shoukai/jonaigyosha.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=有限会社丸二青果 高松市中央卸売市場", "main_items": "青果", "notes": "高松市中央卸売市場の青果部仲卸候補。", "_uid": "FRT007"}, {"supplier_id": "FRT008", "source_category": "fruit", "name": "有限会社太田青果", "type": "中央卸売市場・仲卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://www.city.takamatsu.kagawa.jp/smph/kurashi/kurashi/shisetsu/chuoichiba/shoukai/jonaigyosha.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=有限会社太田青果 高松市中央卸売市場", "main_items": "青果", "notes": "高松市中央卸売市場の青果部仲卸候補。", "_uid": "FRT008"}, {"supplier_id": "FRT009", "source_category": "fruit", "name": "有限会社丸和青果", "type": "中央卸売市場・仲卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://www.city.takamatsu.kagawa.jp/smph/kurashi/kurashi/shisetsu/chuoichiba/shoukai/jonaigyosha.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=有限会社丸和青果 高松市中央卸売市場", "main_items": "青果", "notes": "高松市中央卸売市場の青果部仲卸候補。", "_uid": "FRT009"}, {"supplier_id": "FRT010", "source_category": "fruit", "name": "フルーツショップ造田", "type": "果物専門店", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3447, "longitude": 134.05, "official_url": "https://www.kagawa-zouda.net/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=フルーツショップ造田", "main_items": "県産果物・贈答用果物・高品質フルーツ", "notes": "高松市兵庫町の老舗果実専門店。さぬき讃フルーツのマスターショップ。", "_uid": "FRT010"}, {"supplier_id": "FRT011", "source_category": "fruit", "name": "フルーツ大林", "type": "果物専門店", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3397, "longitude": 134.0508, "official_url": "https://www.ms-machi.com/shop/obayashi/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=フルーツ大林 高松市南新町", "main_items": "果物全般", "notes": "高松市南新町の果物店。中心部で買い出ししやすい。", "_uid": "FRT011"}, {"supplier_id": "FRT012", "source_category": "fruit", "name": "JA香川県 フルーツの里", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3344, "longitude": 133.9976, "official_url": "https://www.kw-ja.or.jp/shop/shop-8268/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=JA香川県 フルーツの里", "main_items": "地元果物・柑橘・野菜", "notes": "高松市鬼無町。営業時間8:30〜16:00、火曜休み、駐車場約45台。", "_uid": "FRT012"}, {"supplier_id": "FRT013", "source_category": "fruit", "name": "JA香川県 讃さん広場 飯山店", "type": "JA大型産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.2736, "longitude": 133.8504, "official_url": "https://www.kw-ja.or.jp/shop/shop-7887/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=讃さん広場 飯山店", "main_items": "県内産野菜・果物・加工品", "notes": "丸亀市だが大型産直。桃・いちご・柑橘など季節仕入れ候補。", "_uid": "FRT013"}, {"supplier_id": "FRT014", "source_category": "fruit", "name": "高松市中央卸売市場 うみまち商店街", "type": "市場関連店舗", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3546, "longitude": 134.0719, "official_url": "https://seaandsunmarket.com/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=高松市中央卸売市場 うみまち商店街", "main_items": "青果・水産・関連食品", "notes": "市場関連棟。少量多品目の買い出し候補。", "_uid": "FRT014"}, {"supplier_id": "FRT015", "source_category": "fruit", "name": "Mマート", "type": "業務用食材EC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.m-mart.co.jp/", "google_maps_url": "", "main_items": "フルーツ・輸入果実・冷凍フルーツ・業務用食材", "notes": "飲食店等向けBtoBモール。フルーツカテゴリあり。", "_uid": "FRT015"}, {"supplier_id": "FRT016", "source_category": "fruit", "name": "NORUCA / KIMONO FRUITS", "type": "業務用冷凍フルーツ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://noruca.com/", "google_maps_url": "", "main_items": "国産冷凍フルーツ・冷凍柑橘・フルーツソース・デザート素材", "notes": "スムージー、フルーツティー、デザート用。国産冷凍フルーツに強い。", "_uid": "FRT016"}, {"supplier_id": "FRT017", "source_category": "fruit", "name": "タカ食品工業", "type": "業務用フルーツピューレ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.takafoods.co.jp/shop/frozenpuree/", "google_maps_url": "", "main_items": "冷凍フルーツピューレ・製菓材料", "notes": "国産原料の冷凍ピューレシリーズあり。ドリンク・ソース・パフェ向き。", "_uid": "FRT017"}, {"supplier_id": "FRT018", "source_category": "fruit", "name": "ストロングハート", "type": "業務用冷凍フルーツ加工品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://fruits.strongheart.co.jp/fruitspuree/", "google_maps_url": "", "main_items": "冷凍フルーツ・ピューレ・スムージー素材", "notes": "業務用スムージー、フルーツデザート、フレッシュジュース素材候補。", "_uid": "FRT018"}, {"supplier_id": "FRT019", "source_category": "fruit", "name": "株式会社セビア", "type": "業務用青果加工・冷凍フルーツ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://sevia.co.jp/news/", "google_maps_url": "", "main_items": "冷凍フルーツ・冷凍野菜・フルーツピューレ・カット野菜", "notes": "冷凍フルーツ、冷凍野菜、ピューレ、カット野菜の業務用候補。", "_uid": "FRT019"}, {"supplier_id": "FRT020", "source_category": "fruit", "name": "八面六臂", "type": "業務用食材EC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://hachimenroppi.com/", "google_maps_url": "", "main_items": "野菜・フルーツ・水産・精肉・調味料", "notes": "品揃えは強いが、公式上の主配送エリアは1都3県のため高松利用は優先度低め。", "_uid": "FRT020"}, {"supplier_id": "FRT031", "source_category": "fruit", "name": "ギフトフルーツ ヤマネ", "type": "さぬき讃フルーツマスターショップ", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3449, "longitude": 134.0484, "official_url": "", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=ギフトフルーツ ヤマネ 高松市兵庫町1-17", "main_items": "県産果物・贈答用果物", "notes": "高松市兵庫町1-17。電話087-851-3069。10:00-19:00、日曜・月曜定休。県公式では現在営業休止中。", "_uid": "FRT031"}, {"supplier_id": "FRT032", "source_category": "fruit", "name": "フルーツたかぎ 回生病院前店", "type": "さぬき讃フルーツマスターショップ", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.317156, "longitude": 133.862758, "official_url": "", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=フルーツたかぎ 回生病院前店 坂出市旭町3-1-4", "main_items": "県産果物・高品質フルーツ", "notes": "坂出市旭町3-1-4。電話0877-46-0533。10:00-19:30、日祝19:00まで。不定休。", "_uid": "FRT032"}, {"supplier_id": "FRT033", "source_category": "fruit", "name": "高松三越 青果コーナー", "type": "百貨店青果", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3444, "longitude": 134.0525, "official_url": "https://www.mitsukoshi.mistore.jp/takamatsu.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=高松三越 高松市内町7-1", "main_items": "さぬき讃フルーツ・高品質果物", "notes": "高松市内町7-1。電話087-813-1034。10:00-19:00。不定休。高品質・贈答向き。", "_uid": "FRT033"}, {"supplier_id": "FRT034", "source_category": "fruit", "name": "いきいき産直 十河店", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.2799, "longitude": 134.1001, "official_url": "https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=いきいき産直 十河店 高松市十川西町298-1", "main_items": "地元野菜・果物", "notes": "高松市十川西町298-1。電話087-848-4783。6:30-16:00、水曜定休、駐車場21台。", "_uid": "FRT034"}, {"supplier_id": "FRT035", "source_category": "fruit", "name": "いきいき産直 林店", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3042, "longitude": 134.0715, "official_url": "https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=いきいき産直 林店 高松市林町351-4", "main_items": "地元野菜・果物", "notes": "高松市林町351-4。電話087-865-5685。6:30-16:00、火曜定休、駐車場60台。", "_uid": "FRT035"}, {"supplier_id": "FRT036", "source_category": "fruit", "name": "グリーンピア岡本", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.2913, "longitude": 133.9942, "official_url": "https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=グリーンピア岡本 高松市岡本町944", "main_items": "地元野菜・果物", "notes": "高松市岡本町字幸ノ神944。電話087-885-6996。8:30-16:00、水曜定休、駐車場70台。", "_uid": "FRT036"}, {"supplier_id": "FRT037", "source_category": "fruit", "name": "中央ふれあい市場 本店", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.2938, "longitude": 134.0477, "official_url": "https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=中央ふれあい市場 本店 高松市太田上町315-1", "main_items": "地元野菜・果物", "notes": "高松市太田上町315-1。電話087-815-5277。8:30-15:00、季節により変更あり。水曜定休、駐車場40台。", "_uid": "FRT037"}, {"supplier_id": "FRT038", "source_category": "fruit", "name": "中央ふれあい市場 古高松店", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3398, "longitude": 134.1137, "official_url": "https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=中央ふれあい市場 古高松店 高松市高松町2170-1", "main_items": "地元野菜・果物", "notes": "高松市高松町2170-1。電話087-841-1606。8:30-15:00、季節により変更あり。火曜定休、駐車場60台。", "_uid": "FRT038"}, {"supplier_id": "FRT039", "source_category": "fruit", "name": "中央ふれあい市場 木太店", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3247, "longitude": 134.0722, "official_url": "https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=中央ふれあい市場 木太店 高松市木太町1669", "main_items": "地元野菜・果物", "notes": "高松市木太町1669。電話080-2996-5641。9:00-15:00、営業日は火・金中心。", "_uid": "FRT039"}, {"supplier_id": "FRT040", "source_category": "fruit", "name": "国分寺ふれあい産直市", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3019, "longitude": 133.9566, "official_url": "https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=国分寺ふれあい産直市 高松市国分寺町新名744-1", "main_items": "地元野菜・果物", "notes": "高松市国分寺町新名744-1。電話087-874-1224。8:30-16:00、火曜定休、駐車場25台。", "_uid": "FRT040"}, {"supplier_id": "FRT041", "source_category": "fruit", "name": "三木とれとれ市", "type": "JA産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.2705, "longitude": 134.1341, "official_url": "https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=三木とれとれ市 木田郡三木町氷上364-1", "main_items": "地元野菜・果物", "notes": "木田郡三木町大字氷上364-1。電話087-891-1023。8:00-15:00、水曜定休、駐車場30台。高松東部から利用候補。", "_uid": "FRT041"}, {"supplier_id": "FRT042", "source_category": "fruit", "name": "ファーマーズマーケット讃さん広場 滝宮店", "type": "JA大型産直", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.2513, "longitude": 133.9239, "official_url": "https://www.kw-ja.or.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=讃さん広場 滝宮店 綾川町滝宮1578", "main_items": "県内産野菜・果物・加工品", "notes": "綾歌郡綾川町滝宮1578。電話087-876-6333。9:00-17:00、火曜定休、普通車150台。大型産直。", "_uid": "FRT042"}, {"supplier_id": "FRT043", "source_category": "fruit", "name": "河村食品マート", "type": "業務配送青果", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3191, "longitude": 134.0271, "official_url": "https://www.t0831.net/memberlist.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=河村食品マート 高松市西ハゼ町27-2", "main_items": "野菜・果物・乾物", "notes": "高松市西ハゼ町27-2。電話087-865-6823。野菜・果物・乾物などの業務用配達。配達エリアは電話相談。", "_uid": "FRT043"}, {"supplier_id": "FRT044", "source_category": "fruit", "name": "株式会社グリーンアップル", "type": "業務用青果卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3317, "longitude": 134.0463, "official_url": "https://www.t0831.net/memberlist.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=株式会社グリーンアップル 高松市栗林町1-5-7", "main_items": "青果物", "notes": "高松市栗林町1-5-7。電話087-831-4632。外食産業向け青果候補。", "_uid": "FRT044"}, {"supplier_id": "FRT045", "source_category": "fruit", "name": "株式会社香川商事", "type": "青果卸・小売", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.325268, "longitude": 134.062906, "official_url": "https://www.t0831.net/memberlist.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=株式会社香川商事 高松市瓦町2-9-8", "main_items": "野菜・果物", "notes": "高松市瓦町2-9-8。電話087-831-2919。業務用青果・卸・小売。", "_uid": "FRT045"}, {"supplier_id": "FRT046", "source_category": "fruit", "name": "久保田商店", "type": "青果店・納品対応", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3442, "longitude": 134.0375, "official_url": "https://www.t0831.net/memberlist.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=久保田商店 高松市扇町1-23-12", "main_items": "野菜・果物", "notes": "高松市扇町1-23-12。電話087-821-5607。納め・地方配送あり。", "_uid": "FRT046"}, {"supplier_id": "FRT047", "source_category": "fruit", "name": "森政商店", "type": "青果店・卸売小売配達", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3302, "longitude": 134.0642, "official_url": "https://www.t0831.net/memberlist.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=森政商店 高松市上福岡町1280-1", "main_items": "野菜・果物", "notes": "高松市上福岡町1280-1。電話087-861-7340。卸売・小売・配達あり。", "_uid": "FRT047"}, {"supplier_id": "FRT048", "source_category": "fruit", "name": "有限会社イズミ", "type": "青果・食品配達", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.2385, "longitude": 133.9469, "official_url": "https://www.t0831.net/memberlist.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=有限会社イズミ 綾歌郡綾川町羽床上2624-5", "main_items": "野菜・果物・食料品", "notes": "綾歌郡綾川町羽床上2624-5。電話087-870-9190。野菜・果物・食料品・業務用配達。", "_uid": "FRT048"}, {"supplier_id": "FRT049", "source_category": "fruit", "name": "有限会社中美商店", "type": "食品店・配送対応", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3485, "longitude": 134.0027, "official_url": "https://www.t0831.net/memberlist.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=有限会社中美商店 高松市香西本町545", "main_items": "野菜・果物・一般食品", "notes": "高松市香西本町545。電話087-882-0805。電話注文・配送対応。6:30-20:00、日曜定休。", "_uid": "FRT049"}, {"supplier_id": "FRT050", "source_category": "fruit", "name": "株式会社丸新果物商店", "type": "果物店・カフェ併設系", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3387, "longitude": 134.052, "official_url": "https://www.t0831.net/memberlist.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=株式会社丸新果物商店 高松市常磐町1-4-9", "main_items": "果物・生ジュース・ジェラート・サンドイッチ", "notes": "高松市常磐町1-4-9。電話087-861-5353。果物を使ったカフェテリア型販売の記載あり。", "_uid": "FRT050"}, {"supplier_id": "FRT071", "source_category": "fruit", "name": "MONIN", "type": "業務用シロップ・ソース", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://nbkk.co.jp/brand/monin/", "google_maps_url": "", "main_items": "シロップ・フルーツミックス・グルメソース・フラッペベース", "notes": "100種類以上。カフェ・バー・ホテル向け。", "_uid": "FRT071"}, {"supplier_id": "FRT072", "source_category": "fruit", "name": "MONIN公式ショップ", "type": "業務用シロップEC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://shop.nbkk.co.jp/collections/monin", "google_maps_url": "", "main_items": "700ml業務用シロップ・1Lフルーツミックス・グルメソース", "notes": "公式EC。業務用サイズ確認可。", "_uid": "FRT072"}, {"supplier_id": "FRT073", "source_category": "fruit", "name": "1883 Maison Routin", "type": "業務用シロップ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.1883-france.jp/", "google_maps_url": "", "main_items": "自然派シロップ・カフェ/バー向けシロップ", "notes": "フランス製。業務用・店舗向け問い合わせ導線あり。", "_uid": "FRT073"}, {"supplier_id": "FRT074", "source_category": "fruit", "name": "Torani", "type": "業務用シロップ・ソース", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://toyobeverage.com/torani/", "google_maps_url": "", "main_items": "シロップ・ソース・スムージーベース", "notes": "日本でシロップ59種、ソース3種、スムージーベース7種を展開。", "_uid": "FRT074"}, {"supplier_id": "FRT075", "source_category": "fruit", "name": "DaVinci Gourmet", "type": "業務用シロップ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://loj-dvg.jp/", "google_maps_url": "", "main_items": "フレーバーシロップ・ドリンク/デザート素材", "notes": "業務用卸購入は問い合わせ対応。", "_uid": "FRT075"}, {"supplier_id": "FRT076", "source_category": "fruit", "name": "キャプテン / 中村商店", "type": "業務用シロップ・ジュース", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://captain-drink.co.jp/", "google_maps_url": "", "main_items": "業務用ジュース・シロップ・コーヒー飲料", "notes": "小ロットPB対応の記載あり。", "_uid": "FRT076"}, {"supplier_id": "FRT077", "source_category": "fruit", "name": "FOODBOAT by マルイ物産", "type": "業務用ドリンク・スイーツ素材EC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://foodboat.jp/", "google_maps_url": "", "main_items": "タピオカ・シロップ・フルーツピューレ・ドリンク素材", "notes": "飲食店・カフェ向け食材通販。", "_uid": "FRT077"}, {"supplier_id": "FRT078", "source_category": "fruit", "name": "PROFOODS フルーツパウダー", "type": "製菓材料EC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.profoods.co.jp/ic/zairyo-1061", "google_maps_url": "", "main_items": "ストロベリー・ラズベリー・ブルーベリー等フルーツパウダー", "notes": "製菓・クリーム・焼菓子・ドリンク装飾向き。", "_uid": "FRT078"}, {"supplier_id": "FRT079", "source_category": "fruit", "name": "PROFOODS MONIN", "type": "製菓材料EC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.profoods.co.jp/ic/zairyo-2023", "google_maps_url": "", "main_items": "MONINシロップ", "notes": "製菓材料店経由でMONIN調達可。", "_uid": "FRT079"}, {"supplier_id": "FRT080", "source_category": "fruit", "name": "アミカネットショップ", "type": "業務用食材EC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.amicashop.com/products/list?category_id=360", "google_maps_url": "", "main_items": "フルーツソース・ピューレ・冷凍商品", "notes": "QP/スノーマン、マルイ物産などのフルーツソース・ピューレカテゴリあり。", "_uid": "FRT080"}, {"supplier_id": "FRT081", "source_category": "fruit", "name": "フーヅフリッジ 冷凍フルーツ", "type": "業務用食材EC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://foodsfridge.jp/collections/vegetable5", "google_maps_url": "", "main_items": "冷凍フルーツ・缶詰・フルーツソース・ペースト", "notes": "ベリー・マンゴー・みかん・パイン・桃など。", "_uid": "FRT081"}, {"supplier_id": "FRT082", "source_category": "fruit", "name": "インフォマート 冷凍フルーツ", "type": "業務用BtoB", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://foodsinfomart.com/buy/product/food/?category-big=%E9%9D%92%E6%9E%9C%E7%89%A9%E5%8A%A0%E5%B7%A5%E5%93%81&category-medium=%E5%86%B7%E5%87%8D%E3%83%95%E3%83%AB%E3%83%BC%E3%83%84", "google_maps_url": "", "main_items": "冷凍フルーツ・青果物加工品", "notes": "BtoB食材調達候補。", "_uid": "FRT082"}, {"supplier_id": "FRT083", "source_category": "fruit", "name": "大京食品 フルーツソース", "type": "業務用フルーツソース", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.dfc-net.co.jp/bussiness/item05.html", "google_maps_url": "", "main_items": "フルーツソース・フルーツピューレ", "notes": "業務用製品としてフルーツソースを掲載。", "_uid": "FRT083"}, {"supplier_id": "FRT084", "source_category": "fruit", "name": "Agriture", "type": "国産ドライフルーツ・パウダー/OEM", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://genryoubank.com/products/7350", "google_maps_url": "", "main_items": "国産ドライフルーツ・フリーズドライ・パウダー・OEM", "notes": "フリーズドライいちご、スライス、ダイス、パウダー等。", "_uid": "FRT084"}, {"supplier_id": "FRT085", "source_category": "fruit", "name": "Agriture 業務用フルーツパウダー", "type": "業務用フルーツパウダー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://agriture.jp/oem/fruit-powder-bulk/", "google_maps_url": "", "main_items": "果物パウダー・乾燥素材・OEM", "notes": "製菓・飲料・スムージー・乳製品向け。", "_uid": "FRT085"}, {"supplier_id": "FRT086", "source_category": "fruit", "name": "NORUCA 冷凍フルーツ", "type": "国産冷凍フルーツ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://noruca.com/products/frozenfruits/frozenfriuts.html", "google_maps_url": "", "main_items": "国産冷凍フルーツ・カットフルーツ", "notes": "産地指定、品種、小ロット出荷に対応と記載。", "_uid": "FRT086"}, {"supplier_id": "FRT087", "source_category": "fruit", "name": "NORUCA フルーツピューレ", "type": "国産フルーツピューレ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://noruca.com/products/puree/friut-puree.html", "google_maps_url": "", "main_items": "国産フルーツピューレ", "notes": "香料・着色料不使用。国内製造。", "_uid": "FRT087"}, {"supplier_id": "FRT088", "source_category": "fruit", "name": "株式会社アスク", "type": "冷凍フルーツ・OEM", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.asc.co.jp/", "google_maps_url": "", "main_items": "冷凍フルーツ・ダイスカット・チャンク・ピューレ・OEM", "notes": "フードサービス、PB/OEM、メーカー向け対応。", "_uid": "FRT088"}, {"supplier_id": "FRT089", "source_category": "fruit", "name": "シモジマ MONIN", "type": "包材/業務用シロップEC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://shimojima.jp/shop/c/c25140401/", "google_maps_url": "", "main_items": "MONIN業務用シロップ・包材", "notes": "シロップと包材を同時調達できる可能性あり。", "_uid": "FRT089"}, {"supplier_id": "FRT090", "source_category": "fruit", "name": "第一エフ・エル", "type": "シロップ輸入販売EC", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.daiichifl.com/", "google_maps_url": "", "main_items": "Torani・DaVinci等シロップ", "notes": "トラーニ、ダヴィンチなどカフェ向けシロップ調達候補。", "_uid": "FRT090"}, {"supplier_id": "COF001", "source_category": "coffee", "name": "株式会社蠣三珈琲", "type": "業務用コーヒー・食品卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3441, "longitude": 134.0718, "official_url": "https://kakisan.co.jp/company/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=株式会社蠣三珈琲 高松市福岡町3丁目6番18号", "main_items": "ブレンド・ストレート", "notes": "", "_uid": "COF001"}, {"supplier_id": "COF002", "source_category": "coffee", "name": "四国珈琲", "type": "業務用コーヒー・ロースター", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3089, "longitude": 134.0751, "official_url": "https://shikokucoffee.com/commercialcoffee/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=四国珈琲 高松市", "main_items": "ブレンド・スペシャルティ", "notes": "コーヒー豆卸、マシン提案、短期貸出対応。", "_uid": "COF002"}, {"supplier_id": "COF003", "source_category": "coffee", "name": "ダートコーヒー株式会社 四国", "type": "業務用コーヒー・食品卸", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.2862, "longitude": 133.9685, "official_url": "", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=ダートコーヒー株式会社 香川県高松市国分寺町福家甲1268-17", "main_items": "ブレンド", "notes": "", "_uid": "COF003"}, {"supplier_id": "COF004", "source_category": "coffee", "name": "Sea-Coffee", "type": "自家焙煎ロースター", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.342, "longitude": 134.05, "official_url": "https://sea-coffee.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Sea-Coffee 高松市", "main_items": "スペシャルティ", "notes": "卸販売・オリジナルブレンド相談可。", "_uid": "COF004"}, {"supplier_id": "COF005", "source_category": "coffee", "name": "珈琲焙煎所ヤマコーヒー", "type": "自家焙煎ロースター", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3026, "longitude": 134.0115, "official_url": "https://www.nariai-yamacoffee.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=珈琲焙煎所ヤマコーヒー 高松市成合町1428-7", "main_items": "ブレンド・ストレート", "notes": "注文後焙煎。", "_uid": "COF005"}, {"supplier_id": "COF006", "source_category": "coffee", "name": "CORSICA COFFEE DEVELOPMENT", "type": "スペシャルティロースター", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3356, "longitude": 134.0464, "official_url": "https://corsicacoffee.net/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=CORSICA COFFEE DEVELOPMENT 高松市", "main_items": "シングルオリジン", "notes": "スペシャルティコーヒー専門。", "_uid": "COF006"}, {"supplier_id": "COF007", "source_category": "coffee", "name": "アロバー", "type": "スペシャルティロースター", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.3049, "longitude": 134.0695, "official_url": "https://arovor.com/index.html", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=アロバー 高松市", "main_items": "スペシャルティ", "notes": "1991年創業。", "_uid": "COF007"}, {"supplier_id": "COF008", "source_category": "coffee", "name": "豆丸珈琲 鍛冶屋町焙煎所", "type": "注文焙煎ロースター", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.342968, "longitude": 134.049262, "official_url": "https://www.mamemaru-coffee.jp", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=豆丸珈琲 鍛冶屋町焙煎所 高松市鍛冶屋町", "main_items": "ブレンド・ストレート", "notes": "生豆から選択可能。", "_uid": "COF008"}, {"supplier_id": "COF009", "source_category": "coffee", "name": "珈琲鳴館", "type": "業務用コーヒー・開業支援", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://coffeemeikan.jp/gyoumuyou/", "google_maps_url": "", "main_items": "ブレンド", "notes": "○ / 焙煎機レンタル・開業支援。", "_uid": "COF009"}, {"supplier_id": "COF010", "source_category": "coffee", "name": "スギハラコーヒーロースター", "type": "業務用スペシャルティ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://sugihara-coffee.com/wholesale/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "○ / OEM・開業相談。", "_uid": "COF010"}, {"supplier_id": "COF011", "source_category": "coffee", "name": "HIRO COFFEE", "type": "業務用コーヒー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.hirocoffee.co.jp/hiro/gyosha.php", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "○ / 抽出講習・ラテアート指導。", "_uid": "COF011"}, {"supplier_id": "COF012", "source_category": "coffee", "name": "MUC COFFEE", "type": "業務用コーヒー・食品卸", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.muc-coffee.co.jp/b_wholesale.html", "google_maps_url": "", "main_items": "ブレンド", "notes": "業務用食材・器具も販売。", "_uid": "COF012"}, {"supplier_id": "COF013", "source_category": "coffee", "name": "齊藤コーヒー", "type": "業務用コーヒー・開業支援", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.saitou-coffee.co.jp/support/", "google_maps_url": "", "main_items": "ブレンド・スペシャルティ", "notes": "○ / 店舗プロデュース対応。", "_uid": "COF013"}, {"supplier_id": "COF014", "source_category": "coffee", "name": "NOG COFFEE ROASTERS", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://nogcoffeeroasters.com/pages/wholesale", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "○ / スタッフトレーニング対応。", "_uid": "COF014"}, {"supplier_id": "COF015", "source_category": "coffee", "name": "TAOCA COFFEE", "type": "スペシャルティ・OEM", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://taocacoffee.jp/wholesale.html", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "○ / OEM・PB対応。", "_uid": "COF015"}, {"supplier_id": "COF016", "source_category": "coffee", "name": "日向珈琲", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://store.hyuga.coffee/collections/wholesale", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "少量卸対応。", "_uid": "COF016"}, {"supplier_id": "COF017", "source_category": "coffee", "name": "PORTERS COFFEE", "type": "業務用コーヒー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://porters-coffee.com/pages/wholesale", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "卸販売・開業相談。", "_uid": "COF017"}, {"supplier_id": "COF018", "source_category": "coffee", "name": "小川珈琲 業務用オンラインショップ", "type": "業務用コーヒー・喫茶材料", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://ogawa-pro.jp", "google_maps_url": "", "main_items": "ブレンド・スペシャルティ", "notes": "紅茶・輸入食品・喫茶材料あり。", "_uid": "COF018"}, {"supplier_id": "COF019", "source_category": "coffee", "name": "COFFEE MARKET（三洋産業）", "type": "コーヒー資材・OEM", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://coffeemarket.jp/", "google_maps_url": "", "main_items": "コーヒー資材", "notes": "", "_uid": "COF019"}, {"supplier_id": "COF020", "source_category": "coffee", "name": "卸のカイコム", "type": "カフェ包材・消耗品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.mizunoes.com/c/32/32006", "google_maps_url": "", "main_items": "包材", "notes": "", "_uid": "COF020"}, {"supplier_id": "COF021", "source_category": "coffee", "name": "UCCコーヒープロフェッショナル", "type": "総合サプライヤー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.ucc.co.jp/professional/", "google_maps_url": "", "main_items": "レギュラー・エスプレッソ・スペシャルティ", "notes": "業務用コーヒー、食材、マシン、開業支援。", "_uid": "COF021"}, {"supplier_id": "COF022", "source_category": "coffee", "name": "キーコーヒー株式会社", "type": "総合サプライヤー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.keycoffee.co.jp/business/", "google_maps_url": "", "main_items": "レギュラー・エスプレッソ", "notes": "喫茶材料・マシン・開業サポート。", "_uid": "COF022"}, {"supplier_id": "COF023", "source_category": "coffee", "name": "味の素AGFプロフェッショナル", "type": "総合サプライヤー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://agf.ajinomoto.co.jp/pro/", "google_maps_url": "", "main_items": "レギュラー・インスタント", "notes": "法人向けコーヒー・ドリンク提案。", "_uid": "COF023"}, {"supplier_id": "COF024", "source_category": "coffee", "name": "三本珈琲株式会社", "type": "総合サプライヤー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.mmc-coffee.co.jp/", "google_maps_url": "", "main_items": "レギュラー・エスプレッソ", "notes": "ホテル・外食向け実績多数。", "_uid": "COF024"}, {"supplier_id": "COF025", "source_category": "coffee", "name": "キャラバンコーヒー", "type": "総合サプライヤー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.caravan-coffee.com/", "google_maps_url": "", "main_items": "レギュラー・スペシャルティ", "notes": "業務用卸・開業支援。", "_uid": "COF025"}, {"supplier_id": "COF026", "source_category": "coffee", "name": "ワタル株式会社 コーヒー事業", "type": "生豆商社", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.wataru.co.jp/", "google_maps_url": "", "main_items": "生豆・焙煎豆", "notes": "生豆輸入・焙煎提案。", "_uid": "COF026"}, {"supplier_id": "COF027", "source_category": "coffee", "name": "ユニオン株式会社", "type": "生豆商社", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.union-coffee.co.jp/", "google_maps_url": "", "main_items": "生豆・焙煎豆", "notes": "業務用生豆・焙煎豆。", "_uid": "COF027"}, {"supplier_id": "COF028", "source_category": "coffee", "name": "富士珈機株式会社", "type": "焙煎機メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.fujiko-ki.co.jp/", "google_maps_url": "", "main_items": "", "notes": "", "_uid": "COF028"}, {"supplier_id": "COF029", "source_category": "coffee", "name": "ラッキーコーヒーマシン株式会社", "type": "エスプレッソマシン", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.lucky-coffee-machine.co.jp/", "google_maps_url": "", "main_items": "", "notes": "", "_uid": "COF029"}, {"supplier_id": "COF030", "source_category": "coffee", "name": "FMI", "type": "厨房・コーヒー機器", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.fmi.co.jp/", "google_maps_url": "", "main_items": "", "notes": "", "_uid": "COF030"}, {"supplier_id": "COF031", "source_category": "coffee", "name": "ボンマック", "type": "抽出機器メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.bonmac.co.jp/", "google_maps_url": "", "main_items": "", "notes": "ドリップ・グラインダー。", "_uid": "COF031"}, {"supplier_id": "COF032", "source_category": "coffee", "name": "Kalita", "type": "抽出器具メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.kalita.jp/", "google_maps_url": "", "main_items": "", "notes": "業務用抽出器具。", "_uid": "COF032"}, {"supplier_id": "COF033", "source_category": "coffee", "name": "HARIO", "type": "抽出器具メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.hario.com/", "google_maps_url": "", "main_items": "", "notes": "V60・業務用器具。", "_uid": "COF033"}, {"supplier_id": "COF034", "source_category": "coffee", "name": "メリタジャパン", "type": "コーヒー機器", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.melitta.co.jp/", "google_maps_url": "", "main_items": "", "notes": "業務用抽出機器。", "_uid": "COF034"}, {"supplier_id": "COF035", "source_category": "coffee", "name": "ネスレプロフェッショナル", "type": "総合サプライヤー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.nestleprofessional.jp/", "google_maps_url": "", "main_items": "コーヒー・ドリンク", "notes": "NESCAFÉ業務用。", "_uid": "COF035"}, {"supplier_id": "COF036", "source_category": "coffee", "name": "ブルーマチックジャパン", "type": "コーヒーマシン", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.brewmatic.co.jp/", "google_maps_url": "", "main_items": "", "notes": "業務用マシン。", "_uid": "COF036"}, {"supplier_id": "COF037", "source_category": "coffee", "name": "ラ・マルゾッコジャパン", "type": "エスプレッソマシン", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://jp.lamarzocco.com/", "google_maps_url": "", "main_items": "", "notes": "エスプレッソマシン。", "_uid": "COF037"}, {"supplier_id": "COF038", "source_category": "coffee", "name": "MAZZER", "type": "グラインダー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.mazzer.com/", "google_maps_url": "", "main_items": "", "notes": "業務用グラインダー。", "_uid": "COF038"}, {"supplier_id": "COF039", "source_category": "coffee", "name": "EK43(Mahlkönig)", "type": "グラインダー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.mahlkoenig.com/", "google_maps_url": "", "main_items": "", "notes": "業務用グラインダー。", "_uid": "COF039"}, {"supplier_id": "COF040", "source_category": "coffee", "name": "Ditting", "type": "グラインダー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.ditting.com/", "google_maps_url": "", "main_items": "", "notes": "業務用グラインダー。", "_uid": "COF040"}, {"supplier_id": "COF041", "source_category": "coffee", "name": "海ノ向こうコーヒー", "type": "生豆商社・スペシャルティ", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://uminomukou.com/", "google_maps_url": "", "main_items": "スペシャルティ・生豆", "notes": "フェアトレード・トレーサブルコーヒー。", "_uid": "COF041"}, {"supplier_id": "COF042", "source_category": "coffee", "name": "ONIBUS COFFEE Wholesale", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://onibuscoffee.com/pages/wholesale", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "卸販売・開業相談。", "_uid": "COF042"}, {"supplier_id": "COF043", "source_category": "coffee", "name": "LIGHT UP COFFEE Wholesale", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://lightupcoffee.com/pages/wholesale", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "カフェ・ホテル向け卸。", "_uid": "COF043"}, {"supplier_id": "COF044", "source_category": "coffee", "name": "WOODBERRY COFFEE Wholesale", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://woodberrycoffee.com/pages/wholesale", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "卸・トレーニング対応。", "_uid": "COF044"}, {"supplier_id": "COF045", "source_category": "coffee", "name": "REC COFFEE Wholesale", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://rec-coffee.com/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "国内外の大会実績。", "_uid": "COF045"}, {"supplier_id": "COF046", "source_category": "coffee", "name": "NOZY COFFEE Wholesale", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://nozycoffee.jp/", "google_maps_url": "", "main_items": "シングルオリジン", "notes": "シングルオリジン専門。", "_uid": "COF046"}, {"supplier_id": "COF047", "source_category": "coffee", "name": "猿田彦珈琲 法人向け", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://sarutahiko.jp/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "法人・卸相談窓口あり。", "_uid": "COF047"}, {"supplier_id": "COF048", "source_category": "coffee", "name": "丸山珈琲 BtoB", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.maruyamacoffee.com/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "業務用卸・バリスタ教育。", "_uid": "COF048"}, {"supplier_id": "COF049", "source_category": "coffee", "name": "堀口珈琲 卸販売", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.kohikobo.co.jp/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "スペシャルティコーヒー専門。", "_uid": "COF049"}, {"supplier_id": "COF050", "source_category": "coffee", "name": "FUGLEN COFFEE Wholesale", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://fuglencoffee.jp/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "北欧スタイル。", "_uid": "COF050"}, {"supplier_id": "COF051", "source_category": "coffee", "name": "GLITCH COFFEE", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://glitchcoffee.com/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "シングルオリジン中心。", "_uid": "COF051"}, {"supplier_id": "COF052", "source_category": "coffee", "name": "Kurasu Coffee Wholesale", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://kurasu.kyoto/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "海外展開実績あり。", "_uid": "COF052"}, {"supplier_id": "COF053", "source_category": "coffee", "name": "Weekenders Coffee", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://weekenderscoffee.com/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "京都ロースター。", "_uid": "COF053"}, {"supplier_id": "COF054", "source_category": "coffee", "name": "LILO COFFEE ROASTERS", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://lilocoffee.com/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "大阪の人気ロースター。", "_uid": "COF054"}, {"supplier_id": "COF055", "source_category": "coffee", "name": "Mel Coffee Roasters", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://melcoffeeroasters.com/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "大阪。", "_uid": "COF055"}, {"supplier_id": "COF056", "source_category": "coffee", "name": "LiLo Coffee Kissa", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://coffee.liloinveve.com/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "大阪。", "_uid": "COF056"}, {"supplier_id": "COF057", "source_category": "coffee", "name": "ABOUT US COFFEE", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://aboutuscoffee.jp/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "名古屋。", "_uid": "COF057"}, {"supplier_id": "COF058", "source_category": "coffee", "name": "ETHICUS Coffee Roasters", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://ethicus.jp/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "静岡。", "_uid": "COF058"}, {"supplier_id": "COF059", "source_category": "coffee", "name": "Passage Coffee", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://passagecoffee.com/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "東京。", "_uid": "COF059"}, {"supplier_id": "COF060", "source_category": "coffee", "name": "Leaves Coffee Roasters", "type": "スペシャルティロースター", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://leavescoffee.jp/", "google_maps_url": "", "main_items": "スペシャルティ", "notes": "東京。", "_uid": "COF060"}, {"supplier_id": "CON001", "source_category": "consumables", "name": "シモジマ", "type": "総合包材メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.shimojima.co.jp/", "google_maps_url": "", "main_items": "紙カップ・プラカップ・袋・包装資材", "notes": "業界最大手。", "_uid": "CON001"}, {"supplier_id": "CON002", "source_category": "consumables", "name": "HEIKO（シモジマPB）", "type": "包装資材", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.heiko.jp/", "google_maps_url": "", "main_items": "紙カップ・袋・包装資材", "notes": "シモジマPB。", "_uid": "CON002"}, {"supplier_id": "CON003", "source_category": "consumables", "name": "パックスタイル", "type": "食品容器メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.packstyle.jp/", "google_maps_url": "", "main_items": "食品容器・紙カップ・弁当容器", "notes": "飲食向け。", "_uid": "CON003"}, {"supplier_id": "CON004", "source_category": "consumables", "name": "折兼", "type": "食品包装資材", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.orikane.co.jp/", "google_maps_url": "", "main_items": "食品容器・包装資材", "notes": "食品包装専門。", "_uid": "CON004"}, {"supplier_id": "CON005", "source_category": "consumables", "name": "ストア・エキスプレス", "type": "店舗用品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.store-express.com/", "google_maps_url": "", "main_items": "店舗什器・包装資材", "notes": "店舗用品総合。", "_uid": "CON005"}, {"supplier_id": "CON006", "source_category": "consumables", "name": "モノタロウ", "type": "総合資材", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.monotaro.com/", "google_maps_url": "", "main_items": "消耗品全般", "notes": "店舗備品全般。", "_uid": "CON006"}, {"supplier_id": "CON007", "source_category": "consumables", "name": "ASKUL", "type": "オフィス・店舗用品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.askul.co.jp/", "google_maps_url": "", "main_items": "紙コップ・備品", "notes": "翌日配送。", "_uid": "CON007"}, {"supplier_id": "CON008", "source_category": "consumables", "name": "LOHACO法人", "type": "店舗用品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://lohaco.yahoo.co.jp/business/", "google_maps_url": "", "main_items": "店舗消耗品", "notes": "法人向け。", "_uid": "CON008"}, {"supplier_id": "CON009", "source_category": "consumables", "name": "カウネット", "type": "店舗用品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.kaunet.com/", "google_maps_url": "", "main_items": "店舗備品", "notes": "法人向け。", "_uid": "CON009"}, {"supplier_id": "CON010", "source_category": "consumables", "name": "テンポス", "type": "厨房・消耗品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.tenpos.com/", "google_maps_url": "", "main_items": "厨房用品・包材", "notes": "飲食店専門。", "_uid": "CON010"}, {"supplier_id": "CON011", "source_category": "consumables", "name": "プロ厨房ヒット", "type": "厨房用品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.pro-hit.jp/", "google_maps_url": "", "main_items": "厨房用品・消耗品", "notes": "飲食店向け。", "_uid": "CON011"}, {"supplier_id": "CON012", "source_category": "consumables", "name": "cotta Business", "type": "製菓・包材", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.cotta.jp/", "google_maps_url": "", "main_items": "包材・製菓資材", "notes": "製菓向け。", "_uid": "CON012"}, {"supplier_id": "CON013", "source_category": "consumables", "name": "富澤商店Business", "type": "製菓資材", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://tomiz.com/", "google_maps_url": "", "main_items": "包材・製菓用品", "notes": "製菓材料。", "_uid": "CON013"}, {"supplier_id": "CON014", "source_category": "consumables", "name": "アスクル メディカル", "type": "衛生用品", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.askul.co.jp/", "google_maps_url": "", "main_items": "おしぼり・衛生用品", "notes": "衛生用品。", "_uid": "CON014"}, {"supplier_id": "CON015", "source_category": "consumables", "name": "大黒工業", "type": "カトラリー・おしぼり", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.daikoku-com.co.jp/", "google_maps_url": "", "main_items": "おしぼり・カトラリー・紙製品", "notes": "飲食店向け。", "_uid": "CON015"}, {"supplier_id": "CON016", "source_category": "consumables", "name": "尚美堂", "type": "紙製品メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.fuji-shobido.com/", "google_maps_url": "", "main_items": "紙ナプキン・紙コップ", "notes": "紙製品。", "_uid": "CON016"}, {"supplier_id": "CON017", "source_category": "consumables", "name": "溝端紙工印刷", "type": "紙コップOEM", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.mizobata.co.jp/", "google_maps_url": "", "main_items": "紙コップOEM", "notes": "オリジナル印刷。", "_uid": "CON017"}, {"supplier_id": "CON018", "source_category": "consumables", "name": "日本デキシー", "type": "紙カップメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.dixie.co.jp/", "google_maps_url": "", "main_items": "紙カップ・食品容器", "notes": "紙カップ大手。", "_uid": "CON018"}, {"supplier_id": "CON019", "source_category": "consumables", "name": "SMPテクニカ", "type": "プラカップメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.smp-technica.com/", "google_maps_url": "", "main_items": "PETカップ・食品容器", "notes": "透明カップ。", "_uid": "CON019"}, {"supplier_id": "CON020", "source_category": "consumables", "name": "東罐興業", "type": "紙容器メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.tokan.co.jp/", "google_maps_url": "", "main_items": "紙コップ・食品容器", "notes": "紙容器メーカー。", "_uid": "CON020"}, {"supplier_id": "MAT001", "source_category": "materials", "name": "明治", "type": "乳製品メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.meiji.co.jp/", "google_maps_url": "", "main_items": "牛乳・生クリーム・ホイップ・ヨーグルト・チーズ・バター", "notes": "業務用ブランドあり。", "_uid": "MAT001"}, {"supplier_id": "MAT002", "source_category": "materials", "name": "森永乳業", "type": "乳製品メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.morinagamilk.co.jp/", "google_maps_url": "", "main_items": "牛乳・ホイップ・ヨーグルト・チーズ", "notes": "業務用商品あり。", "_uid": "MAT002"}, {"supplier_id": "MAT003", "source_category": "materials", "name": "雪印メグミルク", "type": "乳製品メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.meg-snow.com/", "google_maps_url": "", "main_items": "牛乳・チーズ・バター・生クリーム", "notes": "業務用商品あり。", "_uid": "MAT003"}, {"supplier_id": "MAT004", "source_category": "materials", "name": "タカナシ乳業", "type": "乳製品メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.takanashi-milk.co.jp/", "google_maps_url": "", "main_items": "生クリーム・牛乳・バター・ヨーグルト", "notes": "カフェ採用実績多数。", "_uid": "MAT004"}, {"supplier_id": "MAT005", "source_category": "materials", "name": "中沢乳業", "type": "乳製品メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.nakazawa.co.jp/", "google_maps_url": "", "main_items": "生クリーム・牛乳・バター", "notes": "製菓・カフェ向け。", "_uid": "MAT005"}, {"supplier_id": "MAT006", "source_category": "materials", "name": "四国乳業", "type": "乳製品メーカー", "local_or_online": "ローカル", "address_candidate": "", "latitude": 33.803, "longitude": 132.79, "official_url": "https://www.rakuren.co.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=四国乳業株式会社", "main_items": "牛乳・ヨーグルト・乳飲料", "notes": "らくれんブランド。", "_uid": "MAT006"}, {"supplier_id": "MAT007", "source_category": "materials", "name": "MONIN", "type": "シロップメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.monin.com/", "google_maps_url": "", "main_items": "シロップ・ソース・フラッペ", "notes": "カフェ定番ブランド。", "_uid": "MAT007"}, {"supplier_id": "MAT008", "source_category": "materials", "name": "1883 Maison Routin", "type": "シロップメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.1883.com/", "google_maps_url": "", "main_items": "シロップ・ソース", "notes": "フランスブランド。", "_uid": "MAT008"}, {"supplier_id": "MAT009", "source_category": "materials", "name": "Torani", "type": "シロップメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://shop.torani.com/", "google_maps_url": "", "main_items": "シロップ・ソース・フラッペ", "notes": "米国ブランド。", "_uid": "MAT009"}, {"supplier_id": "MAT010", "source_category": "materials", "name": "DaVinci Gourmet", "type": "シロップメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.davincigourmet.com/", "google_maps_url": "", "main_items": "シロップ・ソース", "notes": "業務用。", "_uid": "MAT010"}, {"supplier_id": "MAT011", "source_category": "materials", "name": "Ghirardelli", "type": "チョコレートソース", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.ghirardelli.com/", "google_maps_url": "", "main_items": "チョコレートソース・キャラメル", "notes": "カフェ・デザート向け。", "_uid": "MAT011"}, {"supplier_id": "MAT012", "source_category": "materials", "name": "HERSHEY'S Foodservice", "type": "チョコレートメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.thehersheycompany.com/", "google_maps_url": "", "main_items": "チョコソース・ココア", "notes": "業務用ラインあり。", "_uid": "MAT012"}, {"supplier_id": "MAT013", "source_category": "materials", "name": "ヴァローナ", "type": "チョコレートメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.valrhona.com/", "google_maps_url": "", "main_items": "チョコレート・ココア", "notes": "高級チョコレート。", "_uid": "MAT013"}, {"supplier_id": "MAT014", "source_category": "materials", "name": "森半", "type": "抹茶メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.kataoka.com/morihan/", "google_maps_url": "", "main_items": "抹茶・ほうじ茶", "notes": "カフェ向け抹茶。", "_uid": "MAT014"}, {"supplier_id": "MAT015", "source_category": "materials", "name": "丸久小山園", "type": "抹茶メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.marukyu-koyamaen.co.jp/", "google_maps_url": "", "main_items": "抹茶", "notes": "製菓・カフェ採用多数。", "_uid": "MAT015"}, {"supplier_id": "MAT016", "source_category": "materials", "name": "山政小山園", "type": "抹茶メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.yamamasa-koyamaen.co.jp/", "google_maps_url": "", "main_items": "抹茶", "notes": "宇治抹茶。", "_uid": "MAT016"}, {"supplier_id": "MAT017", "source_category": "materials", "name": "共栄製茶（森半）", "type": "日本茶メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.kyoeiseicha.co.jp/", "google_maps_url": "", "main_items": "抹茶・ほうじ茶・緑茶", "notes": "業務用対応。", "_uid": "MAT017"}, {"supplier_id": "MAT018", "source_category": "materials", "name": "はちみつの杉養蜂園", "type": "はちみつメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://sugi-bee.com/", "google_maps_url": "", "main_items": "はちみつ・果汁蜜", "notes": "ドリンク利用実績。", "_uid": "MAT018"}, {"supplier_id": "MAT019", "source_category": "materials", "name": "MY HONEY", "type": "はちみつメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://myhoneyjapan.com/", "google_maps_url": "", "main_items": "はちみつ・ナッツ", "notes": "カフェ採用あり。", "_uid": "MAT019"}, {"supplier_id": "MAT020", "source_category": "materials", "name": "日新蜂蜜株式会社", "type": "はちみつメーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.nisshin-honey.co.jp/", "google_maps_url": "", "main_items": "はちみつ・シロップ", "notes": "業務用蜂蜜。", "_uid": "MAT020"}, {"supplier_id": "ICE001", "source_category": "ice", "name": "小久保製氷冷蔵株式会社", "type": "製氷会社", "local_or_online": "ローカル", "address_candidate": "", "latitude": 35.725, "longitude": 140.122, "official_url": "https://www.kokuboice.co.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=小久保製氷冷蔵株式会社 高松市", "main_items": "ロックアイス・クラッシュアイス・角氷・業務用氷", "notes": "香川県内配送。飲食店・ホテル・イベント向け。", "_uid": "ICE001"}, {"supplier_id": "ICE002", "source_category": "ice", "name": "株式会社小久保製氷冷蔵 ロックアイス事業", "type": "製氷会社", "local_or_online": "ローカル", "address_candidate": "", "latitude": 35.725, "longitude": 140.122, "official_url": "https://www.kokuboice.co.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=小久保製氷冷蔵株式会社", "main_items": "業務用ロックアイス", "notes": "高松エリア対応。", "_uid": "ICE002"}, {"supplier_id": "ICE003", "source_category": "ice", "name": "小久保製氷冷蔵 クラッシュアイス", "type": "製氷会社", "local_or_online": "ローカル", "address_candidate": "", "latitude": 35.725, "longitude": 140.122, "official_url": "https://www.kokuboice.co.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=小久保製氷冷蔵株式会社", "main_items": "クラッシュアイス", "notes": "スムージー・ドリンク向け。", "_uid": "ICE003"}, {"supplier_id": "ICE004", "source_category": "ice", "name": "ニチレイフーズ ロックアイス", "type": "メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.nichireifoods.co.jp/", "google_maps_url": "", "main_items": "ロックアイス・クラッシュアイス", "notes": "全国流通。", "_uid": "ICE004"}, {"supplier_id": "ICE005", "source_category": "ice", "name": "小久保製氷冷蔵 ドライアイス", "type": "製氷会社", "local_or_online": "ローカル", "address_candidate": "", "latitude": 35.725, "longitude": 140.122, "official_url": "https://www.kokuboice.co.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=小久保製氷冷蔵株式会社", "main_items": "ドライアイス", "notes": "保冷用途。", "_uid": "ICE005"}, {"supplier_id": "ICE006", "source_category": "ice", "name": "ホシザキ株式会社", "type": "製氷機メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.hoshizaki.co.jp/", "google_maps_url": "", "main_items": "製氷機・キューブアイスメーカー", "notes": "業務用製氷機国内最大手。", "_uid": "ICE006"}, {"supplier_id": "ICE007", "source_category": "ice", "name": "フクシマガリレイ株式会社", "type": "製氷機メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.galilei.co.jp/", "google_maps_url": "", "main_items": "製氷機・冷機設備", "notes": "厨房機器メーカー。", "_uid": "ICE007"}, {"supplier_id": "ICE008", "source_category": "ice", "name": "パナソニック コールドチェーン", "type": "製氷機メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://panasonic.biz/appliance/cold_chain/", "google_maps_url": "", "main_items": "製氷機", "notes": "業務用製氷機。", "_uid": "ICE008"}, {"supplier_id": "ICE009", "source_category": "ice", "name": "大和冷機工業株式会社", "type": "製氷機メーカー", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.drk.co.jp/", "google_maps_url": "", "main_items": "製氷機・厨房機器", "notes": "厨房設備総合。", "_uid": "ICE009"}, {"supplier_id": "ICE010", "source_category": "ice", "name": "中西製氷株式会社", "type": "製氷会社", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.nakanishi-ice.co.jp/", "google_maps_url": "", "main_items": "ロックアイス・業務用氷", "notes": "業務用氷供給。", "_uid": "ICE010"}, {"supplier_id": "ICE011", "source_category": "ice", "name": "ダイワアイス", "type": "製氷会社", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "", "google_maps_url": "", "main_items": "ロックアイス・クラッシュアイス", "notes": "業務用氷。", "_uid": "ICE011"}, {"supplier_id": "ICE012", "source_category": "ice", "name": "前川製氷株式会社", "type": "製氷会社", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "", "google_maps_url": "", "main_items": "業務用氷", "notes": "飲食店向け。", "_uid": "ICE012"}, {"supplier_id": "ICE013", "source_category": "ice", "name": "昭和冷凍食品", "type": "冷凍・氷", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "", "google_maps_url": "", "main_items": "業務用氷", "notes": "冷凍食品と合わせて仕入可能。", "_uid": "ICE013"}, {"supplier_id": "ICE014", "source_category": "ice", "name": "テンポス", "type": "厨房機器", "local_or_online": "オンライン", "address_candidate": "オンライン", "latitude": null, "longitude": null, "official_url": "https://www.tenpos.com/", "google_maps_url": "", "main_items": "製氷機", "notes": "ホシザキ・パナソニック等取扱。", "_uid": "ICE014"}, {"supplier_id": "ICE015", "source_category": "ice", "name": "ホシザキ四国株式会社", "type": "厨房機器", "local_or_online": "ローカル", "address_candidate": "", "latitude": 34.319, "longitude": 134.062, "official_url": "https://www.hoshizaki.co.jp/", "google_maps_url": "https://www.google.com/maps/search/?api=1&query=ホシザキ四国株式会社 高松市", "main_items": "製氷機・保守", "notes": "導入・保守対応。", "_uid": "ICE015"}];
+const categoryLabels = {"fruit": "フルーツ", "coffee": "コーヒー", "consumables": "消耗品", "materials": "原材料", "ice": "氷"};
+
+let currentCategory = "all";
+let selectedUid = null;
+let markers = new Map();
+let lastInteractionSource = null;
+
+const supplierByUid = new Map(
+  suppliers.map(s => [String(s._uid || "").trim(), s])
+);
+
+const map = L.map("map").setView([34.34, 134.05], 11);
+
+L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  maxZoom: 19,
+  attribution: "&copy; OpenStreetMap &copy; CARTO"
+}).addTo(map);
+
+function esc(v) {
+  return String(v ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function label(cat) {
+  return categoryLabels[cat] || cat || "";
+}
+
+function isOnline(s) {
+  const value = String(s.local_or_online || "").toLowerCase();
+  return value.includes("オンライン") || value === "online";
+}
+
+function hasCoordinate(s) {
+  if (s.latitude === null || s.longitude === null) return false;
+  if (s.latitude === undefined || s.longitude === undefined) return false;
+  if (String(s.latitude).trim() === "" || String(s.longitude).trim() === "") return false;
+
+  const lat = Number(s.latitude);
+  const lng = Number(s.longitude);
+
+  return Number.isFinite(lat) && Number.isFinite(lng);
+}
+
+function addressText(s) {
+  return isOnline(s) ? "オンライン" : (s.address_candidate || "");
+}
+
+function textOf(s) {
+  return Object.values(s).join(" ").toLowerCase();
+}
+
+function filteredSuppliers() {
+  const q = document.getElementById("searchBox").value.toLowerCase().trim();
+
+  return suppliers.filter(s => {
+    const catOk = currentCategory === "all" || s.source_category === currentCategory;
+    const qOk = !q || textOf(s).includes(q);
+    return catOk && qOk;
+  });
+}
+
+function popupHtml(s) {
+  return `
+    <strong>${esc(s.name)}</strong><br>
+    <span>${esc(label(s.source_category))} / ${esc(s.type || "")}</span><br>
+    <span>${esc(addressText(s))}</span>
+  `;
+}
+
+function cardHtml(s) {
+  const uid = esc(String(s._uid || "").trim());
+  const onlineClass = isOnline(s) ? " online" : "";
+
+  return `
+    <div class="item ${String(s._uid).trim() === selectedUid ? "active" : ""}"
+         id="card-${uid}"
+         data-supplier-uid="${uid}">
+      <div class="item-title">${esc(s.name)}</div>
+
+      <div>
+        <span class="badge">${esc(label(s.source_category))}</span>
+        <span class="badge">${esc(s.type || "")}</span>
+        <span class="badge${onlineClass}">${esc(isOnline(s) ? "オンライン" : (s.local_or_online || "ローカル"))}</span>
+      </div>
+
+      <div class="items">${esc(s.main_items || "")}</div>
+      <div class="notes">${esc(s.notes || "")}</div>
+
+      <div class="links">
+        ${s.official_url ? `<a href="${esc(s.official_url)}" target="_blank" rel="noopener">公式サイト</a>` : ""}
+        ${(!isOnline(s) && s.google_maps_url) ? ` / <a href="${esc(s.google_maps_url)}" target="_blank" rel="noopener">Google Maps</a>` : ""}
+      </div>
+
+      <div class="addr">${esc(addressText(s))}</div>
+    </div>
+  `;
+}
+
+function renderMarkers(list, fitMap = true) {
+  markers.forEach(marker => map.removeLayer(marker));
+  markers.clear();
+
+  const bounds = [];
+
+  list.forEach(s => {
+    const uid = String(s._uid || "").trim();
+
+    if (!uid || isOnline(s) || !hasCoordinate(s)) return;
+
+    const lat = Number(s.latitude);
+    const lng = Number(s.longitude);
+    const marker = L.marker([lat, lng]).addTo(map).bindPopup(popupHtml(s));
+
+    marker.on("click", () => {
+      selectSupplier(uid, {
+        source: "marker",
+        moveMap: false,
+        scrollList: true,
+        openPopup: false
+      });
+    });
+
+    markers.set(uid, marker);
+    bounds.push([lat, lng]);
+  });
+
+  if (fitMap && bounds.length) {
+    map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
+  }
+}
+
+function renderList(list) {
+  const markerCount = list.filter(s => !isOnline(s) && hasCoordinate(s)).length;
+  const onlineCount = list.filter(isOnline).length;
+
+  document.getElementById("summary").textContent =
+    `${list.length}件表示 / 全${suppliers.length}件（地図${markerCount}件・オンライン${onlineCount}件）`;
+
+  const listEl = document.getElementById("supplierList");
+
+  listEl.innerHTML =
+    list.map(cardHtml).join("") || `<div class="empty">該当する仕入先がありません。</div>`;
+}
+
+function renderDetail(s) {
+  const detailEl = document.getElementById("detail");
+
+  if (!s) {
+    detailEl.innerHTML =
+      `<div class="empty">左の一覧または地図上のピンから仕入先を選択してください。</div>`;
+    return;
+  }
+
+  detailEl.innerHTML = `
+    <h2>${esc(s.name)}</h2>
+    <div class="detail-grid">
+      <div class="label">カテゴリ</div><div>${esc(label(s.source_category))}</div>
+      <div class="label">分類</div><div>${esc(s.type || "")}</div>
+      <div class="label">取引形態</div><div>${esc(isOnline(s) ? "オンライン" : (s.local_or_online || "ローカル"))}</div>
+      <div class="label">住所</div><div>${esc(addressText(s))}</div>
+      <div class="label">取扱</div><div>${esc(s.main_items || "")}</div>
+      <div class="label">メモ</div><div>${esc(s.notes || "")}</div>
+      <div class="label">公式</div>
+      <div>${s.official_url ? `<a href="${esc(s.official_url)}" target="_blank" rel="noopener">公式サイト</a>` : ""}</div>
+      <div class="label">Google</div>
+      <div>${(!isOnline(s) && s.google_maps_url) ? `<a href="${esc(s.google_maps_url)}" target="_blank" rel="noopener">Google Maps</a>` : ""}</div>
+    </div>
+  `;
+}
+
+function updateActiveCard(uid) {
+  document.querySelectorAll(".item").forEach(card => {
+    card.classList.toggle(
+      "active",
+      String(card.dataset.supplierUid || "").trim() === uid
+    );
+  });
+}
+
+function scrollToCard(uid) {
+  const listEl = document.getElementById("supplierList");
+  const card = document.getElementById(`card-${uid}`);
+
+  if (!listEl || !card) return;
+
+  const listRect = listEl.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+
+  const targetTop =
+    listEl.scrollTop +
+    (cardRect.top - listRect.top) -
+    (listEl.clientHeight / 2) +
+    (card.offsetHeight / 2);
+
+  listEl.scrollTo({
+    top: Math.max(0, targetTop),
+    behavior: "smooth"
+  });
+}
+
+function selectSupplier(uid, options = {}) {
+  const normalizedUid = String(uid || "").trim();
+
+  if (!normalizedUid) {
+    console.warn("empty supplier uid");
+    return;
+  }
+
+  selectedUid = normalizedUid;
+  lastInteractionSource = options.source || "list";
+
+  const moveMap = options.moveMap ?? false;
+  const scrollList = options.scrollList ?? false;
+  const openPopup = options.openPopup ?? true;
+
+  const s = supplierByUid.get(normalizedUid);
+
+  if (!s) {
+    console.warn("supplier not found:", normalizedUid);
+    return;
+  }
+
+  renderDetail(s);
+  updateActiveCard(normalizedUid);
+
+  if (scrollList) {
+    scrollToCard(normalizedUid);
+  }
+
+  const marker = markers.get(normalizedUid);
+
+  if (marker) {
+    if (moveMap) {
+      map.setView(marker.getLatLng(), 15, { animate: false });
+    }
+
+    if (openPopup) {
+      marker.openPopup();
+    }
+  }
+}
+
+function renderAll(fitMap = true) {
+  selectedUid = null;
+
+  const list = filteredSuppliers();
+
+  renderList(list);
+  renderMarkers(list, fitMap);
+  renderDetail(null);
+}
+
+document.getElementById("supplierList").addEventListener("click", (e) => {
+  if (e.target.closest("a")) return;
+
+  const card = e.target.closest(".item");
+  if (!card) return;
+
+  const uid = String(card.dataset.supplierUid || "").trim();
+  if (!uid) return;
+
+  selectSupplier(uid, {
+    source: "list",
+    moveMap: true,
+    scrollList: false,
+    openPopup: true
+  });
+});
+
+document.querySelectorAll(".filter").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentCategory = btn.dataset.category;
+    renderAll(true);
+  });
+});
+
+document.getElementById("searchBox").addEventListener("input", () => {
+  renderAll(true);
+});
+
+renderAll(true);
+</script>
+</body>
+</html>

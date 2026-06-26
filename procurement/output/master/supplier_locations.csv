@@ -1,0 +1,176 @@
+﻿supplier_id,source_category,name,type,local_or_online,address_candidate,latitude,longitude,map_available,official_url,google_maps_url,main_items,notes
+FRT001,fruit,高松青果株式会社,中央卸売市場・青果卸,ローカル,高松市朝日町3-8-25,,,yes,https://takamatsuseika.co.jp/about,https://www.google.com/maps/search/?api=1&query=高松青果株式会社,青果全般,高松市中央卸売市場内の青果卸。外食産業等への販売先記載あり。
+FRT002,fruit,高松大一青果株式会社,中央卸売市場・青果卸,ローカル,高松市朝日町3-8-25,,,yes,https://t-daiichiseika.jp/,https://www.google.com/maps/search/?api=1&query=高松大一青果株式会社,青果全般,高松中央卸売市場系の青果卸候補。
+FRT003,fruit,株式会社笠井青果,中央卸売市場・仲卸,ローカル,高松市朝日町3-8-25,,,yes,https://www.kasaiseika.com/,https://www.google.com/maps/search/?api=1&query=株式会社笠井青果 高松市中央卸売市場,高級野菜・青果,スーパー・百貨店・飲食店・病院等へ青果物を納品と明記。
+FRT004,fruit,株式会社五色青果,中央卸売市場・仲卸,ローカル,高松市朝日町3-8-25,,,yes,https://www.goshiki-seika.co.jp/,https://www.google.com/maps/search/?api=1&query=株式会社五色青果 高松市朝日町,青果・小売用加工・販売,高松市中央卸売市場内の青果仲卸。通販部門あり。
+FRT005,fruit,株式会社フレッシュ,中央卸売市場・仲卸,ローカル,高松市朝日町3-8-25,,,yes,https://seaandsunmarket.com/company/,https://www.google.com/maps/search/?api=1&query=株式会社フレッシュ 高松市中央卸売市場,青果,高松市中央卸売市場の場内業者一覧に掲載。
+FRT006,fruit,丸協青果株式会社,中央卸売市場・仲卸,ローカル,高松市朝日町3-8-25,,,yes,https://www.city.takamatsu.kagawa.jp/smph/kurashi/kurashi/shisetsu/chuoichiba/shoukai/jonaigyosha.html,https://www.google.com/maps/search/?api=1&query=丸協青果株式会社 高松市中央卸売市場,青果,高松市中央卸売市場の青果部仲卸候補。
+FRT007,fruit,有限会社丸二青果,中央卸売市場・仲卸,ローカル,高松市朝日町3-8-25,,,yes,https://www.city.takamatsu.kagawa.jp/smph/kurashi/kurashi/shisetsu/chuoichiba/shoukai/jonaigyosha.html,https://www.google.com/maps/search/?api=1&query=有限会社丸二青果 高松市中央卸売市場,青果,高松市中央卸売市場の青果部仲卸候補。
+FRT008,fruit,有限会社太田青果,中央卸売市場・仲卸,ローカル,高松市朝日町3-8-25,,,yes,https://www.city.takamatsu.kagawa.jp/smph/kurashi/kurashi/shisetsu/chuoichiba/shoukai/jonaigyosha.html,https://www.google.com/maps/search/?api=1&query=有限会社太田青果 高松市中央卸売市場,青果,高松市中央卸売市場の青果部仲卸候補。
+FRT009,fruit,有限会社丸和青果,中央卸売市場・仲卸,ローカル,高松市朝日町3-8-25,,,yes,https://www.city.takamatsu.kagawa.jp/smph/kurashi/kurashi/shisetsu/chuoichiba/shoukai/jonaigyosha.html,https://www.google.com/maps/search/?api=1&query=有限会社丸和青果 高松市中央卸売市場,青果,高松市中央卸売市場の青果部仲卸候補。
+FRT010,fruit,フルーツショップ造田,果物専門店,ローカル,高松市兵庫町7-3,,,yes,https://www.kagawa-zouda.net/,https://www.google.com/maps/search/?api=1&query=フルーツショップ造田,県産果物・贈答用果物・高品質フルーツ,高松市兵庫町の老舗果実専門店。さぬき讃フルーツのマスターショップ。
+FRT011,fruit,フルーツ大林,果物専門店,ローカル,高松市南新町4-4,,,yes,https://www.ms-machi.com/shop/obayashi/,https://www.google.com/maps/search/?api=1&query=フルーツ大林 高松市南新町,果物全般,高松市南新町の果物店。中心部で買い出ししやすい。
+FRT012,fruit,JA香川県 フルーツの里,JA産直,ローカル,高松市鬼無町佐料20-1,,,yes,https://www.kw-ja.or.jp/shop/shop-8268/,https://www.google.com/maps/search/?api=1&query=JA香川県 フルーツの里,地元果物・柑橘・野菜,高松市鬼無町。営業時間8:30〜16:00、火曜休み、駐車場約45台。
+FRT013,fruit,JA香川県 讃さん広場 飯山店,JA大型産直,ローカル,丸亀市飯山町西坂元655-1,,,yes,https://www.kw-ja.or.jp/shop/shop-7887/,https://www.google.com/maps/search/?api=1&query=讃さん広場 飯山店,県内産野菜・果物・加工品,丸亀市だが大型産直。桃・いちご・柑橘など季節仕入れ候補。
+FRT014,fruit,高松市中央卸売市場 うみまち商店街,市場関連店舗,ローカル,高松市朝日町3-8-25,,,yes,https://seaandsunmarket.com/,https://www.google.com/maps/search/?api=1&query=高松市中央卸売市場 うみまち商店街,青果・水産・関連食品,市場関連棟。少量多品目の買い出し候補。
+FRT015,fruit,Mマート,業務用食材EC,オンライン,,,,no,https://www.m-mart.co.jp/,,フルーツ・輸入果実・冷凍フルーツ・業務用食材,飲食店等向けBtoBモール。フルーツカテゴリあり。
+FRT016,fruit,NORUCA / KIMONO FRUITS,業務用冷凍フルーツ,オンライン,,,,no,https://noruca.com/,,国産冷凍フルーツ・冷凍柑橘・フルーツソース・デザート素材,スムージー、フルーツティー、デザート用。国産冷凍フルーツに強い。
+FRT017,fruit,タカ食品工業,業務用フルーツピューレ,オンライン,,,,no,https://www.takafoods.co.jp/shop/frozenpuree/,,冷凍フルーツピューレ・製菓材料,国産原料の冷凍ピューレシリーズあり。ドリンク・ソース・パフェ向き。
+FRT018,fruit,ストロングハート,業務用冷凍フルーツ加工品,オンライン,,,,no,https://fruits.strongheart.co.jp/fruitspuree/,,冷凍フルーツ・ピューレ・スムージー素材,業務用スムージー、フルーツデザート、フレッシュジュース素材候補。
+FRT019,fruit,株式会社セビア,業務用青果加工・冷凍フルーツ,オンライン,,,,no,https://sevia.co.jp/news/,,冷凍フルーツ・冷凍野菜・フルーツピューレ・カット野菜,冷凍フルーツ、冷凍野菜、ピューレ、カット野菜の業務用候補。
+FRT020,fruit,八面六臂,業務用食材EC,オンライン,,,,no,https://hachimenroppi.com/,,野菜・フルーツ・水産・精肉・調味料,品揃えは強いが、公式上の主配送エリアは1都3県のため高松利用は優先度低め。
+FRT031,fruit,ギフトフルーツ ヤマネ,さぬき讃フルーツマスターショップ,ローカル,高松市兵庫町1-17,,,yes,,https://www.google.com/maps/search/?api=1&query=ギフトフルーツ ヤマネ 高松市兵庫町1-17,県産果物・贈答用果物,高松市兵庫町1-17。電話087-851-3069。10:00-19:00、日曜・月曜定休。県公式では現在営業休止中。
+FRT032,fruit,フルーツたかぎ 回生病院前店,さぬき讃フルーツマスターショップ,ローカル,坂出市旭町3-1-4,,,yes,,https://www.google.com/maps/search/?api=1&query=フルーツたかぎ 回生病院前店 坂出市旭町3-1-4,県産果物・高品質フルーツ,坂出市旭町3-1-4。電話0877-46-0533。10:00-19:30、日祝19:00まで。不定休。
+FRT033,fruit,高松三越 青果コーナー,百貨店青果,ローカル,高松市内町7-1,,,yes,https://www.mitsukoshi.mistore.jp/takamatsu.html,https://www.google.com/maps/search/?api=1&query=高松三越 高松市内町7-1,さぬき讃フルーツ・高品質果物,高松市内町7-1。電話087-813-1034。10:00-19:00。不定休。高品質・贈答向き。
+FRT034,fruit,いきいき産直 十河店,JA産直,ローカル,高松市十川西町298-1,,,yes,https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C,https://www.google.com/maps/search/?api=1&query=いきいき産直 十河店 高松市十川西町298-1,地元野菜・果物,高松市十川西町298-1。電話087-848-4783。6:30-16:00、水曜定休、駐車場21台。
+FRT035,fruit,いきいき産直 林店,JA産直,ローカル,高松市林町351-4,,,yes,https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C,https://www.google.com/maps/search/?api=1&query=いきいき産直 林店 高松市林町351-4,地元野菜・果物,高松市林町351-4。電話087-865-5685。6:30-16:00、火曜定休、駐車場60台。
+FRT036,fruit,グリーンピア岡本,JA産直,ローカル,高松市岡本町字幸ノ神944,,,yes,https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C,https://www.google.com/maps/search/?api=1&query=グリーンピア岡本 高松市岡本町944,地元野菜・果物,高松市岡本町字幸ノ神944。電話087-885-6996。8:30-16:00、水曜定休、駐車場70台。
+FRT037,fruit,中央ふれあい市場 本店,JA産直,ローカル,高松市太田上町315-1,,,yes,https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C,https://www.google.com/maps/search/?api=1&query=中央ふれあい市場 本店 高松市太田上町315-1,地元野菜・果物,高松市太田上町315-1。電話087-815-5277。8:30-15:00、季節により変更あり。水曜定休、駐車場40台。
+FRT038,fruit,中央ふれあい市場 古高松店,JA産直,ローカル,高松市高松町2170-1,,,yes,https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C,https://www.google.com/maps/search/?api=1&query=中央ふれあい市場 古高松店 高松市高松町2170-1,地元野菜・果物,高松市高松町2170-1。電話087-841-1606。8:30-15:00、季節により変更あり。火曜定休、駐車場60台。
+FRT039,fruit,中央ふれあい市場 木太店,JA産直,ローカル,高松市木太町1669,,,yes,https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C,https://www.google.com/maps/search/?api=1&query=中央ふれあい市場 木太店 高松市木太町1669,地元野菜・果物,高松市木太町1669。電話080-2996-5641。9:00-15:00、営業日は火・金中心。
+FRT040,fruit,国分寺ふれあい産直市,JA産直,ローカル,高松市国分寺町新名744-1,,,yes,https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C,https://www.google.com/maps/search/?api=1&query=国分寺ふれあい産直市 高松市国分寺町新名744-1,地元野菜・果物,高松市国分寺町新名744-1。電話087-874-1224。8:30-16:00、火曜定休、駐車場25台。
+FRT041,fruit,三木とれとれ市,JA産直,ローカル,木田郡三木町大字氷上364-1,,,yes,https://life.ja-group.jp/farm/market/list?state=%E9%A6%99%E5%B7%9D%E7%9C%8C,https://www.google.com/maps/search/?api=1&query=三木とれとれ市 木田郡三木町氷上364-1,地元野菜・果物,木田郡三木町大字氷上364-1。電話087-891-1023。8:00-15:00、水曜定休、駐車場30台。高松東部から利用候補。
+FRT042,fruit,ファーマーズマーケット讃さん広場 滝宮店,JA大型産直,ローカル,綾歌郡綾川町滝宮1578,,,yes,https://www.kw-ja.or.jp/,https://www.google.com/maps/search/?api=1&query=讃さん広場 滝宮店 綾川町滝宮1578,県内産野菜・果物・加工品,綾歌郡綾川町滝宮1578。電話087-876-6333。9:00-17:00、火曜定休、普通車150台。大型産直。
+FRT043,fruit,河村食品マート,業務配送青果,ローカル,高松市西ハゼ町27-2,,,yes,https://www.t0831.net/memberlist.html,https://www.google.com/maps/search/?api=1&query=河村食品マート 高松市西ハゼ町27-2,野菜・果物・乾物,高松市西ハゼ町27-2。電話087-865-6823。野菜・果物・乾物などの業務用配達。配達エリアは電話相談。
+FRT044,fruit,株式会社グリーンアップル,業務用青果卸,ローカル,高松市栗林町1-5-7,,,yes,https://www.t0831.net/memberlist.html,https://www.google.com/maps/search/?api=1&query=株式会社グリーンアップル 高松市栗林町1-5-7,青果物,高松市栗林町1-5-7。電話087-831-4632。外食産業向け青果候補。
+FRT045,fruit,株式会社香川商事,青果卸・小売,ローカル,高松市瓦町2-9-8,,,yes,https://www.t0831.net/memberlist.html,https://www.google.com/maps/search/?api=1&query=株式会社香川商事 高松市瓦町2-9-8,野菜・果物,高松市瓦町2-9-8。電話087-831-2919。業務用青果・卸・小売。
+FRT046,fruit,久保田商店,青果店・納品対応,ローカル,高松市扇町1-23-12,,,yes,https://www.t0831.net/memberlist.html,https://www.google.com/maps/search/?api=1&query=久保田商店 高松市扇町1-23-12,野菜・果物,高松市扇町1-23-12。電話087-821-5607。納め・地方配送あり。
+FRT047,fruit,森政商店,青果店・卸売小売配達,ローカル,高松市上福岡町1280-1,,,yes,https://www.t0831.net/memberlist.html,https://www.google.com/maps/search/?api=1&query=森政商店 高松市上福岡町1280-1,野菜・果物,高松市上福岡町1280-1。電話087-861-7340。卸売・小売・配達あり。
+FRT048,fruit,有限会社イズミ,青果・食品配達,ローカル,綾歌郡綾川町羽床上2624-5,,,yes,https://www.t0831.net/memberlist.html,https://www.google.com/maps/search/?api=1&query=有限会社イズミ 綾歌郡綾川町羽床上2624-5,野菜・果物・食料品,綾歌郡綾川町羽床上2624-5。電話087-870-9190。野菜・果物・食料品・業務用配達。
+FRT049,fruit,有限会社中美商店,食品店・配送対応,ローカル,高松市香西本町545,,,yes,https://www.t0831.net/memberlist.html,https://www.google.com/maps/search/?api=1&query=有限会社中美商店 高松市香西本町545,野菜・果物・一般食品,高松市香西本町545。電話087-882-0805。電話注文・配送対応。6:30-20:00、日曜定休。
+FRT050,fruit,株式会社丸新果物商店,果物店・カフェ併設系,ローカル,高松市常磐町1-4-9,,,yes,https://www.t0831.net/memberlist.html,https://www.google.com/maps/search/?api=1&query=株式会社丸新果物商店 高松市常磐町1-4-9,果物・生ジュース・ジェラート・サンドイッチ,高松市常磐町1-4-9。電話087-861-5353。果物を使ったカフェテリア型販売の記載あり。
+FRT071,fruit,MONIN,業務用シロップ・ソース,オンライン,,,,no,https://nbkk.co.jp/brand/monin/,,シロップ・フルーツミックス・グルメソース・フラッペベース,100種類以上。カフェ・バー・ホテル向け。
+FRT072,fruit,MONIN公式ショップ,業務用シロップEC,オンライン,,,,no,https://shop.nbkk.co.jp/collections/monin,,700ml業務用シロップ・1Lフルーツミックス・グルメソース,公式EC。業務用サイズ確認可。
+FRT073,fruit,1883 Maison Routin,業務用シロップ,オンライン,,,,no,https://www.1883-france.jp/,,自然派シロップ・カフェ/バー向けシロップ,フランス製。業務用・店舗向け問い合わせ導線あり。
+FRT074,fruit,Torani,業務用シロップ・ソース,オンライン,,,,no,https://toyobeverage.com/torani/,,シロップ・ソース・スムージーベース,日本でシロップ59種、ソース3種、スムージーベース7種を展開。
+FRT075,fruit,DaVinci Gourmet,業務用シロップ,オンライン,,,,no,https://loj-dvg.jp/,,フレーバーシロップ・ドリンク/デザート素材,業務用卸購入は問い合わせ対応。
+FRT076,fruit,キャプテン / 中村商店,業務用シロップ・ジュース,オンライン,,,,no,https://captain-drink.co.jp/,,業務用ジュース・シロップ・コーヒー飲料,小ロットPB対応の記載あり。
+FRT077,fruit,FOODBOAT by マルイ物産,業務用ドリンク・スイーツ素材EC,オンライン,,,,no,https://foodboat.jp/,,タピオカ・シロップ・フルーツピューレ・ドリンク素材,飲食店・カフェ向け食材通販。
+FRT078,fruit,PROFOODS フルーツパウダー,製菓材料EC,オンライン,,,,no,https://www.profoods.co.jp/ic/zairyo-1061,,ストロベリー・ラズベリー・ブルーベリー等フルーツパウダー,製菓・クリーム・焼菓子・ドリンク装飾向き。
+FRT079,fruit,PROFOODS MONIN,製菓材料EC,オンライン,,,,no,https://www.profoods.co.jp/ic/zairyo-2023,,MONINシロップ,製菓材料店経由でMONIN調達可。
+FRT080,fruit,アミカネットショップ,業務用食材EC,オンライン,,,,no,https://www.amicashop.com/products/list?category_id=360,,フルーツソース・ピューレ・冷凍商品,QP/スノーマン、マルイ物産などのフルーツソース・ピューレカテゴリあり。
+FRT081,fruit,フーヅフリッジ 冷凍フルーツ,業務用食材EC,オンライン,,,,no,https://foodsfridge.jp/collections/vegetable5,,冷凍フルーツ・缶詰・フルーツソース・ペースト,ベリー・マンゴー・みかん・パイン・桃など。
+FRT082,fruit,インフォマート 冷凍フルーツ,業務用BtoB,オンライン,,,,no,https://foodsinfomart.com/buy/product/food/?category-big=%E9%9D%92%E6%9E%9C%E7%89%A9%E5%8A%A0%E5%B7%A5%E5%93%81&category-medium=%E5%86%B7%E5%87%8D%E3%83%95%E3%83%AB%E3%83%BC%E3%83%84,,冷凍フルーツ・青果物加工品,BtoB食材調達候補。
+FRT083,fruit,大京食品 フルーツソース,業務用フルーツソース,オンライン,,,,no,https://www.dfc-net.co.jp/bussiness/item05.html,,フルーツソース・フルーツピューレ,業務用製品としてフルーツソースを掲載。
+FRT084,fruit,Agriture,国産ドライフルーツ・パウダー/OEM,オンライン,,,,no,https://genryoubank.com/products/7350,,国産ドライフルーツ・フリーズドライ・パウダー・OEM,フリーズドライいちご、スライス、ダイス、パウダー等。
+FRT085,fruit,Agriture 業務用フルーツパウダー,業務用フルーツパウダー,オンライン,,,,no,https://agriture.jp/oem/fruit-powder-bulk/,,果物パウダー・乾燥素材・OEM,製菓・飲料・スムージー・乳製品向け。
+FRT086,fruit,NORUCA 冷凍フルーツ,国産冷凍フルーツ,オンライン,,,,no,https://noruca.com/products/frozenfruits/frozenfriuts.html,,国産冷凍フルーツ・カットフルーツ,産地指定、品種、小ロット出荷に対応と記載。
+FRT087,fruit,NORUCA フルーツピューレ,国産フルーツピューレ,オンライン,,,,no,https://noruca.com/products/puree/friut-puree.html,,国産フルーツピューレ,香料・着色料不使用。国内製造。
+FRT088,fruit,株式会社アスク,冷凍フルーツ・OEM,オンライン,,,,no,https://www.asc.co.jp/,,冷凍フルーツ・ダイスカット・チャンク・ピューレ・OEM,フードサービス、PB/OEM、メーカー向け対応。
+FRT089,fruit,シモジマ MONIN,包材/業務用シロップEC,オンライン,,,,no,https://shimojima.jp/shop/c/c25140401/,,MONIN業務用シロップ・包材,シロップと包材を同時調達できる可能性あり。
+FRT090,fruit,第一エフ・エル,シロップ輸入販売EC,オンライン,,,,no,https://www.daiichifl.com/,,Torani・DaVinci等シロップ,トラーニ、ダヴィンチなどカフェ向けシロップ調達候補。
+COF001,coffee,株式会社蠣三珈琲,業務用コーヒー・食品卸,ローカル,株式会社蠣三珈琲 高松市福岡町3丁目6番18号,,,yes,https://kakisan.co.jp/company/,https://www.google.com/maps/search/?api=1&query=株式会社蠣三珈琲 高松市福岡町3丁目6番18号,ブレンド・ストレート,
+COF002,coffee,四国珈琲,業務用コーヒー・ロースター,ローカル,四国珈琲 高松市,,,yes,https://shikokucoffee.com/commercialcoffee/,https://www.google.com/maps/search/?api=1&query=四国珈琲 高松市,ブレンド・スペシャルティ,コーヒー豆卸、マシン提案、短期貸出対応。
+COF003,coffee,ダートコーヒー株式会社 四国,業務用コーヒー・食品卸,ローカル,ダートコーヒー株式会社 香川県高松市国分寺町福家甲1268-17,,,yes,,https://www.google.com/maps/search/?api=1&query=ダートコーヒー株式会社 香川県高松市国分寺町福家甲1268-17,ブレンド,
+COF004,coffee,Sea-Coffee,自家焙煎ロースター,ローカル,Sea-Coffee 高松市,,,yes,https://sea-coffee.jp/,https://www.google.com/maps/search/?api=1&query=Sea-Coffee 高松市,スペシャルティ,卸販売・オリジナルブレンド相談可。
+COF005,coffee,珈琲焙煎所ヤマコーヒー,自家焙煎ロースター,ローカル,珈琲焙煎所ヤマコーヒー 高松市成合町1428-7,,,yes,https://www.nariai-yamacoffee.jp/,https://www.google.com/maps/search/?api=1&query=珈琲焙煎所ヤマコーヒー 高松市成合町1428-7,ブレンド・ストレート,注文後焙煎。
+COF006,coffee,CORSICA COFFEE DEVELOPMENT,スペシャルティロースター,ローカル,CORSICA COFFEE DEVELOPMENT 高松市,,,yes,https://corsicacoffee.net/,https://www.google.com/maps/search/?api=1&query=CORSICA COFFEE DEVELOPMENT 高松市,シングルオリジン,スペシャルティコーヒー専門。
+COF007,coffee,アロバー,スペシャルティロースター,ローカル,アロバー 高松市,,,yes,https://arovor.com/index.html,https://www.google.com/maps/search/?api=1&query=アロバー 高松市,スペシャルティ,1991年創業。
+COF008,coffee,豆丸珈琲 鍛冶屋町焙煎所,注文焙煎ロースター,ローカル,豆丸珈琲 鍛冶屋町焙煎所 高松市鍛冶屋町,,,yes,https://www.mamemaru-coffee.jp,https://www.google.com/maps/search/?api=1&query=豆丸珈琲 鍛冶屋町焙煎所 高松市鍛冶屋町,ブレンド・ストレート,生豆から選択可能。
+COF009,coffee,珈琲鳴館,業務用コーヒー・開業支援,オンライン,珈琲鳴館,,,yes,https://coffeemeikan.jp/gyoumuyou/,https://www.google.com/maps/search/?api=1&query=珈琲鳴館,ブレンド,○ / 焙煎機レンタル・開業支援。
+COF010,coffee,スギハラコーヒーロースター,業務用スペシャルティ,オンライン,スギハラコーヒーロースター,,,yes,https://sugihara-coffee.com/wholesale/,https://www.google.com/maps/search/?api=1&query=スギハラコーヒーロースター,スペシャルティ,○ / OEM・開業相談。
+COF011,coffee,HIRO COFFEE,業務用コーヒー,オンライン,HIRO COFFEE,,,yes,https://www.hirocoffee.co.jp/hiro/gyosha.php,https://www.google.com/maps/search/?api=1&query=HIRO COFFEE,スペシャルティ,○ / 抽出講習・ラテアート指導。
+COF012,coffee,MUC COFFEE,業務用コーヒー・食品卸,オンライン,MUC COFFEE,,,yes,https://www.muc-coffee.co.jp/b_wholesale.html,https://www.google.com/maps/search/?api=1&query=MUC COFFEE,ブレンド,業務用食材・器具も販売。
+COF013,coffee,齊藤コーヒー,業務用コーヒー・開業支援,オンライン,齊藤コーヒー,,,yes,https://www.saitou-coffee.co.jp/support/,https://www.google.com/maps/search/?api=1&query=齊藤コーヒー,ブレンド・スペシャルティ,○ / 店舗プロデュース対応。
+COF014,coffee,NOG COFFEE ROASTERS,スペシャルティロースター,オンライン,NOG COFFEE ROASTERS,,,yes,https://nogcoffeeroasters.com/pages/wholesale,https://www.google.com/maps/search/?api=1&query=NOG COFFEE ROASTERS,スペシャルティ,○ / スタッフトレーニング対応。
+COF015,coffee,TAOCA COFFEE,スペシャルティ・OEM,オンライン,TAOCA COFFEE,,,yes,https://taocacoffee.jp/wholesale.html,https://www.google.com/maps/search/?api=1&query=TAOCA COFFEE,スペシャルティ,○ / OEM・PB対応。
+COF016,coffee,日向珈琲,スペシャルティロースター,オンライン,日向珈琲,,,yes,https://store.hyuga.coffee/collections/wholesale,https://www.google.com/maps/search/?api=1&query=日向珈琲,スペシャルティ,少量卸対応。
+COF017,coffee,PORTERS COFFEE,業務用コーヒー,オンライン,PORTERS COFFEE,,,yes,https://porters-coffee.com/pages/wholesale,https://www.google.com/maps/search/?api=1&query=PORTERS COFFEE,スペシャルティ,卸販売・開業相談。
+COF018,coffee,小川珈琲 業務用オンラインショップ,業務用コーヒー・喫茶材料,オンライン,小川珈琲,,,yes,https://ogawa-pro.jp,https://www.google.com/maps/search/?api=1&query=小川珈琲,ブレンド・スペシャルティ,紅茶・輸入食品・喫茶材料あり。
+COF019,coffee,COFFEE MARKET（三洋産業）,コーヒー資材・OEM,オンライン,三洋産業 COFFEE MARKET,,,yes,https://coffeemarket.jp/,https://www.google.com/maps/search/?api=1&query=三洋産業 COFFEE MARKET,コーヒー資材,
+COF020,coffee,卸のカイコム,カフェ包材・消耗品,オンライン,,,,no,https://www.mizunoes.com/c/32/32006,,包材,
+COF021,coffee,UCCコーヒープロフェッショナル,総合サプライヤー,オンライン,UCCコーヒープロフェッショナル,,,yes,https://www.ucc.co.jp/professional/,https://www.google.com/maps/search/?api=1&query=UCCコーヒープロフェッショナル,レギュラー・エスプレッソ・スペシャルティ,業務用コーヒー、食材、マシン、開業支援。
+COF022,coffee,キーコーヒー株式会社,総合サプライヤー,オンライン,キーコーヒー株式会社,,,yes,https://www.keycoffee.co.jp/business/,https://www.google.com/maps/search/?api=1&query=キーコーヒー株式会社,レギュラー・エスプレッソ,喫茶材料・マシン・開業サポート。
+COF023,coffee,味の素AGFプロフェッショナル,総合サプライヤー,オンライン,AGFプロフェッショナル,,,yes,https://agf.ajinomoto.co.jp/pro/,https://www.google.com/maps/search/?api=1&query=AGFプロフェッショナル,レギュラー・インスタント,法人向けコーヒー・ドリンク提案。
+COF024,coffee,三本珈琲株式会社,総合サプライヤー,オンライン,三本珈琲株式会社,,,yes,https://www.mmc-coffee.co.jp/,https://www.google.com/maps/search/?api=1&query=三本珈琲株式会社,レギュラー・エスプレッソ,ホテル・外食向け実績多数。
+COF025,coffee,キャラバンコーヒー,総合サプライヤー,オンライン,キャラバンコーヒー,,,yes,https://www.caravan-coffee.com/,https://www.google.com/maps/search/?api=1&query=キャラバンコーヒー,レギュラー・スペシャルティ,業務用卸・開業支援。
+COF026,coffee,ワタル株式会社 コーヒー事業,生豆商社,オンライン,ワタル株式会社 コーヒー,,,yes,https://www.wataru.co.jp/,https://www.google.com/maps/search/?api=1&query=ワタル株式会社 コーヒー,生豆・焙煎豆,生豆輸入・焙煎提案。
+COF027,coffee,ユニオン株式会社,生豆商社,オンライン,ユニオン株式会社 コーヒー,,,yes,https://www.union-coffee.co.jp/,https://www.google.com/maps/search/?api=1&query=ユニオン株式会社 コーヒー,生豆・焙煎豆,業務用生豆・焙煎豆。
+COF028,coffee,富士珈機株式会社,焙煎機メーカー,オンライン,富士珈機株式会社,,,yes,https://www.fujiko-ki.co.jp/,https://www.google.com/maps/search/?api=1&query=富士珈機株式会社,,
+COF029,coffee,ラッキーコーヒーマシン株式会社,エスプレッソマシン,オンライン,ラッキーコーヒーマシン,,,yes,https://www.lucky-coffee-machine.co.jp/,https://www.google.com/maps/search/?api=1&query=ラッキーコーヒーマシン,,
+COF030,coffee,FMI,厨房・コーヒー機器,オンライン,FMI コーヒー,,,yes,https://www.fmi.co.jp/,https://www.google.com/maps/search/?api=1&query=FMI コーヒー,,
+COF031,coffee,ボンマック,抽出機器メーカー,オンライン,BONMAC,,,yes,https://www.bonmac.co.jp/,https://www.google.com/maps/search/?api=1&query=BONMAC,,ドリップ・グラインダー。
+COF032,coffee,Kalita,抽出器具メーカー,オンライン,Kalita,,,yes,https://www.kalita.jp/,https://www.google.com/maps/search/?api=1&query=Kalita,,業務用抽出器具。
+COF033,coffee,HARIO,抽出器具メーカー,オンライン,HARIO,,,yes,https://www.hario.com/,https://www.google.com/maps/search/?api=1&query=HARIO,,V60・業務用器具。
+COF034,coffee,メリタジャパン,コーヒー機器,オンライン,メリタジャパン,,,yes,https://www.melitta.co.jp/,https://www.google.com/maps/search/?api=1&query=メリタジャパン,,業務用抽出機器。
+COF035,coffee,ネスレプロフェッショナル,総合サプライヤー,オンライン,ネスレプロフェッショナル,,,yes,https://www.nestleprofessional.jp/,https://www.google.com/maps/search/?api=1&query=ネスレプロフェッショナル,コーヒー・ドリンク,NESCAFÉ業務用。
+COF036,coffee,ブルーマチックジャパン,コーヒーマシン,オンライン,ブルーマチックジャパン,,,yes,https://www.brewmatic.co.jp/,https://www.google.com/maps/search/?api=1&query=ブルーマチックジャパン,,業務用マシン。
+COF037,coffee,ラ・マルゾッコジャパン,エスプレッソマシン,オンライン,ラ・マルゾッコ ジャパン,,,yes,https://jp.lamarzocco.com/,https://www.google.com/maps/search/?api=1&query=ラ・マルゾッコ ジャパン,,エスプレッソマシン。
+COF038,coffee,MAZZER,グラインダー,オンライン,Mazzer,,,yes,https://www.mazzer.com/,https://www.google.com/maps/search/?api=1&query=Mazzer,,業務用グラインダー。
+COF039,coffee,EK43(Mahlkönig),グラインダー,オンライン,Mahlkonig,,,yes,https://www.mahlkoenig.com/,https://www.google.com/maps/search/?api=1&query=Mahlkonig,,業務用グラインダー。
+COF040,coffee,Ditting,グラインダー,オンライン,Ditting,,,yes,https://www.ditting.com/,https://www.google.com/maps/search/?api=1&query=Ditting,,業務用グラインダー。
+COF041,coffee,海ノ向こうコーヒー,生豆商社・スペシャルティ,オンライン,海ノ向こうコーヒー,,,yes,https://uminomukou.com/,https://www.google.com/maps/search/?api=1&query=海ノ向こうコーヒー,スペシャルティ・生豆,フェアトレード・トレーサブルコーヒー。
+COF042,coffee,ONIBUS COFFEE Wholesale,スペシャルティロースター,オンライン,ONIBUS COFFEE,,,yes,https://onibuscoffee.com/pages/wholesale,https://www.google.com/maps/search/?api=1&query=ONIBUS COFFEE,スペシャルティ,卸販売・開業相談。
+COF043,coffee,LIGHT UP COFFEE Wholesale,スペシャルティロースター,オンライン,LIGHT UP COFFEE,,,yes,https://lightupcoffee.com/pages/wholesale,https://www.google.com/maps/search/?api=1&query=LIGHT UP COFFEE,スペシャルティ,カフェ・ホテル向け卸。
+COF044,coffee,WOODBERRY COFFEE Wholesale,スペシャルティロースター,オンライン,WOODBERRY COFFEE,,,yes,https://woodberrycoffee.com/pages/wholesale,https://www.google.com/maps/search/?api=1&query=WOODBERRY COFFEE,スペシャルティ,卸・トレーニング対応。
+COF045,coffee,REC COFFEE Wholesale,スペシャルティロースター,オンライン,REC COFFEE,,,yes,https://rec-coffee.com/,https://www.google.com/maps/search/?api=1&query=REC COFFEE,スペシャルティ,国内外の大会実績。
+COF046,coffee,NOZY COFFEE Wholesale,スペシャルティロースター,オンライン,NOZY COFFEE,,,yes,https://nozycoffee.jp/,https://www.google.com/maps/search/?api=1&query=NOZY COFFEE,シングルオリジン,シングルオリジン専門。
+COF047,coffee,猿田彦珈琲 法人向け,スペシャルティロースター,オンライン,猿田彦珈琲,,,yes,https://sarutahiko.jp/,https://www.google.com/maps/search/?api=1&query=猿田彦珈琲,スペシャルティ,法人・卸相談窓口あり。
+COF048,coffee,丸山珈琲 BtoB,スペシャルティロースター,オンライン,丸山珈琲,,,yes,https://www.maruyamacoffee.com/,https://www.google.com/maps/search/?api=1&query=丸山珈琲,スペシャルティ,業務用卸・バリスタ教育。
+COF049,coffee,堀口珈琲 卸販売,スペシャルティロースター,オンライン,堀口珈琲,,,yes,https://www.kohikobo.co.jp/,https://www.google.com/maps/search/?api=1&query=堀口珈琲,スペシャルティ,スペシャルティコーヒー専門。
+COF050,coffee,FUGLEN COFFEE Wholesale,スペシャルティロースター,オンライン,FUGLEN COFFEE,,,yes,https://fuglencoffee.jp/,https://www.google.com/maps/search/?api=1&query=FUGLEN COFFEE,スペシャルティ,北欧スタイル。
+COF051,coffee,GLITCH COFFEE,スペシャルティロースター,オンライン,GLITCH COFFEE,,,yes,https://glitchcoffee.com/,https://www.google.com/maps/search/?api=1&query=GLITCH COFFEE,スペシャルティ,シングルオリジン中心。
+COF052,coffee,Kurasu Coffee Wholesale,スペシャルティロースター,オンライン,Kurasu Coffee,,,yes,https://kurasu.kyoto/,https://www.google.com/maps/search/?api=1&query=Kurasu Coffee,スペシャルティ,海外展開実績あり。
+COF053,coffee,Weekenders Coffee,スペシャルティロースター,オンライン,Weekenders Coffee,,,yes,https://weekenderscoffee.com/,https://www.google.com/maps/search/?api=1&query=Weekenders Coffee,スペシャルティ,京都ロースター。
+COF054,coffee,LILO COFFEE ROASTERS,スペシャルティロースター,オンライン,LILO COFFEE,,,yes,https://lilocoffee.com/,https://www.google.com/maps/search/?api=1&query=LILO COFFEE,スペシャルティ,大阪の人気ロースター。
+COF055,coffee,Mel Coffee Roasters,スペシャルティロースター,オンライン,Mel Coffee Roasters,,,yes,https://melcoffeeroasters.com/,https://www.google.com/maps/search/?api=1&query=Mel Coffee Roasters,スペシャルティ,大阪。
+COF056,coffee,LiLo Coffee Kissa,スペシャルティロースター,オンライン,LiLo Coffee Kissa,,,yes,https://coffee.liloinveve.com/,https://www.google.com/maps/search/?api=1&query=LiLo Coffee Kissa,スペシャルティ,大阪。
+COF057,coffee,ABOUT US COFFEE,スペシャルティロースター,オンライン,ABOUT US COFFEE,,,yes,https://aboutuscoffee.jp/,https://www.google.com/maps/search/?api=1&query=ABOUT US COFFEE,スペシャルティ,名古屋。
+COF058,coffee,ETHICUS Coffee Roasters,スペシャルティロースター,オンライン,ETHICUS Coffee Roasters,,,yes,https://ethicus.jp/,https://www.google.com/maps/search/?api=1&query=ETHICUS Coffee Roasters,スペシャルティ,静岡。
+COF059,coffee,Passage Coffee,スペシャルティロースター,オンライン,Passage Coffee,,,yes,https://passagecoffee.com/,https://www.google.com/maps/search/?api=1&query=Passage Coffee,スペシャルティ,東京。
+COF060,coffee,Leaves Coffee Roasters,スペシャルティロースター,オンライン,Leaves Coffee Roasters,,,yes,https://leavescoffee.jp/,https://www.google.com/maps/search/?api=1&query=Leaves Coffee Roasters,スペシャルティ,東京。
+CON001,consumables,シモジマ,総合包材メーカー,オンライン,シモジマ,,,yes,https://www.shimojima.co.jp/,https://www.google.com/maps/search/?api=1&query=シモジマ,紙カップ・プラカップ・袋・包装資材,業界最大手。
+CON002,consumables,HEIKO（シモジマPB）,包装資材,オンライン,,,,no,https://www.heiko.jp/,,紙カップ・袋・包装資材,シモジマPB。
+CON003,consumables,パックスタイル,食品容器メーカー,オンライン,,,,no,https://www.packstyle.jp/,,食品容器・紙カップ・弁当容器,飲食向け。
+CON004,consumables,折兼,食品包装資材,オンライン,,,,no,https://www.orikane.co.jp/,,食品容器・包装資材,食品包装専門。
+CON005,consumables,ストア・エキスプレス,店舗用品,オンライン,,,,no,https://www.store-express.com/,,店舗什器・包装資材,店舗用品総合。
+CON006,consumables,モノタロウ,総合資材,オンライン,,,,no,https://www.monotaro.com/,,消耗品全般,店舗備品全般。
+CON007,consumables,ASKUL,オフィス・店舗用品,オンライン,,,,no,https://www.askul.co.jp/,,紙コップ・備品,翌日配送。
+CON008,consumables,LOHACO法人,店舗用品,オンライン,,,,no,https://lohaco.yahoo.co.jp/business/,,店舗消耗品,法人向け。
+CON009,consumables,カウネット,店舗用品,オンライン,,,,no,https://www.kaunet.com/,,店舗備品,法人向け。
+CON010,consumables,テンポス,厨房・消耗品,オンライン,,,,no,https://www.tenpos.com/,,厨房用品・包材,飲食店専門。
+CON011,consumables,プロ厨房ヒット,厨房用品,オンライン,,,,no,https://www.pro-hit.jp/,,厨房用品・消耗品,飲食店向け。
+CON012,consumables,cotta Business,製菓・包材,オンライン,,,,no,https://www.cotta.jp/,,包材・製菓資材,製菓向け。
+CON013,consumables,富澤商店Business,製菓資材,オンライン,,,,no,https://tomiz.com/,,包材・製菓用品,製菓材料。
+CON014,consumables,アスクル メディカル,衛生用品,オンライン,,,,no,https://www.askul.co.jp/,,おしぼり・衛生用品,衛生用品。
+CON015,consumables,大黒工業,カトラリー・おしぼり,オンライン,,,,no,https://www.daikoku-com.co.jp/,,おしぼり・カトラリー・紙製品,飲食店向け。
+CON016,consumables,尚美堂,紙製品メーカー,オンライン,,,,no,https://www.fuji-shobido.com/,,紙ナプキン・紙コップ,紙製品。
+CON017,consumables,溝端紙工印刷,紙コップOEM,オンライン,,,,no,https://www.mizobata.co.jp/,,紙コップOEM,オリジナル印刷。
+CON018,consumables,日本デキシー,紙カップメーカー,オンライン,,,,no,https://www.dixie.co.jp/,,紙カップ・食品容器,紙カップ大手。
+CON019,consumables,SMPテクニカ,プラカップメーカー,オンライン,,,,no,https://www.smp-technica.com/,,PETカップ・食品容器,透明カップ。
+CON020,consumables,東罐興業,紙容器メーカー,オンライン,,,,no,https://www.tokan.co.jp/,,紙コップ・食品容器,紙容器メーカー。
+MAT001,materials,明治,乳製品メーカー,オンライン,株式会社明治,,,yes,https://www.meiji.co.jp/,https://www.google.com/maps/search/?api=1&query=株式会社明治,牛乳・生クリーム・ホイップ・ヨーグルト・チーズ・バター,業務用ブランドあり。
+MAT002,materials,森永乳業,乳製品メーカー,オンライン,森永乳業株式会社,,,yes,https://www.morinagamilk.co.jp/,https://www.google.com/maps/search/?api=1&query=森永乳業株式会社,牛乳・ホイップ・ヨーグルト・チーズ,業務用商品あり。
+MAT003,materials,雪印メグミルク,乳製品メーカー,オンライン,雪印メグミルク株式会社,,,yes,https://www.meg-snow.com/,https://www.google.com/maps/search/?api=1&query=雪印メグミルク株式会社,牛乳・チーズ・バター・生クリーム,業務用商品あり。
+MAT004,materials,タカナシ乳業,乳製品メーカー,オンライン,タカナシ乳業株式会社,,,yes,https://www.takanashi-milk.co.jp/,https://www.google.com/maps/search/?api=1&query=タカナシ乳業株式会社,生クリーム・牛乳・バター・ヨーグルト,カフェ採用実績多数。
+MAT005,materials,中沢乳業,乳製品メーカー,オンライン,中沢乳業株式会社,,,yes,https://www.nakazawa.co.jp/,https://www.google.com/maps/search/?api=1&query=中沢乳業株式会社,生クリーム・牛乳・バター,製菓・カフェ向け。
+MAT006,materials,四国乳業,乳製品メーカー,ローカル,四国乳業株式会社,,,yes,https://www.rakuren.co.jp/,https://www.google.com/maps/search/?api=1&query=四国乳業株式会社,牛乳・ヨーグルト・乳飲料,らくれんブランド。
+MAT007,materials,MONIN,シロップメーカー,オンライン,MONIN,,,yes,https://www.monin.com/,https://www.google.com/maps/search/?api=1&query=MONIN,シロップ・ソース・フラッペ,カフェ定番ブランド。
+MAT008,materials,1883 Maison Routin,シロップメーカー,オンライン,1883 Maison Routin,,,yes,https://www.1883.com/,https://www.google.com/maps/search/?api=1&query=1883 Maison Routin,シロップ・ソース,フランスブランド。
+MAT009,materials,Torani,シロップメーカー,オンライン,Torani,,,yes,https://shop.torani.com/,https://www.google.com/maps/search/?api=1&query=Torani,シロップ・ソース・フラッペ,米国ブランド。
+MAT010,materials,DaVinci Gourmet,シロップメーカー,オンライン,DaVinci Gourmet,,,yes,https://www.davincigourmet.com/,https://www.google.com/maps/search/?api=1&query=DaVinci Gourmet,シロップ・ソース,業務用。
+MAT011,materials,Ghirardelli,チョコレートソース,オンライン,Ghirardelli,,,yes,https://www.ghirardelli.com/,https://www.google.com/maps/search/?api=1&query=Ghirardelli,チョコレートソース・キャラメル,カフェ・デザート向け。
+MAT012,materials,HERSHEY'S Foodservice,チョコレートメーカー,オンライン,Hershey Foodservice,,,yes,https://www.thehersheycompany.com/,https://www.google.com/maps/search/?api=1&query=Hershey Foodservice,チョコソース・ココア,業務用ラインあり。
+MAT013,materials,ヴァローナ,チョコレートメーカー,オンライン,Valrhona,,,yes,https://www.valrhona.com/,https://www.google.com/maps/search/?api=1&query=Valrhona,チョコレート・ココア,高級チョコレート。
+MAT014,materials,森半,抹茶メーカー,オンライン,森半,,,yes,https://www.kataoka.com/morihan/,https://www.google.com/maps/search/?api=1&query=森半,抹茶・ほうじ茶,カフェ向け抹茶。
+MAT015,materials,丸久小山園,抹茶メーカー,オンライン,丸久小山園,,,yes,https://www.marukyu-koyamaen.co.jp/,https://www.google.com/maps/search/?api=1&query=丸久小山園,抹茶,製菓・カフェ採用多数。
+MAT016,materials,山政小山園,抹茶メーカー,オンライン,山政小山園,,,yes,https://www.yamamasa-koyamaen.co.jp/,https://www.google.com/maps/search/?api=1&query=山政小山園,抹茶,宇治抹茶。
+MAT017,materials,共栄製茶（森半）,日本茶メーカー,オンライン,共栄製茶,,,yes,https://www.kyoeiseicha.co.jp/,https://www.google.com/maps/search/?api=1&query=共栄製茶,抹茶・ほうじ茶・緑茶,業務用対応。
+MAT018,materials,はちみつの杉養蜂園,はちみつメーカー,オンライン,杉養蜂園,,,yes,https://sugi-bee.com/,https://www.google.com/maps/search/?api=1&query=杉養蜂園,はちみつ・果汁蜜,ドリンク利用実績。
+MAT019,materials,MY HONEY,はちみつメーカー,オンライン,MY HONEY,,,yes,https://myhoneyjapan.com/,https://www.google.com/maps/search/?api=1&query=MY HONEY,はちみつ・ナッツ,カフェ採用あり。
+MAT020,materials,日新蜂蜜株式会社,はちみつメーカー,オンライン,日新蜂蜜株式会社,,,yes,https://www.nisshin-honey.co.jp/,https://www.google.com/maps/search/?api=1&query=日新蜂蜜株式会社,はちみつ・シロップ,業務用蜂蜜。
+ICE001,ice,小久保製氷冷蔵株式会社,製氷会社,ローカル,香川県内配送,,,yes,https://www.kokuboice.co.jp/,https://www.google.com/maps/search/?api=1&query=小久保製氷冷蔵株式会社 高松市,ロックアイス・クラッシュアイス・角氷・業務用氷,香川県内配送。飲食店・ホテル・イベント向け。
+ICE002,ice,株式会社小久保製氷冷蔵 ロックアイス事業,製氷会社,ローカル,小久保製氷冷蔵株式会社,,,yes,https://www.kokuboice.co.jp/,https://www.google.com/maps/search/?api=1&query=小久保製氷冷蔵株式会社,業務用ロックアイス,高松エリア対応。
+ICE003,ice,小久保製氷冷蔵 クラッシュアイス,製氷会社,ローカル,小久保製氷冷蔵株式会社,,,yes,https://www.kokuboice.co.jp/,https://www.google.com/maps/search/?api=1&query=小久保製氷冷蔵株式会社,クラッシュアイス,スムージー・ドリンク向け。
+ICE004,ice,ニチレイフーズ ロックアイス,メーカー,オンライン,ニチレイフーズ,,,yes,https://www.nichireifoods.co.jp/,https://www.google.com/maps/search/?api=1&query=ニチレイフーズ,ロックアイス・クラッシュアイス,全国流通。
+ICE005,ice,小久保製氷冷蔵 ドライアイス,製氷会社,ローカル,小久保製氷冷蔵株式会社,,,yes,https://www.kokuboice.co.jp/,https://www.google.com/maps/search/?api=1&query=小久保製氷冷蔵株式会社,ドライアイス,保冷用途。
+ICE006,ice,ホシザキ株式会社,製氷機メーカー,オンライン,ホシザキ株式会社,,,yes,https://www.hoshizaki.co.jp/,https://www.google.com/maps/search/?api=1&query=ホシザキ株式会社,製氷機・キューブアイスメーカー,業務用製氷機国内最大手。
+ICE007,ice,フクシマガリレイ株式会社,製氷機メーカー,オンライン,フクシマガリレイ株式会社,,,yes,https://www.galilei.co.jp/,https://www.google.com/maps/search/?api=1&query=フクシマガリレイ株式会社,製氷機・冷機設備,厨房機器メーカー。
+ICE008,ice,パナソニック コールドチェーン,製氷機メーカー,オンライン,Panasonic コールドチェーン,,,yes,https://panasonic.biz/appliance/cold_chain/,https://www.google.com/maps/search/?api=1&query=Panasonic コールドチェーン,製氷機,業務用製氷機。
+ICE009,ice,大和冷機工業株式会社,製氷機メーカー,オンライン,大和冷機工業株式会社,,,yes,https://www.drk.co.jp/,https://www.google.com/maps/search/?api=1&query=大和冷機工業株式会社,製氷機・厨房機器,厨房設備総合。
+ICE010,ice,中西製氷株式会社,製氷会社,オンライン,中西製氷株式会社,,,yes,https://www.nakanishi-ice.co.jp/,https://www.google.com/maps/search/?api=1&query=中西製氷株式会社,ロックアイス・業務用氷,業務用氷供給。
+ICE011,ice,ダイワアイス,製氷会社,オンライン,ダイワアイス,,,yes,,https://www.google.com/maps/search/?api=1&query=ダイワアイス,ロックアイス・クラッシュアイス,業務用氷。
+ICE012,ice,前川製氷株式会社,製氷会社,オンライン,前川製氷株式会社,,,yes,,https://www.google.com/maps/search/?api=1&query=前川製氷株式会社,業務用氷,飲食店向け。
+ICE013,ice,昭和冷凍食品,冷凍・氷,オンライン,昭和冷凍食品,,,yes,,https://www.google.com/maps/search/?api=1&query=昭和冷凍食品,業務用氷,冷凍食品と合わせて仕入可能。
+ICE014,ice,テンポス,厨房機器,オンライン,テンポス,,,yes,https://www.tenpos.com/,https://www.google.com/maps/search/?api=1&query=テンポス,製氷機,ホシザキ・パナソニック等取扱。
+ICE015,ice,ホシザキ四国株式会社,厨房機器,ローカル,ホシザキ四国株式会社 高松市,,,yes,https://www.hoshizaki.co.jp/,https://www.google.com/maps/search/?api=1&query=ホシザキ四国株式会社 高松市,製氷機・保守,導入・保守対応。

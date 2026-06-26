@@ -1,0 +1,10 @@
+beautifulsoup4
+lxml
+pandas
+openpyxl
+requests
+playwright
+folium
+geopy
+jinja2
+markdown

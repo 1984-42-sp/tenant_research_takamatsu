@@ -1,0 +1,8 @@
+﻿file,exists,status,header_columns,rows,bad_lines,error
+data\fruit\fruit_suppliers.csv,True,ok,14,60,,
+data\coffee\coffee_suppliers.csv,True,ok,27,60,,
+data\consumables\consumables_suppliers.csv,True,ok,16,20,,
+data\materials\materials_suppliers.csv,True,ok,14,20,,
+data\ice\ice_suppliers.csv,True,ok,13,15,,
+data\prices\price_observations.csv,True,ok,14,47,,
+data\prices\fruit_price_observations.csv,True,ok,17,40,,
