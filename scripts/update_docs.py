@@ -41,6 +41,7 @@ def build_index_html(template_text):
     )
 
 FINAL_HTML_DIR = BASE_DIR / "output" / "final_html"
+PROCUREMENT_DOCS_DIR = BASE_DIR / "procurement" / "docs"
 COMPETITORS_DIR = BASE_DIR / "output" / "competitors"
 REPORTS_DIR = BASE_DIR / "output" / "reports"
 TARGET_DIR = BASE_DIR / "docs"
@@ -52,6 +53,7 @@ PUBLIC_FILE_MAP = {
     "cafe_business_dashboard.html": FINAL_HTML_DIR / "cafe_business_dashboard.html",
     "simulation_index.html": FINAL_HTML_DIR / "simulation_index.html",
     "cafe_business_analysis_report.html": REPORTS_DIR / "cafe_business_analysis_report.html",
+    "procurement_dashboard.html": PROCUREMENT_DOCS_DIR / "procurement_dashboard.html",
 }
 
 PUBLIC_DIRS = [
