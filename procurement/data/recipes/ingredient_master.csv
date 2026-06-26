@@ -1,0 +1,13 @@
+﻿ingredient_id,ingredient_name,price_source,price_key,reference_unit_price_yen,reference_unit,preferred_supplier_hint,notes
+I001,コーヒー豆,general,コーヒー豆,3000,kg,,
+I002,牛乳,general,牛乳,240,L,,
+I003,抹茶パウダー,general,抹茶,6000,kg,,
+I004,炭酸水,general,炭酸水,120,L,,
+I005,フルーツソース,fruit,ミックスフルーツ,900,kg,,
+I006,冷凍フルーツ,fruit,ミックスフルーツ,1200,kg,,
+I007,食パン,general,食パン,40,枚,,
+I008,クリームチーズ,general,クリームチーズ,1800,kg,,
+I009,生クリーム,general,生クリーム,900,L,,
+I010,砂糖,general,砂糖,300,kg,,
+I011,氷,general,氷,200,kg,,
+I012,カップ・蓋・ストロー,general,カップ,25,個,,

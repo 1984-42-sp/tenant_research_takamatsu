@@ -1,0 +1,9 @@
+﻿menu_id,menu_name,category,default_sales_price_yen,default_monthly_sales,notes
+M001,ドリップコーヒー,drink,450,600,
+M002,カフェラテ,drink,550,500,
+M003,抹茶ラテ,drink,580,300,
+M004,フルーツソーダ,drink,650,250,
+M005,フルーツスムージー,drink,720,220,
+M006,フルーツパフェ,sweets,980,180,
+M007,トースト,food,480,250,
+M008,チーズケーキ,sweets,620,200,

@@ -54,6 +54,7 @@ PUBLIC_FILE_MAP = {
     "simulation_index.html": FINAL_HTML_DIR / "simulation_index.html",
     "cafe_business_analysis_report.html": REPORTS_DIR / "cafe_business_analysis_report.html",
     "procurement_dashboard.html": PROCUREMENT_DOCS_DIR / "procurement_dashboard.html",
+    "cost_simulator_dashboard.html": PROCUREMENT_DOCS_DIR / "cost_simulator_dashboard.html",
 }
 
 PUBLIC_DIRS = [
