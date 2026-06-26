@@ -6,161 +6,420 @@
 <title>高松市 カフェ開業候補地分析システム</title>
 
 <style>
+:root{
+    --ink:#191714;
+    --muted:#69645d;
+    --paper:#f6f1e8;
+    --panel:#fffaf0;
+    --line:rgba(25,23,20,.16);
+    --accent:#d94f2b;
+    --accent-2:#2f6f68;
+    --shadow:0 24px 70px rgba(54,43,29,.12);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-    font-family:sans-serif;
     margin:0;
-    background:#f5f6f8;
-    color:#222;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;
+    color:var(--ink);
+    background:
+        radial-gradient(circle at 14% 12%, rgba(217,79,43,.18), transparent 26rem),
+        radial-gradient(circle at 86% 18%, rgba(47,111,104,.16), transparent 24rem),
+        linear-gradient(135deg,#f7efe1 0%,#f4f0e8 48%,#ece6da 100%);
+    min-height:100vh;
 }
 
-header{
-    background:#2c3e50;
-    color:white;
-    padding:50px 20px;
-    text-align:center;
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.28;
+    background-image:linear-gradient(rgba(25,23,20,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(25,23,20,.06) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:linear-gradient(to bottom,black,transparent 78%);
 }
 
-header h1{
-    margin:0;
-    font-size:36px;
+.page{
+    width:min(1180px,calc(100% - 40px));
+    margin:0 auto;
+    padding:34px 0 42px;
+    position:relative;
 }
 
-header p{
-    margin-top:12px;
-    opacity:0.9;
-}
-
-.container{
-    max-width:1200px;
-    margin:40px auto;
-    padding:0 20px;
-}
-
-.summary{
-    background:white;
-    border-radius:12px;
-    padding:24px;
-    margin-bottom:30px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
-    line-height:1.8;
-}
-
-.cards{
+.hero{
+    min-height:360px;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:minmax(0,1.1fr) minmax(280px,.62fr);
+    gap:28px;
+    align-items:stretch;
+    padding:22px 0 28px;
+}
+
+.hero-main{
+    position:relative;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:34px;
+    padding:42px;
+    background:rgba(255,250,240,.70);
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(18px);
+}
+
+.hero-main::after{
+    content:"CAFE / DATA / MAP";
+    position:absolute;
+    right:-58px;
+    bottom:26px;
+    transform:rotate(-7deg);
+    font-weight:900;
+    font-size:clamp(44px,7vw,96px);
+    letter-spacing:-.08em;
+    color:rgba(25,23,20,.055);
+    white-space:nowrap;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:12px;
+    letter-spacing:.18em;
+    font-weight:800;
+    color:var(--accent-2);
+    text-transform:uppercase;
+}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--accent-2)}
+
+h1{
+    margin:26px 0 18px;
+    font-size:clamp(38px,6vw,78px);
+    line-height:.96;
+    letter-spacing:-.075em;
+}
+
+.hero-copy{
+    max-width:670px;
+    margin:0;
+    color:#423d36;
+    font-size:clamp(15px,1.6vw,18px);
+    line-height:1.95;
+}
+
+.hero-actions{
+    margin-top:30px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.pill{
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:10px 15px;
+    background:rgba(255,255,255,.42);
+    font-size:13px;
+    color:#4d4740;
+}
+
+.stats-panel{
+    border:1px solid rgba(25,23,20,.18);
+    border-radius:34px;
+    padding:28px;
+    background:#191714;
+    color:#fff8e8;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:100%;
+}
+
+.panel-label{
+    font-size:12px;
+    letter-spacing:.18em;
+    color:rgba(255,248,232,.62);
+    font-weight:800;
+}
+
+.stats-grid{
+    display:grid;
+    gap:14px;
+    margin:22px 0;
+}
+
+.stat{
+    padding:18px 0;
+    border-top:1px solid rgba(255,248,232,.16);
+}
+.stat strong{
+    display:block;
+    font-size:clamp(30px,4vw,48px);
+    letter-spacing:-.05em;
+    line-height:1;
+}
+.stat span{
+    display:block;
+    margin-top:7px;
+    color:rgba(255,248,232,.68);
+    font-size:13px;
+}
+
+.panel-note{
+    margin:0;
+    color:rgba(255,248,232,.76);
+    line-height:1.8;
+    font-size:13px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
     gap:20px;
+    margin:30px 0 16px;
 }
 
-.card{
-    background:white;
-    border-radius:12px;
-    padding:24px;
-    text-decoration:none;
-    color:#222;
-    box-shadow:0 2px 8px rgba(0,0,0,0.08);
-    transition:0.2s;
+.section-head h2{
+    margin:0;
+    font-size:clamp(24px,3vw,38px);
+    letter-spacing:-.04em;
 }
-
-.card:hover{
-    transform:translateY(-4px);
-}
-
-.card h2{
-    margin-top:0;
-    color:#2c3e50;
-}
-
-.card p{
+.section-head p{
+    margin:0;
+    max-width:460px;
+    color:var(--muted);
     line-height:1.7;
-    color:#555;
+    font-size:14px;
 }
+
+.portal-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:16px;
+}
+
+.portal-card{
+    position:relative;
+    isolation:isolate;
+    min-height:275px;
+    overflow:hidden;
+    text-decoration:none;
+    color:var(--ink);
+    border:1px solid var(--line);
+    border-radius:28px;
+    padding:24px;
+    background:rgba(255,250,240,.74);
+    box-shadow:0 12px 38px rgba(54,43,29,.08);
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+}
+
+.portal-card::before{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    right:-54px;
+    top:-54px;
+    background:rgba(217,79,43,.14);
+    transition:transform .28s ease, background .28s ease;
+    z-index:-1;
+}
+.portal-card:nth-child(2n)::before{background:rgba(47,111,104,.14)}
+.portal-card:nth-child(3n)::before{border-radius:30px; transform:rotate(18deg); background:rgba(25,23,20,.08)}
+
+.portal-card:hover{
+    transform:translateY(-6px) rotate(-.35deg);
+    box-shadow:0 24px 64px rgba(54,43,29,.16);
+    border-color:rgba(25,23,20,.34);
+    background:rgba(255,252,246,.94);
+}
+.portal-card:hover::before{transform:scale(1.22) rotate(12deg)}
+
+.card-index{
+    position:absolute;
+    right:22px;
+    top:18px;
+    font-size:48px;
+    line-height:1;
+    font-weight:900;
+    letter-spacing:-.08em;
+    color:rgba(25,23,20,.08);
+}
+.card-kicker{
+    display:block;
+    max-width:70%;
+    color:var(--accent-2);
+    font-size:11px;
+    letter-spacing:.14em;
+    font-weight:900;
+}
+.portal-card h2{
+    margin:44px 0 14px;
+    font-size:clamp(23px,2.5vw,34px);
+    line-height:1.05;
+    letter-spacing:-.055em;
+}
+.portal-card p{
+    margin:0;
+    color:#5a544d;
+    font-size:14px;
+    line-height:1.85;
+}
+.card-foot{
+    position:absolute;
+    left:24px;
+    right:24px;
+    bottom:22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    color:#3f3932;
+    font-size:13px;
+    font-weight:700;
+}
+.arrow{
+    display:grid;
+    place-items:center;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:var(--ink);
+    color:#fff8e8;
+    transition:transform .22s ease;
+}
+.portal-card:hover .arrow{transform:translateX(3px)}
 
 footer{
-    text-align:center;
-    color:#777;
-    padding:40px 0;
+    margin-top:34px;
+    padding:26px 0 4px;
+    color:var(--muted);
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    border-top:1px solid var(--line);
+}
+
+@media (max-width:920px){
+    .hero{grid-template-columns:1fr}
+    .portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+    .page{width:min(100% - 24px,1180px);padding-top:18px}
+    .hero-main,.stats-panel{border-radius:24px;padding:26px}
+    .section-head{display:block}
+    .section-head p{margin-top:10px}
+    .portal-grid{grid-template-columns:1fr}
+    .portal-card{min-height:245px;border-radius:24px}
+    footer{display:block;line-height:1.8}
 }
 </style>
 </head>
 
 <body>
-
-<header>
-    <h1>高松市 カフェ開業候補地分析システム</h1>
-    <p>216件の店舗・事業用賃貸物件を対象に事業成立性を分析</p>
-</header>
-
-<div class="container">
-
-    <div class="summary">
-        <h2>プロジェクト概要</h2>
-
-        <p>
-        本システムは、高松市内で掲載中の店舗・事業用賃貸物件と、食べログ・ホットペッパーグルメ・Googleマップ由来のカフェ競合店舗を統合し、
-        「どの物件で、どのカフェ業態なら成立しやすいか」を分析するための候補地評価データベースです。
-        </p>
-        <ul>
-        <li>対象物件：216件</li>
-        <li>ジオコード成功：216件</li>
-        <li>競合店舗：157件（食べログ40件／ホットペッパー42件／Googleマップ75件）</li>
-        <li>仕入れ先候補調査（品目別）</li>
-        </ul>
-    </div>
-
-    <div class="cards">
-
-        <a class="card" href="all_properties_map.html">
-            <h2>🗺️ 物件・競合店マップ</h2>
-            <p>
-            高松市内の物件と近隣の競合店舗の位置を地図上で確認できます。
+<main class="page">
+    <section class="hero" aria-labelledby="page-title">
+        <div class="hero-main">
+            <span class="eyebrow">Takamatsu Cafe Project</span>
+            <h1 id="page-title">かふぇ開業調査分析ファイル</h1>
+            <p class="hero-copy">
+                高松市内の店舗・事業用賃貸物件、競合店舗、仕入れ先候補、営業シミュレーションを横断して確認するための会議資料トップページです。
+                必要な資料へ迷わず入れることを優先し、軽い遊び心だけを加えています。
             </p>
+            <div class="hero-actions" aria-label="この資料で確認できる内容">
+                <span class="pill">物件評価</span>
+                <span class="pill">競合確認</span>
+                <span class="pill">営業試算</span>
+                <span class="pill">仕入れ先調査</span>
+            </div>
+        </div>
+
+        <aside class="stats-panel" aria-label="プロジェクト概要">
+            <div>
+                <div class="panel-label">CURRENT DATASET</div>
+                <div class="stats-grid">
+                    <div class="stat"><strong>216</strong><span>対象物件</span></div>
+                    <div class="stat"><strong>216</strong><span>ジオコード成功</span></div>
+                    <div class="stat"><strong>157</strong><span>競合店舗</span></div>
+                </div>
+            </div>
+            <p class="panel-note">
+                食べログ 40件 ／ ホットペッパー 42件 ／ Googleマップ 75件を統合。
+            </p>
+        </aside>
+    </section>
+
+    <section aria-labelledby="portal-title">
+        <div class="section-head">
+            <h2 id="portal-title">資料を選ぶ</h2>
+            <p>カード全体がリンクです。タイトルで用途を判断し、補足文で開いた先の内容を確認できます。</p>
+        </div>
+
+        <div class="portal-grid">
+
+        <a class="portal-card" href="all_properties_map.html" aria-label="物件・競合店マップを開く">
+            <span class="card-index">01</span>
+            <span class="card-kicker">MAP / LOCATION</span>
+            <h2>物件・競合店マップ</h2>
+            <p>物件と競合カフェの位置関係を地図で確認。候補地の周辺環境を最初に掴む入口です。</p>
+            <span class="card-foot"><span>位置・競合・周辺確認</span><span class="arrow">→</span></span>
         </a>
 
-                <a class="card" href="cafe_business_dashboard.html">
-            <h2>📊 パターン別物件散布</h2>
-            <p>
-            物件ごとに分析したカフェ開業時の事業成立性や必要月商や客数を可視化し散布図で閲覧できます。
-            </p>
+        <a class="portal-card" href="cafe_business_dashboard.html" aria-label="パターン別物件散布を開く">
+            <span class="card-index">02</span>
+            <span class="card-kicker">SCATTER / VIABILITY</span>
+            <h2>パターン別物件散布</h2>
+            <p>物件ごとに業態別の成立性、必要月商、必要客数を評価。散布図で視覚的に把握します。</p>
+            <span class="card-foot"><span>成立性・必要売上</span><span class="arrow">→</span></span>
         </a>
 
-        <a class="card" href="business_plan_dashboard.html">
-            <h2>📈 物件ランキング</h2>
-            <p>
-            取得した物件のソンス風実装可能性を評価し、ランキング形式で集計したものです。
-            </p>
+        <a class="portal-card" href="business_plan_dashboard.html" aria-label="物件ランキングを開く">
+            <span class="card-index">03</span>
+            <span class="card-kicker">RANKING / PRIORITY</span>
+            <h2>物件ランキング</h2>
+            <p>取得物件をソンス風実現可能性の観点で評価。優先して検討すべき候補を短時間で確認します。</p>
+            <span class="card-foot"><span>候補比較・優先順位</span><span class="arrow">→</span></span>
         </a>
 
-                <a class="card" href="simulation_index.html">
-            <h2>☕ 営業シミュレーション一覧</h2>
-            <p>
-            各物件について、
-            必要客数・想定売上・投資規模を確認できます。
-            </p>
+        <a class="portal-card" href="simulation_index.html" aria-label="営業シミュレーション一覧を開く">
+            <span class="card-index">04</span>
+            <span class="card-kicker">SIMULATION / SALES</span>
+            <h2>営業シミュレーション一覧</h2>
+            <p>各物件の必要客数、想定売上、投資規模を一覧化。事業計画の前提確認に使います。</p>
+            <span class="card-foot"><span>客数・売上・投資</span><span class="arrow">→</span></span>
         </a>
-        
-        <a class="card" href="procurement_dashboard.html">
+
+        <a class="portal-card" href="procurement_dashboard.html" aria-label="仕入れ先候補DBを開く">
+            <span class="card-index">05</span>
+            <span class="card-kicker">PROCUREMENT / SUPPLY</span>
             <h2>仕入れ先候補DB</h2>
-            <p>カフェ運営に必要な仕入れ先候補をカテゴリ別に整理した仕入れ先データベースです。</p>
-            <ul>
-            <li>仕入れ先候補調査：青果・コーヒー・消耗品・原材料・氷</li>
-            </ul>
+            <p>青果、コーヒー、消耗品、原材料、氷など、運営に必要な仕入れ先候補を整理します。</p>
+            <span class="card-foot"><span>調達先・カテゴリ整理</span><span class="arrow">→</span></span>
         </a>
 
-        <a class="card" href="cost_simulator_dashboard.html">
-            <h2>🍓 メニュー原価シミュレーター</h2>
-            <p>
-            仕入れ先候補調査をもとに原価計算を可能にしました。現在不足情報を追加取得中です。
-            </p>
+        <a class="portal-card" href="cost_simulator_dashboard.html" aria-label="メニュー原価シミュレーターを開く">
+            <span class="card-index">06</span>
+            <span class="card-kicker">COST / MENU</span>
+            <h2>メニュー原価シミュレーター</h2>
+            <p>仕入れ先候補調査をもとに、メニューごとの原価感を掴みます。不足情報を追調査中です。</p>
+            <span class="card-foot"><span>原価・メニュー設計</span><span class="arrow">→</span></span>
         </a>
+        </div>
+    </section>
 
-
-    </div>
-
-</div>
-
-<footer>
-    Takamatsu Cafe Property Analysis System
-</footer>
-
+    <footer>
+        <span>Takamatsu Cafe Property Analysis System</span>
+        <span>Meeting Portal</span>
+    </footer>
+</main>
 </body>
 </html>
